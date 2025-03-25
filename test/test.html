@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="test.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Status Sidebar (Desktop View) -->
+        <div class="status-sidebar">
+            <h4>Statuses</h4>
+            <div id="status-list">
+                <!-- Status items will be loaded here dynamically -->
+            </div>
+        </div>
+
+        <!-- Main Chat Section -->
+        <div class="chat-main">
+            <!-- Your chat UI goes here -->
+        </div>
+    </div>
+
+    <!-- Status Fullscreen Modal (For Mobile View) -->
+    <div id="status-modal" class="status-modal">
+        <div class="status-content">
+            <span class="close-modal">&times;</span>
+            <div id="status-display"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        let statusList = document.getElementById("status-list");
+        let statusModal = document.getElementById("status-modal");
+        let statusDisplay = document.getElementById("status-display");
+        let closeModal = document.querySelector(".close-modal");
+
+        // Dummy Data (Replace this with a fetch request to your backend)
+        let statuses = [
+            { username: "Jane", type: "image", url: "https://via.placeholder.com/300" },
+            { username: "Alex", type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+            { username: "Mike", type: "text", content: "Feeling great today!" }
+        ];
+
+        function loadStatuses() {
+            statusList.innerHTML = "";
+            statuses.forEach(status => {
+                let statusItem = document.createElement("div");
+                statusItem.classList.add("status-item");
+                statusItem.innerHTML = `
+                    <img src="https://via.placeholder.com/40" alt="${status.username}">
+                    <span>${status.username}</span>
+                `;
+                statusItem.addEventListener("click", () => openStatus(status));
+                statusList.appendChild(statusItem);
+            });
+        }
+
+        function openStatus(status) {
+            statusDisplay.innerHTML = ""; // Clear previous content
+
+            if (status.type === "image") {
+                statusDisplay.innerHTML = `<img src="${status.url}" alt="Status Image">`;
+            } else if (status.type === "video") {
+                statusDisplay.innerHTML = `<video controls autoplay><source src="${status.url}" type="video/mp4"></video>`;
+            } else {
+                statusDisplay.innerHTML = `<p>${status.content}</p>`;
+            }
+
+            // 📱 In Mobile View, Show Fullscreen
+            statusModal.style.display = "flex";
+        }
+
+        closeModal.addEventListener("click", function () {
+            statusModal.style.display = "none";
+        });
+
+        // Load statuses on page load
+        loadStatuses();
+    });
+
+
+
+    </script>
+
+</body>
+</html>

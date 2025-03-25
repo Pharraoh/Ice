@@ -1,0 +1,7 @@
+<div class="chat-messages">
+    {% for message in chat_data %}
+        <div class="message">
+            <p>{{ message.content }}</p>
+        </div>
+    {% endfor %}
+</div>

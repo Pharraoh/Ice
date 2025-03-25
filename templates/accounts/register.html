@@ -1,0 +1,853 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from demos.codexcoder.com/themeforest/html/lorem/{% url 'accounts:signup' %} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Sep 2024 15:35:56 GMT -->
+<head>
+	<meta charset="utf-8">
+	<title>lorem</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- site favicon -->
+	<link rel="icon" type="image/png" href="../../static/assets/images/favicon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- All stylesheet and icons css  -->
+	<link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/animate.css">
+	<link rel="stylesheet" href="../../static/assets/css/all.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
+	<link rel="stylesheet" href="../../static/assets/css/style.css">
+
+</head>
+
+<body>
+	<!-- preloader start here -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+	<!-- preloader ending here -->
+
+	<!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fa-solid fa-angle-up"></i></a>
+    <!-- scrollToTop ending here -->
+
+
+    <!-- ================> login section start here <================== -->
+    <section class="log-reg">
+        <div class="top-menu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-7">
+                        <div class="logo">
+                            <a href="/"><img src="/" alt="logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-5">
+                        <a href="/" class="backto-home"><i class="fas fa-chevron-left"></i> Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="image">
+                </div>
+                <div class="col-lg-7">
+                    <div class="log-reg-inner">
+                        <div class="section-header">
+                            <h2 class="title">Welcome to lorem </h2>
+                            <p>Let's create your profile! Just fill in the fields below, and we’ll get a new account. </p>
+                        </div>
+                        <div class="main-content">
+													<!-- templates/accounts/register.html -->
+													<form method="POST" enctype="multipart/form-data" novalidate>
+														{% csrf_token %}
+
+														<!-- Username Field -->
+														<h4 class="content-title">Acount Details</h4>
+
+														<div class="form-group">
+															<label>Username*</label>
+															<input type="text" name="username" class="my-form-control" id="id_username" placeholder="Enter Your Username">
+															{% if form.username.errors %}
+																<div class="text-danger">
+																		{{ form.username.errors }}
+																</div>
+															{% endif %}
+														</div>
+														<div class="form-group">
+															<label>Password*</label>
+															<input type="password" name="password1" class="my-form-control" id="is_password1" placeholder="Enter Your Password">
+															{% if form.password1.errors %}
+																		<div class="text-danger">
+																				{{ form.password1.errors }}
+																		</div>
+															{% endif %}
+														</div>
+														<div class="form-group">
+															<label>Confirm Password*</label>
+															<input type="password" name="password2" class="my-form-control" id="id_password2" placeholder="Enter Your Password">
+															{% if form.password2.errors %}
+																		<div class="text-danger">
+																				{{ form.password2.errors }}
+																		</div>
+															{% endif %}
+														</div>
+														<div class="form-group">
+															<label>Email Address*</label>
+															<input type="email" name="email" class="my-form-control" id="id_email" placeholder="Enter Your Email">
+															{% if form.email.errors %}
+																<div class="text-danger">
+																		{{ form.email.errors }}
+																</div>
+															{% endif %}
+														</div>
+
+
+
+														<!-- Email Field -->
+														<!-- <div class="form-group">
+																<label for="id_email">Email:</label>
+																<input type="email" name="email" class="form-control" id="id_email" value="{{ form.email.value }}">
+																{% if form.email.errors %}
+																		<div class="text-danger">
+																				{{ form.email.errors }}
+																		</div>
+																{% endif %}
+														</div> -->
+
+														<!-- Password1 Field -->
+														<!-- <div class="form-group">
+																<label for="id_password1">Password:</label>
+																<input type="password" name="password1" class="form-control" id="id_password1">
+																{% if form.password1.errors %}
+																		<div class="text-danger">
+																				{{ form.password1.errors }}
+																		</div>
+																{% endif %}
+														</div> -->
+
+														<!-- Password2 Field (Password Confirmation) -->
+														<!-- <div class="form-group">
+																<label for="id_password2">Confirm Password:</label>
+																<input type="password" name="password2" class="form-control" id="id_password2">
+																{% if form.password2.errors %}
+																		<div class="text-danger">
+																				{{ form.password2.errors }}
+																		</div>
+																{% endif %}
+														</div> -->
+
+														<h4 class="content-title mt-5">Profile Details</h4>
+
+														<div class="form-group">
+																<label for="{{ form.first_name.id_for_label }}">First Name*</label>
+																<input type="text" name="first_name" class="my-form-control" id="id_firstname" placeholder="Enter Your First Name">
+																<!-- {{ form.first_name }} -->
+																{% if form.first_name.errors %}
+																		<div class="text-danger">
+																				{{ form.first_name.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+															<label>Middle Name*</label>
+															<input type="text" name="middle_name" class="my-form-control" id="id_middlename" placeholder="Enter Your Middle Name">
+															<!-- {{ form.middle_name }} -->
+															{% if form.middle_name.errors %}
+																<div class="text-danger">
+																		{{ form.middle_name.errors }}
+																</div>
+															{% endif %}
+														</div>
+
+														<div class="form-group">
+																<label for="{{ form.last_name.id_for_label }}">Last Name*</label>
+																<input type="text" name="last_name" class="my-form-control" id="id_lastname" placeholder="Enter Your Last Name">
+																<!-- {{ form.last_name }} -->
+																{% if form.last_name.errors %}
+																		<div class="text-danger">
+																				{{ form.last_name.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+																<label for="{{ form.birthday_for.id_for_label }}">Birthday</label>
+																<input type="date" class="my-form-control" name="birthday" value="birthday">
+																{% if form.birthday.errors %}
+																		<div class="text-danger">
+																				{{ form.birthday.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+																<label for="{{ form.gender.id_for_label }}">I am a</label>
+																<div class="banner__inputlist" value="{{ form.gender.value }}">
+																		<div class="s-input me-3">
+																				<input type="radio" name="gender" id="male" value="male"><label for="male">Man</label>
+																		</div>
+																		<div class="s-input me-3">
+																				<input type="radio" name="gender" id="female" value="female"><label for="female">Woman</label>
+																		</div>
+																		<!-- <div class="s-input">
+																				<input type="radio" name="gender" id="other" value="other"><label for="female">Other</label>
+																		</div> -->
+																</div>
+																{% if form.gender.errors %}
+																		<div class="text-danger">
+																				{{ form.gender.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+																<label for="{{ form.looking_for.id_for_label }}">Looking for a</label>
+																<div class="banner__inputlist" value="{{ form.looking_for.value }}">
+																		<div class="s-input me-3">
+																				<input type="radio" name="looking_for" id="male" value="male"><label for="male">Man</label>
+																		</div>
+																		<div class="s-input me-3">
+																				<input type="radio" name="looking_for" id="female" value="female"><label for="female">Woman</label>
+																		</div>
+																		<!-- <div class="s-input">
+																				<input type="radio" name="looking_for" id="other" value="other"><label for="other">Other</label>
+																		</div> -->
+																</div>
+																{% if form.looking_for.errors %}
+																		<div class="text-danger">
+																				{{ form.looking_for.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+															<label for="{{ form.marital_status.id_for_label }}">Marital status</label>
+															<div class="banner__inputlist">
+																	<select name="marital_status" id="marital_status" value="{{ form.marital_status.value }}">
+																			<option value="single" selected>Single</option>
+																			<option value="married">Married</option>
+																			<option value="divorced">Divorced</option>
+																	</select>
+															</div>
+															{% if form.marital_status.errors %}
+																	<div class="text-danger">
+																			{{ form.marital_status.errors }}
+																	</div>
+															{% endif %}
+														</div>
+
+														<!-- <div class="form-group">
+																<label for="{{ form.state.id_for_label }}">State</label>
+																<div class="banner__inputlist">
+																		<select name="state" id="state" value="{{ form.state.value }}">
+																				<option value="abia">Abia</option>
+																				<option value="abuja">Abuja</option>
+																				<option value="adamawa">Adamawa</option>
+																				<option value="akwa-ibom">Akwa-Ibom</option>
+																				<option value="anambra">Anambra</option>
+																				<option value="bauchi">Bauchi</option>
+																				<option value="bayelsa">Bayelsa</option>
+																				<option value="benue">Benue</option>
+																				<option value="borno">Borno</option>
+																				<option value="cross-Rivers">Cross-Rivers</option>
+																				<option value="delta">Delta</option>
+																				<option value="ebonyi">Ebonyi</option>
+																				<option value="edo">Edo</option>
+																				<option value="ekiti">Ekiti</option>
+																				<option value="enugu">Enugu</option>
+																				<option value="gombe">Gombe</option>
+																				<option value="imo">Imo</option>
+																				<option value="jigawa">Jigawa</option>
+																				<option value="kaduna">Kaduna</option>
+																				<option value="kano">Kano</option>
+																				<option value="katsina">Katsina</option>
+																				<option value="kebbi">Kebbi</option>
+																				<option value="kogi">Kogi</option>
+																				<option value="kwara">Kwara</option>
+																				<option value="lagos" selected>Lagos</option>
+																				<option value="nasarawa">Nasarawa</option>
+																				<option value="niger">Niger</option>
+																				<option value="ogun">Ogun</option>
+																				<option value="ondo">Ondo</option>
+																				<option value="osun">Osun</option>
+																				<option value="oyo">Oyo</option>
+																				<option value="plateau">Plateau</option>
+																				<option value="rivers">Rivers</option>
+																				<option value="sokoto">Sokoto</option>
+																				<option value="taraba">Taraba</option>
+																				<option value="yobe">Yobe</option>
+																				<option value="zamfara">Zamfara</option>
+																		</select>
+																</div>
+																{% if form.state.errors %}
+																		<div class="text-danger">
+																				{{ form.state.errors }}
+																		</div>
+																{% endif %}
+														</div> -->
+
+														 <!-- State Dropdown -->
+														 <div class="form-group">
+															<label for="stateSelect">Select State:</label>
+															<div class="banner__inputlist">
+																<select id="stateSelect" name="state" onchange="updateLGA()">
+																	<option value="">--Select a State--</option>
+																	<!-- States will be populated here -->
+																</select>
+															</div>
+															{% if form.state.errors %}
+																		<div class="text-danger">
+																				{{ form.state.errors }}
+																		</div>
+															{% endif %}
+														</div>
+														<div class="form-group">
+															<label>LGA*</label>
+															<div class="banner__inputlist">
+																<select id="lgaSelect" name="lga">
+																	<option value="">--Select LGA--</option>
+																	<!-- LGAs will be populated here based on selected state -->
+																</select>
+															</div>
+														</div>
+
+														<div class="form-group">
+													    <label for="collegeSelect">Select College:</label>
+															<div class="banner__inputlist">
+														    <select id="collegeSelect" name="college">
+														        <option value="">--Select College--</option>
+														    </select>
+															</div>
+														</div>
+
+														<div class="form-group">
+														    <label for="gradYearSelect">Select Grad Year:</label>
+														    <div class="banner__inputlist">
+														        <select id="gradYearSelect" name="grad_year">
+														            <option value="">--Select Grad Year--</option>
+														            {% for year in form.grad_year %}
+														                <option value="{{ year.id }}" {% if year.id == form.grad_year.value %} selected {% endif %}>{{ year.year }}</option>
+														            {% endfor %}
+														        </select>
+														    </div>
+														    {% if form.grad_year.errors %}
+														        <div class="text-danger">
+														            {{ form.grad_year.errors }}
+														        </div>
+														    {% endif %}
+														</div>
+
+														<div class="form-group">
+															<label>Bio*</label>
+															<textarea name="bio" rows="8" class="my-form-control" id="id_bio" cols="80"></textarea>
+															<!-- {{ form.middle_name }} -->
+															{% if form.middle_name.errors %}
+																<div class="text-danger">
+																		{{ form.middle_name.errors }}
+																</div>
+															{% endif %}
+														</div>
+
+
+
+
+
+
+
+
+
+														<!-- <label for="state">State:</label>
+												    <select id="state" name="state">
+												        <option value="">Select a state</option>
+												        {% for state in states %}
+												        <option value="{{ state.id }}">{{ state.name }}</option>
+												        {% endfor %}
+												    </select>
+
+												    <label for="lga">LGA:</label>
+												    <select id="lga" name="lga">
+												        <option value="">Select an LGA</option>
+												    </select> -->
+
+
+														<!-- <div class="form-group">
+															<label>College*</label>
+															<div class="banner__inputlist">
+																<select name="college">
+																	<option value="Abia State University, Uturu">Abia State University, Uturu</option>
+																	<option value="Abubakar Tafawa Balewa University, Bauchi">Abubakar Tafawa Balewa University, Bauchi</option>
+																	<option value="Achievers University, Owo">Achievers University, Owo</option>
+																	<option value="Adamawa State University Mubi">Adamawa State University, Mubi</option>
+																	<option value="Adekunle Ajasin University, Akungba">Adekunle Ajasin University, Akungba</option>
+																	<option value="Adeleke University, Ede">Adeleke University, Ede</option>
+																	<option value="Afe Babalola University, Ado-Ekiti - Ekiti State">Afe Babalola University, Ado-Ekiti - Ekiti State</option>
+																	<option value="African University of Science & Technology, Abuja">African University of Science & Technology, Abuja</option>
+																	<option value="Ahmadu Bello University, Zaria">Ahmadu Bello University, Zaria</option>
+																	<option value="Ajayi Crowther University, Ibadan">Ajayi Crowther University, Ibadan</option>
+																	<option value="Akwa Ibom State University, Ikot Akpaden">Akwa Ibom State University, Ikot Akpaden</option>
+																	<option value="Al-Hikmah University, Ilorin">Al-Hikmah University, Ilorin</option>
+																	<option value="Al-Qalam University, Katsina">Al-Qalam University, Katsina</option>
+																	<option value="Ambrose Alli University, Ekpoma">Ambrose Alli University, Ekpoma</option>
+																	<option value="American University of Nigeria, Yola">American University of Nigeria, Yola</option>
+																	<option value="Anchor University Ayobo, Lagos State">Anchor University Ayobo, Lagos State</option>
+																	<option value="Arthur Javis University Akpoyubo Cross river State">Arthur Javis University Akpoyubo, Cross River State</option>
+																	<option value="Atiba University Oyo">Atiba University, Oyo</option>
+																	<option value="Augustine University">Augustine University</option>
+																	<option value="Babcock University, Ilishan-Remo">Babcock University, Ilishan-Remo</option>
+																	<option value="Bauchi State University, Gadau">Bauchi State University, Gadau</option>
+																	<option value="Bayero University, Kano">Bayero University, Kano</option>
+																	<option value="Baze University">Baze University</option>
+																	<option value="Bells University of Technology, Otta">Bells University of Technology, Otta</option>
+																	<option value="Benue State University, Makurdi">Benue State University, Makurdi</option>
+																	<option value="Benson Idahosa University, Benin City">Benson Idahosa University, Benin City</option>
+																	<option value="Bingham University, New Karu">Bingham University, New Karu</option>
+																	<option value="Bowen University, Iwo">Bowen University, Iwo</option>
+																	<option value="Caleb University, Lagos">Caleb University, Lagos</option>
+																	<option value="Caritas University, Enugu">Caritas University, Enugu</option>
+																	<option value="Chrisland University">Chrisland University</option>
+																	<option value="Christopher University Mowe">Christopher University, Mowe</option>
+																	<option value="Chukwuemeka Odumegwu Ojukwu University, Uli">Chukwuemeka Odumegwu Ojukwu University, Uli</option>
+																	<option value="Covenant University Ota">Covenant University, Ota</option>
+																	<option value="Crawford University Igbesa">Crawford University, Igbesa</option>
+																	<option value="Crescent University">Crescent University</option>
+																	<option value="Cross River State University of Science & Technology, Calabar">Cross River State University of Science & Technology, Calabar</option>
+																	<option value="Delta State University Abraka">Delta State University, Abraka</option>
+																	<option value="Dominican University Ibadan Oyo State">Dominican University, Ibadan Oyo State</option>
+																	<option value="Eastern Palm University Ogboko, Imo State">Eastern Palm University, Ogboko, Imo State</option>
+																	<option value="Edo University Iyamo">Edo University, Iyamo</option>
+																	<option value="Ekiti State University">Ekiti State University</option>
+																	<option value="Elizade University, Ilara-Mokin">Elizade University, Ilara-Mokin</option>
+																	<option value="Eko University of Medical and Health Sciences Ijanikin, Lagos">Eko University of Medical and Health Sciences, Ijanikin, Lagos</option>
+																	<option value="Enugu State University of Science and Technology, Enugu">Enugu State University of Science and Technology, Enugu</option>
+																	<option value="Evangel University, Akaeze">Evangel University, Akaeze</option>
+																	<option value="Federal University Gashua, Yobe">Federal University Gashua, Yobe</option>
+																	<option value="Federal University of Agriculture, Abeokuta">Federal University of Agriculture, Abeokuta</option>
+																	<option value="Federal University of Petroleum Resources, Effurun">Federal University of Petroleum Resources, Effurun</option>
+																	<option value="Federal University of Technology, Akure">Federal University of Technology, Akure</option>
+																	<option value="Federal University of Technology, Minna">Federal University of Technology, Minna</option>
+																	<option value="Federal University of Technology, Owerri">Federal University of Technology, Owerri</option>
+																	<option value="Federal University, Birnin Kebbi">Federal University, Birnin Kebbi</option>
+																	<option value="Federal University, Dutse, Jigawa State">Federal University, Dutse, Jigawa State</option>
+																	<option value="Federal University, Dutsin-Ma, Katsina">Federal University, Dutsin-Ma, Katsina</option>
+																	<option value="Federal University, Gusau Zamfara">Federal University, Gusau Zamfara</option>
+																	<option value="Federal University, Kashere, Gombe State">Federal University, Kashere, Gombe State</option>
+																	<option value="Federal University, Lafia, Nasarawa State">Federal University, Lafia, Nasarawa State</option>
+																	<option value="Federal University, Lokoja, Kogi State">Federal University, Lokoja, Kogi State</option>
+																	<option value="Federal University, Otuoke, Bayelsa">Federal University, Otuoke, Bayelsa</option>
+																	<option value="Federal University, Oye-Ekiti, Ekiti State">Federal University, Oye-Ekiti, Ekiti State</option>
+																	<option value="Federal University, Wukari, Taraba State">Federal University, Wukari, Taraba State</option>
+																	<option value="Fountain University, Oshogbo">Fountain University, Oshogbo</option>
+																	<option value="Godfrey Okoye University, Ugwuomu-Nike - Enugu State">Godfrey Okoye University, Ugwuomu-Nike - Enugu State</option>
+																	<option value="Gombe State University, Gombe">Gombe State University, Gombe</option>
+																	<option value="Gregory University, Uturu">Gregory University, Uturu</option>
+																	<option value="Hallmark University, Ijebu-Itele, Ogun">Hallmark University, Ijebu-Itele, Ogun</option>
+																	<option value="Hezekiah University, Umudi">Hezekiah University, Umudi</option>
+																	<option value="Ibrahim Badamasi Babangida University, Lapai">Ibrahim Badamasi Babangida University, Lapai</option>
+																	<option value="Igbinedion University Okada">Igbinedion University, Okada</option>
+																	<option value="Ignatius Ajuru University of Education, Rumuolumeni">Ignatius Ajuru University of Education, Rumuolumeni</option>
+																	<option value="Imo State University, Owerri">Imo State University, Owerri</option>
+																	<option value="Joseph Ayo Babalola University, Ikeji-Arakeji">Joseph Ayo Babalola University, Ikeji-Arakeji</option>
+																	<option value="Kaduna State University, Kaduna">Kaduna State University, Kaduna</option>
+																	<option value="Kano University of Science & Technology, Wudil">Kano University of Science & Technology, Wudil</option>
+																	<option value="Kebbi State University of Science and Technology, Aliero">Kebbi State University of Science and Technology, Aliero</option>
+																	<option value="Kings University, Ode Omu">Kings University, Ode Omu</option>
+																	<option value="Kogi State University Anyigba">Kogi State University, Anyigba</option>
+																	<option value="Kwara State University, Ilorin">Kwara State University, Ilorin</option>
+																	<option value="Ladoke Akintola University of Technology, Ogbomoso">Ladoke Akintola University of Technology, Ogbomoso</option>
+																	<option value="Lagos State University, Ojo">Lagos State University, Ojo</option>
+																	<option value="Landmark University, Omu-Aran.">Landmark University, Omu-Aran</option>
+																	<option value="Lead City University, Ibadan">Lead City University, Ibadan</option>
+																	<option value="Madonna University, Okija">Madonna University, Okija</option>
+																	<option value="Mcpherson University, Seriki Sotayo, Ajebo">Mcpherson University, Seriki Sotayo, Ajebo</option>
+																	<option value="Michael Okpara University of Agricultural Umudike">Michael Okpara University of Agricultural, Umudike</option>
+																	<option value="Modibbo Adama University of Technology, Yola">Modibbo Adama University of Technology, Yola</option>
+																	<option value="Mountain Top University">Mountain Top University</option>
+																	<option value="Nasarawa State University Keffi">Nasarawa State University, Keffi</option>
+																	<option value="Niger Delta University Yenagoa">Niger Delta University, Yenagoa</option>
+																	<option value="Nigerian Defence Academy Kaduna">Nigerian Defence Academy, Kaduna</option>
+																	<option value="Nigerian Police Academy Wudil">Nigerian Police Academy, Wudil</option>
+																	<option value="Nile University of Nigeria, Abuja">Nile University of Nigeria, Abuja</option>
+																	<option value="Nnamdi Azikiwe University, Awka">Nnamdi Azikiwe University, Awka</option>
+																	<option value="Novena University, Ogume">Novena University, Ogume</option>
+																	<option value="Obafemi Awolowo University, Ile-Ife">Obafemi Awolowo University, Ile-Ife</option>
+																	<option value="Obong University, Obong Ntak">Obong University, Obong Ntak</option>
+																	<option value="Oduduwa University, Ipetumodu - Osun State">Oduduwa University, Ipetumodu - Osun State</option>
+																	<option value="Olabisi Onabanjo University, Ago Iwoye">Olabisi Onabanjo University, Ago Iwoye</option>
+																	<option value="Ondo State University of Science and Technology Okitipupa">Ondo State University of Science and Technology, Okitipupa</option>
+																	<option value="Pan-Atlantic University, Lagos">Pan-Atlantic University, Lagos</option>
+																	<option value="Paul University, Awka - Anambra State">Paul University, Awka - Anambra State</option>
+																	<option value="Plateau State University Bokkos">Plateau State University, Bokkos</option>
+																	<option value="Redeemers University, Ede">Redeemers University, Ede</option>
+																	<option value="Renaissance University, Enugu">Renaissance University, Enugu</option>
+																	<option value="Rhema University, Obeama-Asa - Rivers State">Rhema University, Obeama-Asa - Rivers State</option>
+																	<option value="Ritman University, Ikot-Ekpene, Akwa Ibom">Ritman University, Ikot-Ekpene, Akwa Ibom</option>
+																	<option value="Rivers State University">Rivers State University</option>
+																	<option value="Salem University, Lokoja">Salem University, Lokoja</option>
+																	<option value="Samuel Adegboyega University, Ogwa">Samuel Adegboyega University, Ogwa</option>
+																	<option value="Skyline University, Kano">Skyline University, Kano</option>
+																	<option value="Sokoto State University">Sokoto State University</option>
+																	<option value="Southwestern University, Oku Owa">Southwestern University, Oku Owa</option>
+																	<option value="Summit University">Summit University</option>
+																	<option value="Tai Solarin University of Education Ijebu Ode">Tai Solarin University of Education, Ijebu Ode</option>
+																	<option value="Tansian University, Umunya">Tansian University, Umunya</option>
+																	<option value="Taraba State University, Jalingo">Taraba State University, Jalingo</option>
+																	<option value="The Technical University, Ibadan">The Technical University, Ibadan</option>
+																	<option value="Umaru Musa Yar' Adua University Katsina">Umaru Musa Yar' Adua University, Katsina</option>
+																	<option value="University of Abuja, Gwagwalada">University of Abuja, Gwagwalada</option>
+																	<option value="University of Agriculture, Makurdi">University of Agriculture, Makurdi</option>
+																	<option value="University of Benin">University of Benin</option>
+																	<option value="University of Calabar">University of Calabar</option>
+																	<option value="University of Ibadan">University of Ibadan</option>
+																	<option value="University of Ilorin">University of Ilorin</option>
+																	<option value="University of Jos">University of Jos</option>
+																	<option value="University of Lagos">University of Lagos</option>
+																	<option value="University of Maiduguri">University of Maiduguri</option>
+																	<option value="University of Medical Sciences, Ondo">University of Medical Sciences, Ondo</option>
+																	<option value="University of Mkar, Mkar">University of Mkar, Mkar</option>
+																	<option value="University of Nigeria, Nsukka">University of Nigeria, Nsukka</option>
+																	<option value="University of Port-Harcourt">University of Port-Harcourt</option>
+																	<option value="University of Uyo">University of Uyo</option>
+																	<option value="Usmanu Danfodiyo University">Usmanu Danfodiyo University</option>
+																	<option value="Veritas University, Abuja">Veritas University, Abuja</option>
+																	<option value="Wesley University of Science & Technology, Ondo">Wesley University of Science & Technology, Ondo</option>
+																	<option value="Western Delta University, Oghara Delta State">Western Delta University, Oghara Delta State</option>
+																	<option value="Yobe State University, Damaturu">Yobe State University, Damaturu</option>
+																	<option value="Yusuf Maitama Sule University Kano">Yusuf Maitama Sule University, Kano</option>
+																	<option value="Zamfara State University">Zamfara State University</option>
+																  </select>
+															</div>
+														</div> -->
+														<!-- <div class="form-group">
+															<label>Grad Year*</label>
+															<div class="banner__inputlist">
+																<select id="gradYear" name="gradYear">
+																	<option value="1960">1960</option>
+																	<option value="1961">1961</option>
+																	<option value="1962">1962</option>
+																	<option value="1963">1963</option>
+																	<option value="1964">1964</option>
+																	<option value="1965">1965</option>
+																	<option value="1966">1966</option>
+																	<option value="1967">1967</option>
+																	<option value="1968">1968</option>
+																	<option value="1969">1969</option>
+																	<option value="1970">1970</option>
+																	<option value="1971">1971</option>
+																	<option value="1972">1972</option>
+																	<option value="1973">1973</option>
+																	<option value="1974">1974</option>
+																	<option value="1975">1975</option>
+																	<option value="1976">1976</option>
+																	<option value="1977">1977</option>
+																	<option value="1978">1978</option>
+																	<option value="1979">1979</option>
+																	<option value="1980">1980</option>
+																	<option value="1981">1981</option>
+																	<option value="1982">1982</option>
+																	<option value="1983">1983</option>
+																	<option value="1984">1984</option>
+																	<option value="1985">1985</option>
+																	<option value="1986">1986</option>
+																	<option value="1987">1987</option>
+																	<option value="1988">1988</option>
+																	<option value="1989">1989</option>
+																	<option value="1990">1990</option>
+																	<option value="1991">1991</option>
+																	<option value="1992">1992</option>
+																	<option value="1993">1993</option>
+																	<option value="1994">1994</option>
+																	<option value="1995">1995</option>
+																	<option value="1996">1996</option>
+																	<option value="1997">1997</option>
+																	<option value="1998">1998</option>
+																	<option value="1999">1999</option>
+																	<option value="2000">2000</option>
+																	<option value="2001">2001</option>
+																	<option value="2002">2002</option>
+																	<option value="2003">2003</option>
+																	<option value="2004">2004</option>
+																	<option value="2005">2005</option>
+																	<option value="2006">2006</option>
+																	<option value="2007">2007</option>
+																	<option value="2008">2008</option>
+																	<option value="2009">2009</option>
+																	<option value="2010">2010</option>
+																	<option value="2011">2011</option>
+																	<option value="2012">2012</option>
+																	<option value="2013">2013</option>
+																	<option value="2014">2014</option>
+																	<option value="2015">2015</option>
+																	<option value="2016">2016</option>
+																	<option value="2017">2017</option>
+																	<option value="2018">2018</option>
+																	<option value="2019">2019</option>
+																	<option value="2020">2020</option>
+																	<option value="2021">2021</option>
+																	<option value="2022">2022</option>
+																	<option value="2023">2023</option>
+																	<option value="2024">2024</option>
+																	<option value="2025">2025</option>
+																	<option value="2026">2026</option>
+																	<option value="2027">2027</option>
+																	<option value="2028">2028</option>
+																  </select>
+															</div>
+														</div> -->
+														<div class="form-group">
+																<label for="{{ form.profile_image.id_for_label }}">Profile Image:</label>
+																<input type="file" name="profile_image" class="my-form-control" id="id_profileimage" value="{{ form.profile_image.value }}">
+																<!-- {{ form.last_name }} -->
+																{% if form.last_name.errors %}
+																		<div class="text-danger">
+																				{{ form.last_name.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<!-- Submit Button -->
+														<button type="submit" class="default-btn reverse" data-toggle="modal" data-target="#email-confirm"><span>Create Your Profile</span></button>
+														<!-- <button type="submit" class="btn btn-primary">Register</button> -->
+													</form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================> login section end here <================== -->
+
+
+
+
+	<!-- All Needed JS -->
+	<script src="../../static/assets/js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="../../static/assets/js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="../../static/assets/js/isotope.pkgd.min.js"></script>
+	<script src="../../static/assets/js/swiper.min.js"></script>
+	<!-- <script src="../../static/assets/js/all.min.js"></script> -->
+	<script src="../../static/assets/js/wow.js"></script>
+	<script src="../../static/assets/js/counterup.js"></script>
+	<script src="../../static/assets/js/jquery.countdown.min.js"></script>
+	<script src="../../static/assets/js/lightcase.js"></script>
+	<script src="../../static/assets/js/waypoints.min.js"></script>
+	<script src="../../static/assets/js/vendor/bootstrap.bundle.min.js"></script>
+	<script src="../../static/assets/js/plugins.js"></script>
+	<script src="../../static/assets/js/main.js"></script>
+
+
+
+	<!-- -------------- states and lga option ----------------------- -->
+    <!-- <script>
+        let stateLGAData = {};  // This will hold the JSON data
+
+        // Function to load the JSON data from file (simulating the file as an object here)
+        async function loadStateLGA() {
+        try {
+            // Simulated fetch to load your JSON data
+            stateLGAData = await fetch('../../static/assets/json/nigeria-state-and-lgas.json') // Replace with actual path
+            .then(response => response.json());
+
+            // Populate the state dropdown
+            let stateSelect = document.getElementById('stateSelect');
+            stateLGAData.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.alias;  // Using alias as value
+            option.text = item.state;
+            stateSelect.add(option);
+            });
+        } catch (error) {
+            console.error('Error loading JSON data:', error);
+        }
+        }
+
+        // Function to update the LGA dropdown based on selected state
+        function updateLGA() {
+        let stateSelect = document.getElementById('stateSelect');
+        let lgaSelect = document.getElementById('lgaSelect');
+        let selectedStateAlias = stateSelect.value;
+
+        // Find the selected state object
+        let selectedState = stateLGAData.find(item => item.alias === selectedStateAlias);
+
+        // Clear existing LGAs
+        lgaSelect.innerHTML = '<option value="">--Select LGA--</option>';
+
+        // Populate LGAs for the selected state
+        if (selectedState && selectedState.lgas) {
+            selectedState.lgas.forEach(lga => {
+            let option = document.createElement('option');
+            option.value = lga;
+            option.text = lga;
+            lgaSelect.add(option);
+            });
+        }
+        }
+
+        // Load the states on page load
+        window.onload = loadStateLGA;
+  </script> -->
+
+  <!-- -------------- end --------------------- -->
+
+	<script>
+	    // This will hold the JSON data
+	    let stateLGAData = {};
+
+	    // Function to load the JSON data from file
+			async function loadStateLGA() {
+			    try {
+			        // Fetch the JSON data
+			        stateLGAData = await fetch('../../static/assets/json/output.json')  // Adjust the path as needed
+			            .then(response => response.json());
+
+			        console.log('Raw JSON data:', stateLGAData);  // Debug: Log the raw JSON data
+
+			        let stateSelect = document.getElementById('stateSelect');
+			        stateSelect.innerHTML = '<option value="">--Select State--</option>'; // Clear any existing options
+
+			        stateLGAData.forEach(state => {
+			            console.log('Processing state:', state);  // Debug: Log each state object
+			            let option = document.createElement('option');
+			            option.value = state.id;  // Use the state ID as the value
+			            option.text = state.state;  // Display the state name
+			            stateSelect.add(option);
+			        });
+
+			        console.log('States successfully loaded into the dropdown');
+			    } catch (error) {
+			        console.error('Error loading JSON data:', error);
+			    }
+			}
+
+
+
+
+
+	    // Function to update the LGA dropdown based on the selected state
+	    function updateLGA() {
+	        let stateSelect = document.getElementById('stateSelect');
+	        let lgaSelect = document.getElementById('lgaSelect');
+	        let selectedStateId = parseInt(stateSelect.value);  // Get the selected state's ID as an integer
+
+	        console.log('Selected State ID:', selectedStateId);
+
+	        // Find the selected state object
+	        let selectedState = stateLGAData.find(item => item.id === selectedStateId);
+
+	        // Clear existing LGAs
+	        lgaSelect.innerHTML = '<option value="">--Select LGA--</option>';
+
+	        // Populate LGAs for the selected state
+	        if (selectedState && selectedState.lgas) {
+	            selectedState.lgas.forEach(lga => {
+	                let option = document.createElement('option');
+	                option.value = lga.id;  // Use the LGA ID as the value
+	                option.text = lga.name;  // Display the LGA name
+	                lgaSelect.add(option);
+	            });
+
+	            console.log('LGAs populated:', selectedState.lgas);
+	        } else {
+	            console.warn('No LGAs found for the selected state or invalid state ID');
+	        }
+	    }
+
+	    // Add event listener to the state dropdown to trigger the LGA update
+	    document.addEventListener('DOMContentLoaded', () => {
+	        const stateSelect = document.getElementById('stateSelect');
+	        stateSelect.addEventListener('change', updateLGA);
+
+	        // Load the states when the page is loaded
+	        loadStateLGA();
+	    });
+	</script>
+
+	<script>
+			let collegeData = [];  // Holds the college data
+
+			// Function to load colleges from JSON file
+			async function loadColleges() {
+					try {
+							// Fetch the JSON file
+							collegeData = await fetch('../../static/assets/json/colleges.json')  // Adjust path as needed
+									.then(response => response.json());
+
+							console.log('Loaded colleges:', collegeData);  // Debug
+
+							let collegeSelect = document.getElementById('collegeSelect');
+							collegeSelect.innerHTML = '<option value="">--Select College--</option>';  // Clear existing options
+
+							// Populate the dropdown
+							collegeData.forEach(college => {
+									let option = document.createElement('option');
+									option.value = college.id;  // Use the college ID as the value
+									option.text = college.name;  // Display the college name
+									collegeSelect.add(option);
+							});
+
+							console.log('Colleges successfully loaded into the dropdown');
+					} catch (error) {
+							console.error('Error loading colleges:', error);
+					}
+			}
+
+			// Load the colleges on page load
+			document.addEventListener('DOMContentLoaded', loadColleges);
+	</script>
+
+	<script type="text/javascript">
+				// JavaScript to populate Grad Year dropdown dynamically (if needed)
+			async function loadGradYears() {
+			    try {
+			        const response = await fetch('../../static/assets/json/grad_years.json');  // Adjust the path
+			        const gradYears = await response.json();
+
+			        const gradYearSelect = document.getElementById('gradYearSelect');
+			        gradYearSelect.innerHTML = '<option value="">--Select a Grad Year--</option>';  // Clear existing options
+
+			        gradYears.forEach(year => {
+			            let option = document.createElement('option');
+			            option.value = year.id;  // Grad year ID
+			            option.text = year.year;  // Grad year name (e.g., 2020, 2021)
+			            gradYearSelect.add(option);
+			        });
+
+			        console.log('Grad years loaded successfully.');
+			    } catch (error) {
+			        console.error('Error loading grad years:', error);
+			    }
+			}
+
+			// Call the function to load grad years when the page loads
+			document.addEventListener('DOMContentLoaded', loadGradYears);
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+<!-- Mirrored from demos.codexcoder.com/themeforest/html/lorem/{% url 'accounts:signup' %} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Sep 2024 15:35:56 GMT -->
+</html>

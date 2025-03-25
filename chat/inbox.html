@@ -1,0 +1,27 @@
+{% load chat_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox</h1>
+    <ul>
+      {% if chat_partners %}
+          <ul>
+              {% for user, messages in chat_partners.items %}
+                  <li>
+                      <a href="{% url 'private_chat' user.username %}">{{ user.username }}</a>
+                      - Last message: {{ messages|get_content|truncatechars:30 }}
+                  </li>
+              {% endfor %}
+          </ul>
+      {% else %}
+          <p>No messages yet. Start chatting!</p>
+      {% endif %}
+
+    </ul>
+</body>
+</html>

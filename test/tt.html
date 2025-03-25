@@ -1,0 +1,121 @@
+<!-- Neumorphic Status Form -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neumorphic Status Form</title>
+    <style>
+        /* Neumorphic Styles */
+        body {
+            background: #ecf0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #ecf0f3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: #ecf0f3;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+        }
+        .modal h3 {
+            text-align: center;
+            color: #333;
+        }
+        .modal input, .modal select, .modal button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: #ecf0f3;
+            box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
+            font-size: 16px;
+        }
+        .modal button {
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+        }
+        .close-modal {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating '+' Button -->
+    <button id="openStatusModal" class="fab">+</button>
+
+    <!-- Neumorphic Status Modal -->
+    <div id="status-upload-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <h3>Post a Status</h3>
+        <form id="statusUploadForm" enctype="multipart/form-data" method="POST">
+            <select name="status_type" id="statusType">
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+            </select>
+            <input type="text" name="text" id="statusText" placeholder="Enter text status">
+            <input type="file" name="media" id="statusMedia" style="display:none;">
+            <button type="submit">Post Status</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let uploadModal = document.getElementById("status-upload-modal");
+            let openStatusModalBtn = document.getElementById("openStatusModal");
+            let closeModal = document.querySelector(".close-modal");
+            let statusType = document.getElementById("statusType");
+            let textInput = document.getElementById("statusText");
+            let mediaInput = document.getElementById("statusMedia");
+
+            openStatusModalBtn.addEventListener("click", function () {
+                uploadModal.style.display = "block";
+            });
+
+            closeModal.addEventListener("click", function () {
+                uploadModal.style.display = "none";
+            });
+
+            statusType.addEventListener("change", function () {
+                if (this.value === "text") {
+                    textInput.style.display = "block";
+                    mediaInput.style.display = "none";
+                } else {
+                    textInput.style.display = "none";
+                    mediaInput.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

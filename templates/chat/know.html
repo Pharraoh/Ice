@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .chat-container {
+            display: flex;
+            flex: 1;
+            height: 100%;
+        }
+        .chat-list {
+            width: 30%;
+            max-width: 300px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+        .chat-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .chat-list li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.2s;
+        }
+        .chat-list li:hover {
+            background-color: #eee;
+        }
+        .chat-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-header {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .tyn-reply-item {
+            margin-bottom: 10px;
+        }
+        .tyn-reply-item.outgoing {
+            text-align: right;
+        }
+        .tyn-reply-item.incoming {
+            text-align: left;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            resize: none;
+        }
+        .chat-input button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-list {
+                display: none;
+            }
+            .chat-list.active {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 10;
+            }
+            .chat-section {
+                display: none;
+            }
+            .chat-section.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Chat List -->
+        <div class="chat-list" id="chatList">
+            <ul>
+                {% for partner in chat_partners %}
+                <li data-username="{{ partner.username }}">
+                    <img src="{{ partner.profile_image.url }}" alt="{{ partner.username }}" width="30">
+                    {{ partner.username }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section" id="chatSection">
+            <div class="chat-header">
+                <span id="chatUsername">Select a user to chat</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                {% for message in messages reversed %}
+                <div class="tyn-reply-item {% if message.sender == request.user %}outgoing{% else %}incoming{% endif %}">
+                    <div class="tyn-reply-group">
+                        <div class="tyn-reply-bubble">
+                            <div class="tyn-reply-text">{{ message.message }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <form class="chat-input" id="chatForm" method="POST">
+                {% csrf_token %}
+                <textarea name="message" id="chatInput" placeholder="Type a message..." rows="1" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+      const chatList = document.getElementById("chatList");
+      const chatMessages = document.getElementById("chatMessages");
+      const chatForm = document.getElementById("chatForm");
+      const chatInput = document.getElementById("chatInput");
+      const chatUsernameDisplay = document.getElementById("chatUsername");
+      let selectedUsername = null; // Store selected username
+
+      const chatItems = chatList.querySelectorAll("li");
+
+      chatItems.forEach(item => {
+          item.addEventListener("click", () => {
+              const username = item.dataset.username;
+              selectedUsername = username; // Update the selected username
+              chatUsernameDisplay.textContent = `Chatting with ${username}`; // Update chat header
+
+              // Fetch chat messages dynamically
+              fetch(`/chat/fetch-messages/${username}/`)
+                  .then(response => response.json())
+                  .then(data => {
+                      chatMessages.innerHTML = ""; // Clear previous messages
+                      data.messages.forEach(msg => {
+                          const messageDiv = document.createElement("div");
+                          messageDiv.classList.add("tyn-reply-item");
+                          messageDiv.classList.add(msg.sender === "{{ request.user.username }}" ? "outgoing" : "incoming");
+                          messageDiv.innerHTML = `
+                              <div class="tyn-reply-group">
+                                  <div class="tyn-reply-bubble">
+                                      <div class="tyn-reply-text">${msg.message}</div>
+                                  </div>
+                              </div>
+                          `;
+                          chatMessages.appendChild(messageDiv);
+                      });
+                      chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+                  });
+          });
+      });
+
+      // Send new messages
+      chatForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const message = chatInput.value.trim();
+          if (!message || !selectedUsername) return; // Ensure a user is selected
+
+          // Send message to server
+          fetch("/chat/send-message/", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({ message, recipient: selectedUsername }),
+          })
+              .then(response => response.json())
+              .then(data => {
+                  // Append sent message
+                  const messageDiv = document.createElement("div");
+                  messageDiv.classList.add("tyn-reply-item", "outgoing");
+                  messageDiv.innerHTML = `
+                      <div class="tyn-reply-group">
+                          <div class="tyn-reply-bubble">
+                              <div class="tyn-reply-text">${message}</div>
+                          </div>
+                      </div>
+                  `;
+                  chatMessages.appendChild(messageDiv);
+                  chatInput.value = "";
+                  chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+              });
+      });
+  });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<div class="tyn-chat-body">
+    {% for message in messages %}
+        <div class="tyn-reply-item {% if message.sender == request.user %}outgoing{% else %}incoming{% endif %}">
+            <div class="tyn-reply-group">
+                <div class="tyn-reply-bubble">
+                    <div class="tyn-reply-text">{{ message.message }}</div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

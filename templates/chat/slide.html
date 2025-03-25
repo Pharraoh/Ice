@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ other_user.username }}</title>
+    <link rel="shortcut icon" href="../../static/chatimages/favicon.ico">
+    <link rel="stylesheet" href="../../static/chatassets/css/bundle0ae1.css?v1310">
+    <link rel="stylesheet" href="../../static/chatassets/css/app0ae1.css?v1310">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Chat with {{ other_user.username }}</h1>
+        </header>
+
+        <div class="chat-messages" id="chat-messages">
+            {% for message in messages %}
+                <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                    <p><strong>{{ message.sender.username }}</strong>: {{ message.message }}</p>
+                    <span class="timestamp">{{ message.timestamp|date:"Y-m-d H:i" }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <footer class="chat-footer">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <textarea name="message" placeholder="Type your message..." required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        // Optional: Auto-scroll to the latest message
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Optional: Add real-time updates (AJAX or WebSocket integration can go here)
+    </script>
+
+    <script>
+        const roomName = "{{ room_name }}";
+        const username = "{{ request.user.username }}";
+
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#chat-log').innerHTML +=
+                `<div><b>${data.sender}:</b> ${data.message}</div>`;
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'sender': username
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>

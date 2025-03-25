@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neumorphic Status Form</title>
+    <style>
+        /* 🌟 Neumorphic Styles */
+        body {
+            background: #ecf0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 📌 Floating Action Button (FAB) */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #ecf0f3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+        }
+        .fab:hover {
+            box-shadow: 3px 3px 8px #babecc, -3px -3px 8px #ffffff;
+        }
+
+        /* 📌 Modal Styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 🌟 Open Modal When FAB Clicked */
+        #status-upload-modal:target {
+            display: flex;
+        }
+
+        /* 📌 Modal Content */
+        .modal-content {
+            background: #ecf0f3;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+            border-radius: 10px;
+            position: relative;
+            text-align: center;
+        }
+
+        /* 📌 Close Button */
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            text-decoration: none;
+            color: #555;
+        }
+        .close-modal:hover {
+            color: red;
+        }
+
+        /* 📌 Form Elements */
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: #ecf0f3;
+            box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 Floating '+' Button -->
+    <a href="#status-upload-modal" class="fab">+</a>
+
+    <!-- 📝 Status Post Modal -->
+    <div id="status-upload-modal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close-modal">&times;</a> <!-- Close modal -->
+            <h3>Post a Status</h3>
+            <form id="statusUploadForm" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <label for="statusType">Status Type:</label>
+                <select name="status_type" id="statusType">
+                    <option value="text">Text</option>
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                </select>
+                <input type="text" name="text" id="statusText" placeholder="Enter text status">
+                <input type="file" name="media" id="statusMedia" style="display:none;">
+                <button type="submit">Post Status</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

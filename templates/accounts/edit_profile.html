@@ -1,0 +1,641 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from demos.codexcoder.com/themeforest/html/lorem/{% url 'accounts:signup' %} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Sep 2024 15:35:56 GMT -->
+<head>
+	<meta charset="utf-8">
+	<title>lorem</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- site favicon -->
+	<link rel="icon" type="image/png" href="../../static/assets/images/favicon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- All stylesheet and icons css  -->
+	<link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/animate.css">
+	<link rel="stylesheet" href="../../static/assets/css/all.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
+	<link rel="stylesheet" href="../../static/assets/css/style.css">
+
+</head>
+
+<body>
+	<!-- preloader start here -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+	<!-- preloader ending here -->
+
+	<!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fa-solid fa-angle-up"></i></a>
+    <!-- scrollToTop ending here -->
+
+
+    <!-- ================> login section start here <================== -->
+    <section class="log-reg">
+        <div class="top-menu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-7">
+                        <div class="logo">
+                            <a href="/"><img src="/" alt="logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-5">
+                        <a href="/" class="backto-home"><i class="fas fa-chevron-left"></i> Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="image">
+                </div>
+                <div class="col-lg-7">
+                    <div class="log-reg-inner">
+                        <div class="section-header">
+                            <h2 class="title">Welcome to lorem </h2>
+                            <p>Let's create your profile! Just fill in the fields below, and we’ll get a new account. </p>
+                        </div>
+                        <div class="main-content">
+													<!-- templates/accounts/register.html -->
+													<form method="POST" enctype="multipart/form-data" novalidate>
+														{% csrf_token %}
+
+														<h4 class="content-title mt-5">Profile Details</h4>
+
+														<!-- <div class="form-group">
+																<label for="{{ form.first_name.id_for_label }}">First Name*</label>
+																<input type="text" name="first_name" class="my-form-control" id="id_firstname" placeholder="First Name">
+																{% if form.first_name.errors %}
+																		<div class="text-danger">
+																				{{ form.first_name.errors }}
+																		</div>
+																{% endif %}
+														</div>
+
+														<div class="form-group">
+															<label>Middle Name*</label>
+															<input type="text" name="middle_name" class="my-form-control" id="id_middlename" placeholder="Middle Name">
+															{% if form.middle_name.errors %}
+																<div class="text-danger">
+																		{{ form.middle_name.errors }}
+																</div>
+															{% endif %}
+														</div>
+
+														<div class="form-group">
+																<label for="{{ form.last_name.id_for_label }}">Last Name*</label>
+																<input type="text" name="last_name" class="my-form-control" id="id_lastname" placeholder="Last Name">
+																{% if form.last_name.errors %}
+																		<div class="text-danger">
+																				{{ form.last_name.errors }}
+																		</div>
+																{% endif %}
+														</div> -->
+
+														<div class="form-group">
+														    <label>First Name</label>
+														    <input type="text" class="my-form-control" name="first_name" placeholder="Enter your first name" value="{{ form.first_name.value|default_if_none:'' }}">
+														</div>
+
+														<div class="form-group">
+														    <label>Middle Name</label>
+														    <input type="text" class="my-form-control" name="middle_name" placeholder="Enter your middle name" value="{{ form.middle_name.value|default_if_none:'' }}">
+														</div>
+
+
+														<div class="form-group">
+														    <label>Last Name</label>
+														    <input type="text" class="my-form-control" name="last_name" placeholder="Enter your last name" value="{{ form.last_name.value|default_if_none:'' }}">
+														</div>
+
+														<!-- <div class="form-group">
+																<label for="{{ form.birthday_for.id_for_label }}">Birthday</label>
+																<input type="date" class="my-form-control" name="birthday" value="{{ form.birthday.value|default_if_none:'' }}">
+														</div> -->
+
+
+														<!-- <div class="form-group">
+																<label>Birthday</label>
+																{{ form.birthday }}
+														</div> -->
+														<!-- <div class="form-group">
+																<label>I am a</label>
+																{{ form.gender }}
+														</div> -->
+														<!-- <div class="form-group">
+																<label>Looking For</label>
+																{{ form.looking_for }}
+														</div> -->
+
+														<!-- <div class="form-group">
+																<label for="{{ form.birthday_for.id_for_label }}">Birthday</label>
+																<input type="date" class="my-form-control" name="birthday" value="birthday">
+														</div> -->
+
+														<!-- <div class="form-group">
+																<label for="{{ form.gender.id_for_label }}">I am a</label>
+																<div class="banner__inputlist" value="{{ form.gender.value }}">
+																		<div class="s-input me-3">
+																				<input type="radio" name="gender" id="male" value="male"><label for="male">Man</label>
+																		</div>
+																		<div class="s-input me-3">
+																				<input type="radio" name="gender" id="female" value="female"><label for="female">Woman</label>
+																		</div>
+																</div>
+														</div> -->
+
+														<!-- <div class="form-group">
+																<label for="{{ form.looking_for.id_for_label }}">Looking for a</label>
+																<div class="banner__inputlist" value="{{ form.looking_for.value }}">
+																		<div class="s-input me-3">
+																				<input type="radio" name="looking_for" id="male" value="male"><label for="male">Man</label>
+																		</div>
+																		<div class="s-input me-3">
+																				<input type="radio" name="looking_for" id="female" value="female"><label for="female">Woman</label>
+																		</div>
+																</div>
+														</div> -->
+
+														<!-- <div class="form-group">
+															<label for="{{ form.marital_status.id_for_label }}">Marital status</label>
+															<div class="banner__inputlist">
+																	<select name="marital_status" id="marital_status" value="">
+																			<option value="single" selected>Single</option>
+																			<option value="married">Married</option>
+																			<option value="divorced">Divorced</option>
+																	</select>
+															</div>
+														</div> -->
+
+														<!-- State Dropdown -->
+														<!-- <div class="form-group">
+														 <label for="stateSelect">Select State:</label>
+														 <div class="banner__inputlist">
+															 <select id="stateSelect" name="state" onchange="updateLGA()">
+																 <option value="">{{ form.state.value|default_if_none:'' }}</option> -->
+																 <!-- States will be populated here -->
+															 <!-- </select>
+														 </div>
+
+													 </div> -->
+
+													 <!-- <div class="form-group">
+														 <label>LGA*</label>
+														 <div class="banner__inputlist">
+															 <select id="lgaSelect" name="lga">
+																 <option value="">--Select LGA--</option> -->
+																 <!-- LGAs will be populated here based on selected state -->
+															 <!-- </select>
+														 </div>
+													 </div> -->
+
+														<div class="form-group">
+														    <label for="{{ form.birthday.id_for_label }}">Birthday</label>
+														    <input type="date" class="my-form-control" name="birthday"
+														        value="{{ form.birthday.value|date:'Y-m-d' }}">
+														</div>
+
+
+														<div class="form-group">
+														    <label for="{{ form.gender.id_for_label }}">Looking for a</label>
+														    <div class="banner__inputlist">
+														        <div class="s-input me-3">
+														            <input type="radio" name="gender" id="male" value="male"
+														                {% if form.gender.value == "male" %}checked{% endif %}>
+														            <label for="male">Man</label>
+														        </div>
+														        <div class="s-input me-3">
+														            <input type="radio" name="gender" id="female" value="female"
+														                {% if form.gender.value == "female" %}checked{% endif %}>
+														            <label for="female">Woman</label>
+														        </div>
+														    </div>
+														</div>
+
+
+														<div class="form-group">
+														    <label for="{{ form.looking_for.id_for_label }}">Looking for a</label>
+														    <div class="banner__inputlist">
+														        <div class="s-input me-3">
+														            <input type="radio" name="looking_for" id="male" value="male"
+														                {% if form.looking_for.value == "male" %}checked{% endif %}>
+														            <label for="male">Man</label>
+														        </div>
+														        <div class="s-input me-3">
+														            <input type="radio" name="looking_for" id="female" value="female"
+														                {% if form.looking_for.value == "female" %}checked{% endif %}>
+														            <label for="female">Woman</label>
+														        </div>
+														    </div>
+														</div>
+
+
+
+														<div class="form-group">
+													    <label for="{{ form.marital_status.id_for_label }}">Marital Status</label>
+													    <div class="banner__inputlist">
+													        <select name="marital_status" id="marital_status">
+													            <option value="single" {% if form.marital_status.value == "single" %}selected{% endif %}>Single</option>
+													            <option value="married" {% if form.marital_status.value == "married" %}selected{% endif %}>Married</option>
+													            <option value="divorced" {% if form.marital_status.value == "divorced" %}selected{% endif %}>Divorced</option>
+													        </select>
+													    </div>
+													</div>
+
+
+														<!-- State Dropdown -->
+														<div class="form-group">
+														    <label for="stateSelect">Select State:</label>
+														    <div class="banner__inputlist">
+														        <select id="stateSelect" name="state">
+														            <option value="">--Select State--</option>
+														        </select>
+														    </div>
+														</div>
+
+														<!-- Hidden Input to Store User's Saved State -->
+														<input type="hidden" id="userStateId" value="{{ form.state.value|default_if_none:'' }}">
+
+														<!-- LGA Dropdown -->
+														<div class="form-group">
+														    <label for="lgaSelect">Select LGA:</label>
+														    <div class="banner__inputlist">
+														        <select id="lgaSelect" name="lga">
+														            <option value="">--Select LGA--</option>
+														        </select>
+														    </div>
+														</div>
+
+														<!-- Hidden Input to Store User's Saved LGA -->
+														<input type="hidden" id="userLGAId" value="{{ form.lga.value|default_if_none:'' }}">
+
+
+
+
+
+														<!-- College Dropdown -->
+														<div class="form-group">
+														    <label for="collegeSelect">Select College:</label>
+														    <div class="banner__inputlist">
+														        <select id="collegeSelect" name="college">
+														            <option value="">--Select College--</option>
+														        </select>
+														    </div>
+														</div>
+
+														<!-- Hidden Input to Store User's Saved College -->
+														<input type="hidden" id="userCollegeId" value="{{ form.college.value|default_if_none:'' }}">
+
+
+														<!-- Grad Year Dropdown -->
+														<div class="form-group">
+														    <label for="gradYearSelect">Select Grad Year:</label>
+														    <div class="banner__inputlist">
+														        <select id="gradYearSelect" name="grad_year">
+														            <option value="">--Select Grad Year--</option>
+														        </select>
+														    </div>
+														</div>
+
+														<!-- Hidden Input to Store User's Saved Grad Year -->
+														<input type="hidden" id="userGradYearId" value="{{ form.grad_year.value|default_if_none:'' }}">
+
+
+														<!-- <div class="form-group">
+															<label>Bio*</label>
+															<textarea name="bio" rows="8" class="my-form-control" id="id_bio" cols="80"></textarea>
+															{% if form.middle_name.errors %}
+																<div class="text-danger">
+																		{{ form.middle_name.errors }}
+																</div>
+															{% endif %}
+														</div> -->
+
+														<div class="form-group">
+															<label>Bio*</label>
+															<textarea name="bio" rows="8" class="my-form-control" id="id_bio" cols="80" placeholder="{{ form.bio.value|default_if_none:'' }}"></textarea>
+														</div>
+
+
+
+														<div class="form-group">
+																<label for="{{ form.profile_image.id_for_label }}">Profile Image:</label>
+																<input type="file" name="profile_image" class="my-form-control" id="id_profileimage" value="{{ form.profile_image.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+
+														<h4 class="content-title mt-5">Gallery</h4>
+														<div class="form-group">
+																<label for="{{ form.image1.id_for_label }}">Image1:</label>
+																<input type="file" name="image1" class="my-form-control" id="id_image1" value="{{ form.image1.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+														<div class="form-group">
+																<label for="{{ form.image2.id_for_label }}">Image2:</label>
+																<input type="file" name="image2" class="my-form-control" id="id_image2" value="{{ form.image2.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+														<div class="form-group">
+																<label for="{{ form.image3.id_for_label }}">Image3:</label>
+																<input type="file" name="image3" class="my-form-control" id="id_image3" value="{{ form.image3.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+														<div class="form-group">
+																<label for="{{ form.image4.id_for_label }}">Image4:</label>
+																<input type="file" name="image4" class="my-form-control" id="id_image4" value="{{ form.image4.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+														<div class="form-group">
+																<label for="{{ form.image5.id_for_label }}">Image5:</label>
+																<input type="file" name="image5" class="my-form-control" id="id_image5" value="{{ form.image5.value }}">
+																<!-- {{ form.last_name }} -->
+
+														</div>
+
+														<!-- Submit Button -->
+														<button type="submit" class="default-btn reverse" data-toggle="modal" data-target="#email-confirm"><span>Save</span></button>
+														<!-- <button type="submit" class="btn btn-primary">Register</button> -->
+													</form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================> login section end here <================== -->
+
+
+
+
+	<!-- All Needed JS -->
+	<script src="../../static/assets/js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="../../static/assets/js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="../../static/assets/js/isotope.pkgd.min.js"></script>
+	<script src="../../static/assets/js/swiper.min.js"></script>
+	<!-- <script src="../../static/assets/js/all.min.js"></script> -->
+	<script src="../../static/assets/js/wow.js"></script>
+	<script src="../../static/assets/js/counterup.js"></script>
+	<script src="../../static/assets/js/jquery.countdown.min.js"></script>
+	<script src="../../static/assets/js/lightcase.js"></script>
+	<script src="../../static/assets/js/waypoints.min.js"></script>
+	<script src="../../static/assets/js/vendor/bootstrap.bundle.min.js"></script>
+	<script src="../../static/assets/js/plugins.js"></script>
+	<script src="../../static/assets/js/main.js"></script>
+
+
+
+	<!-- -------------- states and lga option ----------------------- -->
+    <!-- <script>
+        let stateLGAData = {};  // This will hold the JSON data
+
+        // Function to load the JSON data from file (simulating the file as an object here)
+        async function loadStateLGA() {
+        try {
+            // Simulated fetch to load your JSON data
+            stateLGAData = await fetch('../../static/assets/json/nigeria-state-and-lgas.json') // Replace with actual path
+            .then(response => response.json());
+
+            // Populate the state dropdown
+            let stateSelect = document.getElementById('stateSelect');
+            stateLGAData.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.alias;  // Using alias as value
+            option.text = item.state;
+            stateSelect.add(option);
+            });
+        } catch (error) {
+            console.error('Error loading JSON data:', error);
+        }
+        }
+
+        // Function to update the LGA dropdown based on selected state
+        function updateLGA() {
+        let stateSelect = document.getElementById('stateSelect');
+        let lgaSelect = document.getElementById('lgaSelect');
+        let selectedStateAlias = stateSelect.value;
+
+        // Find the selected state object
+        let selectedState = stateLGAData.find(item => item.alias === selectedStateAlias);
+
+        // Clear existing LGAs
+        lgaSelect.innerHTML = '<option value="">--Select LGA--</option>';
+
+        // Populate LGAs for the selected state
+        if (selectedState && selectedState.lgas) {
+            selectedState.lgas.forEach(lga => {
+            let option = document.createElement('option');
+            option.value = lga;
+            option.text = lga;
+            lgaSelect.add(option);
+            });
+        }
+        }
+
+        // Load the states on page load
+        window.onload = loadStateLGA;
+  </script> -->
+
+  <!-- -------------- end --------------------- -->
+
+	<script>
+	document.addEventListener("DOMContentLoaded", async function () {
+	    let stateSelect = document.getElementById("stateSelect");
+	    let lgaSelect = document.getElementById("lgaSelect");
+
+	    let savedStateId = document.getElementById("userStateId").value; // Fetch saved state ID
+	    let savedLGAId = document.getElementById("userLGAId").value; // Fetch saved LGA ID
+	    let stateLGAData = []; // Store JSON data
+
+	    console.log("📌 Saved State ID:", savedStateId, "Saved LGA ID:", savedLGAId);
+
+	    // Load JSON data
+	    async function loadStateLGA() {
+	        try {
+	            stateLGAData = await fetch('../../static/assets/json/output.json')
+	                .then(response => response.json());
+
+	            console.log("✅ Raw JSON data:", stateLGAData);
+
+	            // Populate states in dropdown
+	            stateSelect.innerHTML = '<option value="">--Select State--</option>';
+	            stateLGAData.forEach(state => {
+	                let option = document.createElement("option");
+	                option.value = state.id; // Use state ID
+	                option.text = state.state; // Use state name
+
+	                // Preselect user's saved state
+	                if (savedStateId && state.id == savedStateId) {
+	                    option.selected = true;
+	                }
+
+	                stateSelect.appendChild(option);
+	            });
+
+	            console.log("✅ States successfully loaded into the dropdown");
+
+	            // If a state was previously selected, load its LGAs
+	            if (savedStateId) {
+	                updateLGA(savedStateId, savedLGAId);
+	            }
+
+	        } catch (error) {
+	            console.error("❌ Error loading JSON data:", error);
+	        }
+	    }
+
+	    // Function to update LGA dropdown based on selected state
+	    function updateLGA(selectedStateId, preselectedLGAId = null) {
+	        let selectedState = stateLGAData.find(state => state.id == selectedStateId);
+	        lgaSelect.innerHTML = '<option value="">--Select LGA--</option>';
+
+	        if (selectedState && selectedState.lgas) {
+	            selectedState.lgas.forEach(lga => {
+	                let option = document.createElement("option");
+	                option.value = lga.id;
+	                option.text = lga.name;
+
+	                // Preselect user's saved LGA
+	                if (preselectedLGAId && lga.id == preselectedLGAId) {
+	                    option.selected = true;
+	                }
+
+	                lgaSelect.appendChild(option);
+	            });
+
+	            console.log("✅ LGAs populated:", selectedState.lgas);
+	        } else {
+	            console.warn("⚠️ No LGAs found for the selected state");
+	        }
+	    }
+
+	    // Event listener to update LGAs when a state is selected
+	    stateSelect.addEventListener("change", function () {
+	        updateLGA(stateSelect.value);
+	    });
+
+	    // Load states on page load
+	    loadStateLGA();
+	});
+
+	</script>
+
+	<script>
+	document.addEventListener("DOMContentLoaded", async function () {
+	    let collegeSelect = document.getElementById("collegeSelect");
+	    let savedCollegeId = document.getElementById("userCollegeId").value; // Fetch saved college ID
+	    let collegeData = []; // Store JSON data
+
+	    console.log("📌 Saved College ID:", savedCollegeId);
+
+	    // Load JSON data
+	    async function loadColleges() {
+	        try {
+	            collegeData = await fetch('../../static/assets/json/colleges.json')
+	                .then(response => response.json());
+
+	            console.log("✅ Loaded colleges:", collegeData);
+
+	            // Populate colleges in dropdown
+	            collegeSelect.innerHTML = '<option value="">--Select College--</option>';
+	            collegeData.forEach(college => {
+	                let option = document.createElement("option");
+	                option.value = college.id; // Use college ID
+	                option.text = college.name; // Use college name
+
+	                // Preselect user's saved college
+	                if (savedCollegeId && college.id == savedCollegeId) {
+	                    option.selected = true;
+	                }
+
+	                collegeSelect.appendChild(option);
+	            });
+
+	            console.log("✅ Colleges successfully loaded into the dropdown");
+	        } catch (error) {
+	            console.error("❌ Error loading colleges:", error);
+	        }
+	    }
+
+	    // Load colleges on page load
+	    loadColleges();
+	});
+
+	</script>
+
+	<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", async function () {
+	    let gradYearSelect = document.getElementById("gradYearSelect");
+	    let savedGradYearId = document.getElementById("userGradYearId").value; // Fetch saved grad year ID
+	    let gradYearData = []; // Store JSON data
+
+	    console.log("📌 Saved Grad Year ID:", savedGradYearId);
+
+	    // Load JSON data
+	    async function loadGradYears() {
+	        try {
+	            gradYearData = await fetch('../../static/assets/json/grad_years.json')
+	                .then(response => response.json());
+
+	            console.log("✅ Loaded grad years:", gradYearData);
+
+	            // Populate grad years in dropdown
+	            gradYearSelect.innerHTML = '<option value="">--Select Grad Year--</option>';
+	            gradYearData.forEach(year => {
+	                let option = document.createElement("option");
+	                option.value = year.id; // Use grad year ID
+	                option.text = year.year; // Use grad year name (e.g., 2020, 2021)
+
+	                // Preselect user's saved grad year
+	                if (savedGradYearId && year.id == savedGradYearId) {
+	                    option.selected = true;
+	                }
+
+	                gradYearSelect.appendChild(option);
+	            });
+
+	            console.log("✅ Grad years successfully loaded into the dropdown");
+	        } catch (error) {
+	            console.error("❌ Error loading grad years:", error);
+	        }
+	    }
+
+	    // Load grad years on page load
+	    loadGradYears();
+	});
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+<!-- Mirrored from demos.codexcoder.com/themeforest/html/lorem/{% url 'accounts:signup' %} by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Sep 2024 15:35:56 GMT -->
+</html>

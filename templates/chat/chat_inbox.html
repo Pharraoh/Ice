@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Inbox</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <h1>Chat Inbox</h1>
+  <div id="chat-container">
+    <!-- Real-time chat messages will appear here -->
+    <ul id="messages"></ul>
+  </div>
+
+  <form id="message-form">
+    <input type="text" id="message-input" placeholder="Type a message" />
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    // Firebase configuration (ensure this is correct)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDD6NNHOhhWb9chhPTg7IGdLYFCLNBUh_g",
+      authDomain: "icee-3a0d4.firebaseapp.com",
+      projectId: "icee-3a0d4",
+      storageBucket: "icee-3a0d4.firebasestorage.app",
+      messagingSenderId: "344476593056",
+      appId: "1:344476593056:web:8e615a5c96f38c9f07d2c5",
+      measurementId: "G-M8QLHJC0DZ"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();  // Use Firestore, not Realtime Database
+
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message-input');
+    const messagesList = document.getElementById('messages');
+
+    // Submit message to Firestore
+    messageForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const message = messageInput.value;
+
+      // Push message to Firestore
+      db.collection('messages').add({
+        content: message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      // Clear the input after sending the message
+      messageInput.value = '';
+    });
+
+    // Listen for new messages in Firestore
+    db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
+      // Clear the current message list
+      messagesList.innerHTML = '';
+
+      // Append each message to the list
+      snapshot.forEach(doc => {
+        const message = doc.data().content;
+        const listItem = document.createElement('li');
+        listItem.textContent = message;
+        messagesList.appendChild(listItem);
+      });
+    });
+  </script>
+
+  <script>
+    const chatContainer = document.getElementById('chat-container');
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message');
+
+    // Get current user
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loadMessages(user.uid);
+      } else {
+        // Redirect to login if not logged in
+        window.location.href = '/accounts/login/';
+      }
+    });
+
+    // Load Messages
+    function loadMessages(userId) {
+      db.collection('messages')
+        .orderBy('timestamp')
+        .onSnapshot(snapshot => {
+          chatContainer.innerHTML = '';
+          snapshot.forEach(doc => {
+            const message = doc.data();
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = `${message.sender}: ${message.text}`;
+            chatContainer.appendChild(messageDiv);
+          });
+        });
+    }
+
+    // Send Message
+    messageForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const text = messageInput.value;
+      if (text.trim() !== '') {
+        db.collection('messages').add({
+          sender: auth.currentUser.email,
+          text: text,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        messageInput.value = '';
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+    // Replace with your Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDD6NNHOhhWb9chhPTg7IGdLYFCLNBUh_g",
+      authDomain: "icee-3a0d4.firebaseapp.com",
+      projectId: "icee-3a0d4",
+      storageBucket: "icee-3a0d4.firebasestorage.app",
+      messagingSenderId: "344476593056",
+      appId: "1:344476593056:web:8e615a5c96f38c9f07d2c5",
+      measurementId: "G-M8QLHJC0DZ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+  </script>
+
+  <!-- Your custom Firebase config file -->
+  <!-- <script src="../../static/js/firebase-config.js"></script> -->
+  <!-- Your chat.js file, if needed -->
+  <!-- <script src="../../static/js/chat.js"></script> -->
+</body>
+</html>

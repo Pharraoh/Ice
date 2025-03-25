@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap");
+
+/* CSS Variables for Easy Theming */
+:root {
+    --primary-color: #FF6B6B; /* Replace with your site's primary color */
+    --secondary-color: #4ECDC4; /* Replace with your site's secondary color */
+    --background-color: #FFFFFF; /* Replace with your site's background color */
+    --text-color: #333333; /* Replace with your site's text color */
+    --border-color: #DDDDDD; /* Replace with your site's border color */
+    --close-button-color: #AAAAAA; /* Replace with your close button color */
+    --close-button-hover-color: #FF3B30; /* Replace with your close button hover color */
+    --button-hover-color: #45B5AC; /* Replace with your button hover color */
+}
+
+/* Pop-Up Container */
+.popup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 300px;
+    max-width: 90%;
+    /* background: url(assets/images/bg-img/02.jpg); */
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    /* transform: translateY(20px); */
+    /* transition: opacity 0.5s ease, transform 0.5s ease; */
+}
+
+.popup.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.popup.hidden {
+    display: block;
+}
+
+/* Pop-Up Content */
+.popup-content {
+    padding: 15px;
+    position: relative;
+    font-family: "Public Sans", sans-serif; /* Use your site's font */
+}
+
+.popup-content h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.popup-content p {
+    color: var(--text-color);
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: var(--close-button-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: var(--close-button-hover-color);
+}
+
+/* Optional: Add a button inside the pop-up */
+.popup-content a.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: var(--secondary-color);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content a.btn:hover {
+    background-color: var(--button-hover-color);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .popup-content h3{
+        font-size: 15px;
+    }
+
+    .popup-content p{
+        font-size: 12px;
+    }
+    
+    .popup {
+        width: 45%;
+        right: 5%;
+        bottom: 10px;
+    }
+}
+

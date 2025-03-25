@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matched Users</title>
+    <link rel="stylesheet" href="../../../static/chatassets/css/bundle0ae1.css?v1310">
+    <link rel="stylesheet" href="../../../static/chatassets/css/app0ae1.css?v1310">
+</head>
+
+<body>
+    <div class="tyn-root">
+        <div class="tyn-content tyn-contact has-aside-base">
+            <!-- Left Section: Matches -->
+            <div class="tyn-aside tyn-aside-base">
+                <div class="tyn-aside-head">
+                    <h3 class="tyn-aside-title">Matches</h3>
+                    <span class="tyn-subtext">{{ matched_users|length }} Matches</span>
+                </div>
+                <div class="tyn-aside-body" data-simplebar>
+                    <ul class="tyn-aside-list">
+                        {% for match in matched_users %}
+                        <li class="tyn-aside-item js-toggle-main"
+                            data-username="{{ match.username }}"
+                            data-bio="{{ match.bio }}"
+                            data-profile-image="{{ match.profile_image.url }}">
+                            <div class="tyn-media-group">
+                                <div class="tyn-media tyn-size-lg">
+                                    <img src="{{ match.profile_image.url }}" alt="">
+                                </div>
+                                <div class="tyn-media-col">
+                                    <h6 class="name">{{ match.username }}</h6>
+                                    <p class="content">@{{ match.username }}</p>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Section: Profile Details -->
+            <div class="tyn-content-main">
+                <div id="profileDetails" class="profile-details">
+                    <div id="profileImage">
+                        <img src="" alt="Profile Picture" id="dynamicProfileImage" class="profile-image">
+                    </div>
+                    <h3 id="dynamicUsername" class="profile-username">Select a user</h3>
+                    <p id="dynamicBio" class="profile-bio">User bio will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userItems = document.querySelectorAll(".js-toggle-main");
+            const profileImage = document.getElementById("dynamicProfileImage");
+            const profileUsername = document.getElementById("dynamicUsername");
+            const profileBio = document.getElementById("dynamicBio");
+
+            userItems.forEach(item => {
+                item.addEventListener("click", () => {
+                    const username = item.dataset.username;
+                    const bio = item.dataset.bio;
+                    const imageUrl = item.dataset.profileImage;
+
+                    // Update the right section
+                    profileImage.src = imageUrl;
+                    profileUsername.textContent = username;
+                    profileBio.textContent = bio;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

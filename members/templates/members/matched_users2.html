@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matched Users</title>
+    <link rel="stylesheet" href="../../static/chatassets/css/bundle0ae1.css">
+    <link rel="stylesheet" href="../../static/chatassets/css/app0ae1.css">
+    <style>
+        /* Responsiveness */
+        .bio-section {
+            border-left: 1px solid #ddd;
+            padding: 15px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .bio-section img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bio-section h5 {
+            margin-bottom: 10px;
+        }
+
+        .bio-section p {
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .tyn-content {
+                flex-direction: column;
+            }
+
+            .bio-section {
+                border-left: none;
+                border-top: 1px solid #ddd;
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tyn-root">
+        <div class="tyn-content tyn-contact has-aside-base" style="display: flex;">
+            <!-- User List -->
+            <div class="tyn-aside tyn-aside-base">
+                <h3>Matched Users</h3>
+                <ul class="tyn-aside-list">
+                    {% for match in matched_users %}
+                    <li>
+                        <a href="?selected_user={{ match.username }}">
+                            <div>
+                                <img src="{{ match.userprofile.profile_image.url }}" alt="{{ match.username }}" width="50">
+                                <span>{{ match.username }}</span>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Bio Section -->
+            <div class="bio-section">
+                {% if selected_user %}
+                <img src="{{ selected_user.userprofile.profile_image.url }}" alt="{{ selected_user.username }}">
+                <h5>{{ selected_user.username }}</h5>
+                <p>{{ selected_bio }}</p>
+                {% else %}
+                <h5>Select a user to view their bio</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+/* Layout */
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Desktop View: Status Sidebar */
+.status-sidebar {
+    width: 500px;
+    background: #f4f4f4;
+    padding: 15px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.status-sidebar h4 {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* Status Item */
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.status-item:hover {
+    background: #e0e0e0;
+}
+
+.status-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.status-item span {
+    font-size: 15px;
+}
+
+/* Fullscreen Status Modal (for Mobile) */
+.status-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.status-content {
+    position: relative;
+    background: #000;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    height: 90%;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-modal img, .status-modal video {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+}
+
+/* Close Button */
+.status-modal .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+/* first FAB */
+/* .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.fab:hover {
+    background-color: #0056b3;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 50%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cls-modal {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+} */
+
+
+
+
+/* Neumorphic Styles */
+/* body {
+    background: #ecf0f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+} */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #ecf0f3;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 30% !important;
+    background: #ecf0f3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+}
+
+#statusUploadForm {
+  margin-top: 40px
+}
+
+.modal h3 {
+    text-align: center;
+    color: #333;
+}
+.modal input, .modal select, .modal button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: #ecf0f3;
+    box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
+    font-size: 16px;
+}
+.modal button {
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+}
+.close-modal {
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    color: #555;
+}
+
+
+/* 📱 Mobile View: Hide Sidebar & Make Status Fullscreen */
+@media (max-width: 768px) {
+    .status-sidebar {
+        width: 100%;
+    }
+
+    .status-modal {
+        /* display: flex; */
+    }
+}
+
+
+
+/* ring around own-user status */
+
+.owner-status {
+    font-weight: bold;
+    color: #007bff;
+}
+.status-owner-pic.owner-status {
+    border: 2px solid #007bff;
+}
+
+/*  */
+
+
+/* status content */
+
+.status-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.status-nav.prev {
+    left: 10px;
+}
+
+.status-nav.next {
+    right: 10px;
+}
+
+.status-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+}

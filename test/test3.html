@@ -1,0 +1,231 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="test.css"> -->
+    <title>Statuses</title>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Status Sidebar (Desktop View) -->
+        <div class="status-sidebar">
+            <h4>Statuses</h4>
+            <div id="status-list">
+                <!-- Status items will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Main Chat Section -->
+        <div class="chat-main">
+            <!-- Your chat UI goes here -->
+        </div>
+    </div>
+
+
+    <button id="openStatusModal" class="fab">+</button>
+
+    <!-- Neumorphic Status Modal -->
+    <div id="status-upload-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <h3>Post a Status</h3>
+        <form id="statusUploadForm" enctype="multipart/form-data" method="POST">
+            <input type="hidden" id="csrf_token" value="{{ csrf_token }}">
+            <select name="status_type" id="statusType">
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+            </select>
+            <input type="text" name="text" id="statusText" placeholder="Enter text status">
+            <input type="file" name="media" id="statusMedia" style="display:none;">
+            <button type="submit">Post Status</button>
+        </form>
+    </div>
+
+    <!-- 📺 Status Fullscreen Modal (For Viewing) -->
+    <div id="status-modal" class="status-modal">
+        <div class="status-content">
+            <span class="close-status-modal">&times;</span>
+            <div id="status-display"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let statusList = document.getElementById("status-list");
+            let statusModal = document.getElementById("status-modal");
+            let statusDisplay = document.getElementById("status-display");
+            let closeStatusModal = document.querySelector(".close-status-modal");
+
+            let uploadModal = document.getElementById("status-upload-modal");
+            let openStatusModalBtn = document.getElementById("openStatusModal");
+            let closeUploadModal = document.querySelector(".close-modal");
+            let statusUploadForm = document.getElementById("statusUploadForm");
+            let csrfToken = document.getElementById("csrf_token").value;
+
+            /** ✅ Open Status Post Modal */
+            openStatusModalBtn.addEventListener("click", function () {
+                uploadModal.style.display = "flex";
+            });
+
+            /** ❌ Close Status Post Modal */
+            closeUploadModal.addEventListener("click", function () {
+                uploadModal.style.display = "none";
+            });
+
+            /** ✅ Fetch Matched Users' Statuses */
+            function fetchStatuses() {
+                fetch("/chat/fetch_statuses/")
+                    .then(response => response.json())
+                    .then(data => {
+                        statusList.innerHTML = ""; // Clear existing statuses
+
+                        if (data.statuses.length === 0) {
+                            statusList.innerHTML = "<p class='text-center text-muted'>No statuses yet.</p>";
+                        } else {
+                            data.statuses.forEach(status => {
+                                let statusItem = document.createElement("div");
+                                statusItem.classList.add("status-item");
+                                statusItem.innerHTML = `
+                                    <img src="https://via.placeholder.com/40" alt="${status.username}">
+                                    <span>${status.username}</span>
+                                `;
+                                statusItem.addEventListener("click", () => openStatus(status));
+                                statusList.appendChild(statusItem);
+                            });
+                        }
+                    })
+                    .catch(error => console.error("❌ Error fetching statuses:", error));
+            }
+
+            /** ✅ Open Status in Fullscreen Modal */
+            function openStatus(status) {
+                statusDisplay.innerHTML = ""; // Clear previous content
+
+                if (status.status_type === "image") {
+                    statusDisplay.innerHTML = `<img src="${status.media_url}" alt="Status Image">`;
+                } else if (status.status_type === "video") {
+                    statusDisplay.innerHTML = `<video controls autoplay><source src="${status.media_url}" type="video/mp4"></video>`;
+                } else {
+                    statusDisplay.innerHTML = `<p>${status.text}</p>`;
+                }
+
+                statusModal.style.display = "flex"; // 📱 Show full-screen modal
+            }
+
+            closeStatusModal.addEventListener("click", function () {
+                statusModal.style.display = "none";
+            });
+
+            /** ✅ Handle Status Upload */
+            statusUploadForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                let formData = new FormData(statusUploadForm);
+                formData.append("csrfmiddlewaretoken", csrfToken);
+
+                fetch("/chat/post_status/", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        console.log("✅ Status posted!");
+                        uploadModal.style.display = "none"; // Close modal after posting
+                        fetchStatuses(); // Refresh statuses
+                    } else {
+                        console.error("❌ Error posting status:", data.message);
+                    }
+                })
+                .catch(error => console.error("❌ Fetch error:", error));
+            });
+
+            /** ✅ Toggle File Input Based on Status Type */
+            document.getElementById("statusType").addEventListener("change", function () {
+                let type = this.value;
+                let textInput = document.getElementById("textInput");
+                let mediaInput = document.getElementById("mediaInput");
+
+                if (type === "text") {
+                    textInput.style.display = "block";
+                    mediaInput.style.display = "none";
+                } else {
+                    textInput.style.display = "none";
+                    mediaInput.style.display = "block";
+                }
+            });
+
+            // Auto-refresh statuses every 10 seconds
+            setInterval(fetchStatuses, 10000);
+
+            // Initial load
+            fetchStatuses();
+        });
+    </script>
+
+    <style>
+        /* Neumorphic Styles */
+        body {
+            background: #ecf0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #ecf0f3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: #ecf0f3;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+        }
+        .modal h3 {
+            text-align: center;
+            color: #333;
+        }
+        .modal input, .modal select, .modal button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: #ecf0f3;
+            box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
+            font-size: 16px;
+        }
+        .modal button {
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
+        }
+        .close-modal {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+            color: #555;
+        }
+    </style>
+
+</body>
+</html>

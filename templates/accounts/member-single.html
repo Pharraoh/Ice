@@ -3,7 +3,6 @@
 <html class="no-js" lang="en">
 
 
-<!-- Mirrored from demos.codexcoder.com/themeforest/html/lorem/member-single.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Sep 2024 15:35:56 GMT -->
 <head>
 	<meta charset="utf-8">
 	<title>lorem</title>
@@ -116,7 +115,15 @@
 										<li><a href="shop-cart.html">Product Cart</a></li>
 									</ul>
 								</li> -->
-								<li><a href="{% url 'members:allmembers' %}">Find Matches</a></li>
+								<li>
+									<a href="#0">Find Matches</a>
+									<ul>
+										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
+										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
+										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
+										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
+									</ul>
+								</li>
 								<li><a href="{% url 'members:matched_users' %}">My Matches</a></li>
 								<li><a href="{% url 'accounts:contact' %}">contact</a></li>
 								<!-- <li><a href="{% url 'chats:chat_list' %}"><i class="fa fa-comments"></i> Messages</a></li> -->
@@ -1826,19 +1833,19 @@
                                             <h6 class="d-block w-100 mb-3">Recent Photos</h6>
                                             <div class="row g-2">
                                                 <div class="col-4">
-                                                    <a href="{{ user.image1.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px;" src="{{ user.image1.url }}" alt="dating thumb"></a>
+                                                    <a href="{{ user.image1.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px; border-radius: 50%;" src="{{ user.image1.url }}" alt="dating thumb"></a>
                                                 </div>
                                                 <div class="col-4">
-                                                    <a href="{{ user.image2.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px;" src="{{ user.image2.url }}" alt="dating thumb"></a>
+                                                    <a href="{{ user.image2.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px; border-radius: 50%;" src="{{ user.image2.url }}" alt="dating thumb"></a>
                                                 </div>
                                                 <div class="col-4">
-                                                    <a href="{{ user.image3.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px;" src="{{ user.image3.url }}" alt="dating thumb"></a>
+                                                    <a href="{{ user.image3.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px; border-radius: 50%;" src="{{ user.image3.url }}" alt="dating thumb"></a>
                                                 </div>
                                                 <div class="col-4">
-                                                    <a href="{{ user.image4.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px;" src="{{ user.image4.url }}" alt="dating thumb"></a>
+                                                    <a href="{{ user.image4.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px; border-radius: 50%;" src="{{ user.image4.url }}" alt="dating thumb"></a>
                                                 </div>
                                                 <div class="col-4">
-                                                    <a href="{{ user.image5.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px;" src="{{ user.image5.url }}" alt="dating thumb"></a>
+                                                    <a href="{{ user.image5.url }}" data-rel="lightcase:callection"><img style="Width: 80px; height: 70px; border-radius: 50%;" src="{{ user.image5.url }}" alt="dating thumb"></a>
                                                 </div>
                                                 <!-- <div class="col-4">
                                                     <a href="#groupmodal" data-rel="lightcase:callection"><img src="{{ user.image6.url }}" alt="dating thumb"></a>
@@ -2680,8 +2687,8 @@
 											<p>lorem is a friendly dating theme based on HTML template for the community functionality</p>
 										</div>
 										<div class="footer__content--info">
-											<p><b>Address :</b> Suite-13 Tropical Center New Elephant Road 1205</p>
-											<p><b>Contact :</b> +30 226 4881 514 www.yoursitename.com</p>
+											<p><b>Address :</b> 1234 lorem street</p>
+											<p><b>Contact :</b> +30 226 4881 514 www.lorem.com</p>
 										</div>
 									</div>
 								</div>
@@ -2802,7 +2809,7 @@
 		<div class="footer__bottom wow fadeInUp" data-wow-duration="1.5s">
 			<div class="container">
 				<div class="footer__content text-center">
-					<p class="mb-0">All Rights Reserved &copy; <a href="/">Spiider Webs</a>
+					<p class="mb-0">All Rights Reserved &copy; <a href="https://pharraoh.netlify.app/">Spiider Webs</a>
 				</div>
 			</div>
 		</div>

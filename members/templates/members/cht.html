@@ -37,18 +37,33 @@
     <link rel="stylesheet" href="../../static/dist/css/app.min.css">
 
     <link rel="stylesheet" href="../../static/dist/css/statuses.css">
+
+
+    <!-- preloader css  -->
+    <link rel="stylesheet" href="../../static/assets/css/preloader.css">
 </head>
 <body>
 
 <!-- preloader -->
-<div class="preloader">
+<!-- <div class="preloader">
     <img src="../../static/dist/media/img/logo-2x.png" alt="logo">
     <p class="lead font-weight-bold text-muted my-5">Loading Lorem...</p>
     <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
     </div>
-</div>
+</div> -->
 <!-- ./ preloader -->
+
+<!-- preloader start here -->
+  <div class="preloader">
+      <div class="preloader-inner">
+          <div class="preloader-icon">
+              <span></span>
+              <span></span>
+          </div>
+      </div>
+  </div>
+<!-- preloader ending here -->
 
 <!-- layout -->
 <div class="layout">
@@ -2133,6 +2148,48 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchStatuses();
 });
 </script>
+
+
+// auto scroll to bottom for chat window
+
+// <script>
+//
+// document.addEventListener("DOMContentLoaded", function () {
+//     function scrollToBottom() {
+//         let chatBody = document.querySelector(".chat-body .messages");
+//         if (chatBody) {
+//             requestAnimationFrame(() => {
+//                 chatBody.scrollTop = chatBody.scrollHeight;
+//                 console.log("Scrolling to:", chatBody.scrollTop, "/", chatBody.scrollHeight);
+//             });
+//         } else {
+//             console.log("Chat body not found");
+//         }
+//     }
+//
+//     // Use MutationObserver to detect message changes
+//     const observer = new MutationObserver(() => {
+//         setTimeout(scrollToBottom, 100); // Slight delay to let elements render
+//     });
+//
+//     let chatBody = document.querySelector(".chat-body .messages");
+//     if (chatBody) {
+//         observer.observe(chatBody, { childList: true, subtree: true });
+//         scrollToBottom(); // Initial scroll
+//     }
+//
+//     // Scroll when submitting a message
+//     let messageForm = document.querySelector("#messageForm");
+//     if (messageForm) {
+//         messageForm.addEventListener("submit", function (event) {
+//             setTimeout(scrollToBottom, 200); // Ensures scroll happens after sending
+//         });
+//     }
+// });
+//
+//
+//
+// </script>
 
 
 

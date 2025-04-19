@@ -1,6 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from .models import User, State, LGA, College, GradYear
+
+
+class LowercaseAuthenticationForm(AuthenticationForm):
+    def clean_username(self):
+        return self.cleaned_data['username'].lower()
+
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -31,6 +38,7 @@ class SignUpForm(UserCreationForm):
     )
 
 
+
     class Meta:
         model = User
         fields = [
@@ -38,6 +46,12 @@ class SignUpForm(UserCreationForm):
             'first_name', 'middle_name', 'last_name', 'marital_status', 'gender',
             'looking_for', 'birthday', 'state', 'lga', 'college', 'grad_year', 'bio'
         ]
+
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        return username.lower()  # Force lowercase
+
 
     def clean_email(self):
         email = self.cleaned_data['email']

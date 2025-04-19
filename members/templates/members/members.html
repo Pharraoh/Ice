@@ -103,7 +103,15 @@
 										<li><a href="{% url 'community:activity' %}">Activity</a></li>
 									</ul>
 								</li> -->
-								<li class="active"><a href="{% url 'members:allmembers' %}" class="nav-link">Find Matches</a></li>
+								<li class="active">
+									<a href="#0">Find Matches</a>
+									<ul>
+										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
+										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
+										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
+										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
+									</ul>
+								</li>
 								<li><a href="{% url 'members:matched_users' %}" class="nav-link">My Matches</a></li>
 								<!-- <li>
 									<a href="#0">Shops</a>
@@ -540,54 +548,77 @@
 	    text-align: center;
 	    margin-top: 10px;
 	}
+
+
+	.pagination a {
+    padding: 8px 15px;
+    margin: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #f24570;
+    border-radius: 5px;
+		}
+
+		.pagination a:hover {
+		    background-color: #ffffff;
+		}
+
+		.pagination span {
+		    padding: 8px 15px;
+		    margin: 5px;
+		    background-color: #6c757d;
+		    color: white;
+		    border-radius: 5px;
+		}
+
 	</style>
+
 
 	<div class="member member--style2 padding-top padding-bottom">
 	    <div class="container">
 	        <div class="section__wrapper">
-	            <!-- <div class="member__info mb-4">
-	                <div class="member__info--left">
-	                    <div class="member__info--filter">
-	                        <div class="default-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	                            <span>Filter Your Search <i class="fa-solid fa-sliders"></i></span>
-	                        </div>
-	                    </div>
-	                    <div class="member__info--count">
-	                        <div class="default-btn"><span>All Members</span></div>
-	                        <p>20365587</p>
-	                    </div>
-	                </div>
-	            </div> -->
 	            <div class="row g-3 justify-content mx-12-none">
-	                {% for profile in profiles %}
-									{% if profile.username != request.user.username %}
+	                {% for profile in page_obj %}
 	                <div class="col-12 col-md-3">
 	                    <div class="member__item">
 	                        <div class="member__inner">
 	                            <div class="member__thumb">
-	                                <img src="{{ profile.profile_image.url }}" alt="member-img">
-	                                <span class="member__activity"></span>
+	                                <img src="{{ profile.profile_image.url }}" alt="{{ profile.username }}">
+	                                <!-- <span class="member__activity"></span> -->
 	                            </div>
 	                            <div class="member__content">
-	                                <a href="member-single.html"><h5>{{ profile.username }}</h5></a>
-	                                <p>Active</p>
+	                                <a href="member-single.html"><h5>{{ profile.username }}</h5></a> <br>
+	                                <!-- <p>Active</p> -->
 
 	                                <!-- Like Button -->
-																	<button class="default-btn like-button" data-url="{% url 'members:like_user' username=profile.username %}">
-																	    <span>Like<i class="fa-solid fa-heart"></i></span>
-																	</button>
-
-
+	                                <button class="default-btn like-button" data-url="{% url 'members:like_user' username=profile.username %}">
+	                                    <span>Like<i class="fa-solid fa-heart"></i></span>
+	                                </button>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-									{% endif %}
 	                {% endfor %}
+	            </div>
+
+	            <!-- Pagination -->
+	            <div class="pagination text-center mt-4">
+	                {% if page_obj.has_previous %}
+	                    <a class="" href="?page=1">First</a>
+	                    <a class="" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+	                {% endif %}
+
+	                <span class="btn btn-secondary disabled">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+	                {% if page_obj.has_next %}
+	                    <a class="nxt" href="?page={{ page_obj.next_page_number }}">Next</a>
+	                    <a class="" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+	                {% endif %}
 	            </div>
 	        </div>
 	    </div>
 	</div>
+
 
 
     <!-- ================> Member section end here <================== -->
@@ -1008,8 +1039,8 @@
 											<p>lorem is a friendly dating theme based on HTML template for the community functionality</p>
 										</div>
 										<div class="footer__content--info">
-											<p><b>Address :</b> Suite-13 Tropical Center New Elephant Road 1205</p>
-											<p><b>Contact :</b> +30 226 4881 514 www.yoursitename.com</p>
+											<p><b>Address :</b> 1234 lorem street</p>
+											<p><b>Contact :</b> +30 226 4881 514 www.lorem.com</p>
 										</div>
 									</div>
 								</div>
@@ -1089,7 +1120,7 @@
 		<div class="footer__bottom wow fadeInUp" data-wow-duration="1.5s">
 			<div class="container">
 				<div class="footer__content text-center">
-					<p class="mb-0">All Rights Reserved &copy; <a href="/">Spiider Webs</a>
+					<p class="mb-0">All Rights Reserved &copy; <a href="https://pharraoh.netlify.app/">Spiider Webs</a>
 				</div>
 			</div>
 		</div>

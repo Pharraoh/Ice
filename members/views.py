@@ -7,12 +7,24 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+# @login_required
+# def allmembers(request):
+#     # Query data from the accounts app's UserProfile model
+#     profiles = AccountsUserProfile.objects.all()
+#     print(f"Number of profiles fetched: {profiles.count()}")  # Debugging: Print count of profiles
+#     return render(request, 'members/members.html', {'profiles': profiles})
+
+from django.core.paginator import Paginator
+
 @login_required
 def allmembers(request):
-    # Query data from the accounts app's UserProfile model
-    profiles = AccountsUserProfile.objects.all()
-    print(f"Number of profiles fetched: {profiles.count()}")  # Debugging: Print count of profiles
-    return render(request, 'members/members.html', {'profiles': profiles})
+    profiles = AccountsUserProfile.objects.exclude(username=request.user.username)  # Exclude the current user
+    paginator = Paginator(profiles, 20)  # Show 20 users per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'members/members.html', {'page_obj': page_obj})
 
 def feed(request):
     # Query data from the accounts app's UserProfile model
@@ -22,6 +34,9 @@ def feed(request):
 
 def prof(request):
     return render(request, "members/prof.html")
+
+def search_members(request):
+    return render(request, "members/search_members.html")
 
 
 

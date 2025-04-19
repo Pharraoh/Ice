@@ -17,6 +17,9 @@ urlpatterns = [
 
     path('get-lgas/<int:state_id>/', get_lgas, name='get_lgas'),
     path('edit-profile/', views.edit_profile, name="edit_profile"),
+    path('search/', views.user_search, name='user_search'),
+    path('online-users/', views.online_users_view, name='online_users'),
+
 
     path('password-reset/', views.custom_password_reset, name='password_reset'),
     path('password-reset/done/', views.custom_password_reset_done, name='password_reset_done'),

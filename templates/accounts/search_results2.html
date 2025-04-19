@@ -1,0 +1,60 @@
+<div class="member member--style2 padding-top padding-bottom">
+    <div class="container">
+        <div class="section__wrapper">
+            <h4 class="mb-4">Search Results for "{{ query }}"</h4>
+
+            {% if results %}
+                <div class="row g-3 justify-content mx-12-none">
+                    {% for profile in results %}
+                        <div class="col-12 col-md-3">
+                            <div class="member__item">
+                                <div class="member__inner">
+                                    <div class="member__thumb">
+                                        <img src="{{ profile.profile_image.url }}" alt="member-img">
+                                        <span class="member__activity"></span>
+                                    </div>
+                                    <div class="member__content">
+                                            <h5>{{ profile.username }}</h5>
+                                        <p>Active</p>
+
+                                        <!-- Like Button -->
+                                        <button class="default-btn like-button"
+                                            data-url="{% url 'members:like_user' username=profile.username %}">
+                                            <span>Like <i class="fa-solid fa-heart"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No users found matching "{{ query }}".</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row g-3 justify-content mx-12-none">
+    {% for profile in online_users %}
+        <div class="col-12 col-md-3">
+            <div class="member__item">
+                <div class="member__inner">
+                    <div class="member__thumb">
+                        <img src="{{ profile.profile_image.url }}" alt="member-img">
+                        <span class="member__activity online"></span>
+                    </div>
+                    <div class="member__content">
+                        <h5>{{ profile.username }}</h5>
+                        <p>🟢 Online</p>
+                        <button class="default-btn like-button" data-url="{% url 'members:like_user' username=profile.username %}">
+                            <span>Like<i class="fa-solid fa-heart"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

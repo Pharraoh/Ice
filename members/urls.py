@@ -12,6 +12,7 @@ urlpatterns = [
     path('like/<str:username>/', views.like_user, name='like_user'),
 
     path('matches/', views.matched_users, name='matched_users'),
+    path('search_members/', views.search_members, name='search_members'),
     # path('user/profile/<int:user_id>/', views.UserProfileView.as_view(), name='user_profile'),
     # url('user/profile/<int:user_id>/', UserProfileView.as_view(), name='user_profile'),
     # url('dashboard/', views.Dashboard.as_view(), name='dashboard'),

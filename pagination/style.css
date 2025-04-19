@@ -1,0 +1,86 @@
+.pagination {
+	display: table;
+	padding-left: 0;
+	margin: 20px 0;
+	border-radius:4px;
+	margin: 20px auto;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 0;
+    margin: 5px;
+    line-height: 1.42857143;
+    color: #5a6f7c;
+    text-decoration: none;
+    background-color: #fff;
+    border-radius: 50px;
+    width: 37px;
+    height: 37px;
+    text-align: center;
+    line-height: 37px;
+	border: 1px solid #eaeff5;
+	-webkit-box-shadow: 0 2px 10px 0 #d8dde6;
+    box-shadow: 0 2px 10px 0 #d8dde6;
+}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus, .pagination>li>a:hover, .pagination>li>a:focus {
+	z-index: 2;
+	color:#ff3a72;
+	cursor:pointer;
+	background-color:rgba(64,65,67,0.1);
+	border-color:#ff3a72;
+}
+.pagination li:first-child a {
+	background: #ff3a72;
+	border: 1px solid #ff3a72;
+	border-radius:50px;
+	color:#ffffff;
+}
+.pagination li:last-child a {
+	background: #35434e;
+	border: 1px solid #35434e;
+	border-radius:50px;
+	color:#ffffff;
+}
+
+
+/* -----main---- */
+
+.pagination li:first-child a {
+    background: #ff431e;
+    border: 1px solid #ff431e;
+}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus, .pagination>li>a:hover, .pagination>li>a:focus {
+    color: #ff431e;
+    background-color: rgba(255, 67, 30,0.12);
+    border-color: #ff431e;
+}
+.verticleilist.listing-shot span.like-listing i {
+    color: #ff4e64;
+}
+span.like-listing i {
+    background: #ff431e;
+    border: 1px solid transparent;
+}
+.layout-option a.active {
+    color: #ff431e;
+}
+.layout-option a:hover, .layout-option a:focus {
+    color: #ff431e;
+}
+.edit-info .btn {
+    border: 1px solid #ff431e;
+    color: #ff431e;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+	border-color:#ff431e;
+	background:#ff431e;
+}
+ul.social-info.info-list li i {
+    color: #ff431e;
+}
+.cover-buttons .btn-outlined:hover, .cover-buttons .btn-outlined:focus {
+    color: #ff431e;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+}

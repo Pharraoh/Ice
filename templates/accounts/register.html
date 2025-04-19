@@ -322,14 +322,15 @@
 															</div>
 														</div>
 
+														<!-- College Dropdown -->
 														<div class="form-group">
-													    <label for="collegeSelect">Select College:</label>
-															<div class="banner__inputlist">
-														    <select id="collegeSelect" name="college">
-														        <option value="">--Select College--</option>
-														    </select>
-															</div>
+																<label for="{{ form.college.id_for_label }}">Select College:</label>
+																<div class="banner__inputlist">
+																		{{ form.college }}
+																</div>
 														</div>
+
+
 
 														<div class="form-group">
 														    <label for="gradYearSelect">Select Grad Year:</label>
@@ -774,39 +775,6 @@
 	    });
 	</script>
 
-	<script>
-			let collegeData = [];  // Holds the college data
-
-			// Function to load colleges from JSON file
-			async function loadColleges() {
-					try {
-							// Fetch the JSON file
-							collegeData = await fetch('../../static/assets/json/colleges.json')  // Adjust path as needed
-									.then(response => response.json());
-
-							console.log('Loaded colleges:', collegeData);  // Debug
-
-							let collegeSelect = document.getElementById('collegeSelect');
-							collegeSelect.innerHTML = '<option value="">--Select College--</option>';  // Clear existing options
-
-							// Populate the dropdown
-							collegeData.forEach(college => {
-									let option = document.createElement('option');
-									option.value = college.id;  // Use the college ID as the value
-									option.text = college.name;  // Display the college name
-									collegeSelect.add(option);
-							});
-
-							console.log('Colleges successfully loaded into the dropdown');
-					} catch (error) {
-							console.error('Error loading colleges:', error);
-					}
-			}
-
-			// Load the colleges on page load
-			document.addEventListener('DOMContentLoaded', loadColleges);
-	</script>
-
 	<script type="text/javascript">
 				// JavaScript to populate Grad Year dropdown dynamically (if needed)
 			async function loadGradYears() {
@@ -834,7 +802,48 @@
 			document.addEventListener('DOMContentLoaded', loadGradYears);
 	</script>
 
+	<script>
+	document.addEventListener("DOMContentLoaded", async function () {
+	    let collegeSelect = document.getElementById("collegeSelect");
+	    let savedCollegeId = document.getElementById("userCollegeId").value; // Fetch saved college ID
+	    let collegeData = []; // Store JSON data
 
+	    console.log("📌 Saved College ID:", savedCollegeId);
+
+	    // Load JSON data
+	    async function loadColleges() {
+	        try {
+	            collegeData = await fetch('../../static/assets/json/colleges.json')
+	                .then(response => response.json());
+
+	            console.log("✅ Loaded colleges:", collegeData);
+
+	            // Populate colleges in dropdown
+	            collegeSelect.innerHTML = '<option value="">--Select College--</option>';
+	            collegeData.forEach(college => {
+	                let option = document.createElement("option");
+	                option.value = college.id; // Use college ID
+	                option.text = college.name; // Use college name
+
+	                // Preselect user's saved college
+	                if (savedCollegeId && college.id == savedCollegeId) {
+	                    option.selected = true;
+	                }
+
+	                collegeSelect.appendChild(option);
+	            });
+
+	            console.log("✅ Colleges successfully loaded into the dropdown");
+	        } catch (error) {
+	            console.error("❌ Error loading colleges:", error);
+	        }
+	    }
+
+	    // Load colleges on page load
+	    loadColleges();
+	});
+
+	</script>
 
 
 

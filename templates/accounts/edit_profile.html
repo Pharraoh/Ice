@@ -286,16 +286,12 @@
 
 														<!-- College Dropdown -->
 														<div class="form-group">
-														    <label for="collegeSelect">Select College:</label>
+														    <label for="{{ form.college.id_for_label }}">Select College:</label>
 														    <div class="banner__inputlist">
-														        <select id="collegeSelect" name="college">
-														            <option value="">--Select College--</option>
-														        </select>
+														        {{ form.college }}
 														    </div>
 														</div>
 
-														<!-- Hidden Input to Store User's Saved College -->
-														<input type="hidden" id="userCollegeId" value="{{ form.college.value|default_if_none:'' }}">
 
 
 														<!-- Grad Year Dropdown -->

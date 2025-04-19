@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm
+from .forms import LowercaseAuthenticationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
@@ -22,19 +23,41 @@ def signup_view(request):
 
 
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username').lower()
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('accounts:dashboard')  # Redirect to homepage after login
+#             else:
+#                 error = "Invalid credentials"
+#                 return render(request, 'accounts/login.html', {'error': error})
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'accounts/login.html', {'form': form})
+
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = LowercaseAuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username')  # Already lowercase
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('accounts:dashboard')  # Redirect to homepage after login
+                return redirect('accounts:dashboard')
+            else:
+                error = "Invalid credentials"
+                return render(request, 'accounts/login.html', {'error': error, 'form': form})
     else:
-        form = AuthenticationForm()
+        form = LowercaseAuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
+
+
 
 @login_required
 def dashboard(request):
@@ -76,6 +99,33 @@ def edit_profile(request):
         form = EditProfileForm(instance=user)
 
     return render(request, "accounts/edit_profile.html", {"form": form})
+
+
+from django.db.models import Q
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+def user_search(request):
+    query = request.GET.get('username', '').lower()
+    results = []
+
+    if query:
+        results = User.objects.filter(username__icontains=query).exclude(id=request.user.id)
+
+    return render(request, 'accounts/search_results.html', {'results': results, 'query': query})
+
+
+
+from .models import User
+from .utils import get_online_users
+
+@login_required
+def online_users_view(request):
+    online_users = get_online_users().exclude(id=request.user.id)
+    return render(request, 'accounts/online_users.html', {'online_users': online_users})
+
+
 
 
 

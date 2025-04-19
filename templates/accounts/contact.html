@@ -104,7 +104,15 @@
 
 									</ul>
 								</li> -->
-								<li><a href="{% url 'members:allmembers' %}">Find Matches</a></li>
+								<li>
+									<a href="#0">Find Matches</a>
+									<ul>
+										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
+										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
+										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
+										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
+									</ul>
+								</li>
 								<li><a href="{% url 'members:matched_users' %}" class="nav-link">My Matches</a></li>
 								<!-- <li>
 									<a href="#0">Shops</a>
@@ -307,8 +315,8 @@
 											<p>lorem is a friendly dating theme based on HTML template for the community functionality</p>
 										</div>
 										<div class="footer__content--info">
-											<p><b>Address :</b> Suite-13 Tropical Center New Elephant Road 1205</p>
-											<p><b>Contact :</b> +30 226 4881 514 www.yoursitename.com</p>
+											<p><b>Address :</b> 1234 lorem street</p>
+											<p><b>Contact :</b> +30 226 4881 514 www.lorem.com</p>
 										</div>
 									</div>
 								</div>
@@ -429,7 +437,7 @@
 		<div class="footer__bottom wow fadeInUp" data-wow-duration="1.5s">
 			<div class="container">
 				<div class="footer__content text-center">
-					<p class="mb-0">All Rights Reserved &copy; <a href="/">Spiider Webs</a>
+					<p class="mb-0">All Rights Reserved &copy; <a href="https://pharraoh.netlify.app/">Spiider Webs</a>
 				</div>
 			</div>
 		</div>

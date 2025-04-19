@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
 
 class State(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -29,7 +32,6 @@ class GradYear(models.Model):
 
 
 
-
 class User(AbstractUser):
     MARITAL_STATUS_CHOICES = [
         ('single', 'Single'),
@@ -52,6 +54,7 @@ class User(AbstractUser):
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS_CHOICES, default='single')
     bio = models.TextField(blank=True, null=True)
     middle_name = models.TextField(blank=True, null=True)
+    last_seen = models.DateTimeField(default=timezone.now)
 
     # Profile Images
     profile_image = models.ImageField(upload_to='profile/', default='avatar.png', null=True, blank=True)
@@ -61,8 +64,16 @@ class User(AbstractUser):
     image4 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
     image5 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
 
+
+    def save(self, *args, **kwargs):
+        if self.username:
+            self.username = self.username.lower()
+        super().save(*args, **kwargs)
+
+
     def __str__(self):
         return self.username
+
 
 
 

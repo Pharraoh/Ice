@@ -16,4 +16,5 @@ urlpatterns = [
     # path('user/profile/<int:user_id>/', views.UserProfileView.as_view(), name='user_profile'),
     # url('user/profile/<int:user_id>/', UserProfileView.as_view(), name='user_profile'),
     # url('dashboard/', views.Dashboard.as_view(), name='dashboard'),
+    path('profile/<int:user_id>/', views.user_profile, name='user_profile'),
 ]

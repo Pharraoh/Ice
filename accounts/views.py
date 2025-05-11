@@ -103,8 +103,7 @@ def edit_profile(request):
 
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from members.models import Like
 
 def user_search(request):
     query = request.GET.get('username', '').lower()
@@ -113,17 +112,39 @@ def user_search(request):
     if query:
         results = User.objects.filter(username__icontains=query).exclude(id=request.user.id)
 
-    return render(request, 'accounts/search_results.html', {'results': results, 'query': query})
+    # Get list of users already liked
+    liked_user_ids = Like.objects.filter(user_from=request.user).values_list('user_to__id', flat=True)
+
+    return render(request, 'accounts/search_results.html', {
+        'results': results,
+        'query': query,
+        'liked_user_ids': liked_user_ids
+    })
 
 
 
 from .models import User
 from .utils import get_online_users
+from members.models import Like
+from django.core.paginator import Paginator
 
 @login_required
 def online_users_view(request):
     online_users = get_online_users().exclude(id=request.user.id)
-    return render(request, 'accounts/online_users.html', {'online_users': online_users})
+
+    # Get IDs of users the current user has already liked
+    liked_user_ids = Like.objects.filter(user_from=request.user).values_list('user_to__id', flat=True)
+
+    # Paginate the online users list
+    paginator = Paginator(online_users, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'accounts/online_users.html', {
+        'online_users': page_obj,
+        'page_obj': page_obj,
+        'liked_user_ids': liked_user_ids
+    })
 
 
 

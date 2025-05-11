@@ -18,13 +18,19 @@ from django.core.paginator import Paginator
 
 @login_required
 def allmembers(request):
-    profiles = AccountsUserProfile.objects.exclude(username=request.user.username)  # Exclude the current user
-    paginator = Paginator(profiles, 20)  # Show 20 users per page
+    profiles = AccountsUserProfile.objects.exclude(username=request.user.username)
 
+    # ✅ Get the IDs of users the current user has already liked
+    liked_user_ids = Like.objects.filter(user_from=request.user).values_list('user_to__id', flat=True)
+
+    paginator = Paginator(profiles, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'members/members.html', {'page_obj': page_obj})
+    return render(request, 'members/members.html', {
+        'page_obj': page_obj,
+        'liked_user_ids': liked_user_ids
+    })
 
 def feed(request):
     # Query data from the accounts app's UserProfile model
@@ -77,3 +83,12 @@ def matched_users(request):
         likes_sent__user_to=user
     )
     return render(request, "members/cht.html", {"matched_users": matched_users})
+
+
+from django.shortcuts import render, get_object_or_404
+from accounts.models import User  # or your custom user model
+
+@login_required
+def user_profile(request, user_id):
+    user_profile = get_object_or_404(User, id=user_id)
+    return render(request, 'members/user_profile.html', {'profile': user_profile})

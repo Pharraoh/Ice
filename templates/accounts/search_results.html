@@ -223,30 +223,47 @@
               <h4 class="mb-4">Search Results for "{{ query }}"</h4>
 
               {% if results %}
-                  <div class="row g-3 justify-content mx-12-none">
-                      {% for profile in results %}
-                          <div class="col-12 col-md-3">
-                              <div class="member__item">
-                                  <div class="member__inner">
-                                      <div class="member__thumb">
-                                          <img src="{{ profile.profile_image.url }}" alt="member-img">
-                                          <span class="member__activity"></span>
-                                      </div>
-                                      <div class="member__content">
-                                              <h5>{{ profile.username }}</h5>
-                                          <p>Active</p>
+									<div class="row g-3 justify-content mx-12-none">
+											{% for profile in results %}
+													<div class="col-12 col-md-3">
+															<div class="member__item">
+																	<div class="member__inner">
+																			<div class="member__thumb">
+																					<img src="{{ profile.profile_image.url }}" alt="member-img">
+																					<span class="member__activity"></span>
+																			</div>
+																			<div class="member__content">
+																							<h5>{{ profile.username }}</h5> <br>
+																					<!-- <p>Active</p> -->
 
-                                          <!-- Like Button -->
-                                          <button class="default-btn like-button"
-                                              data-url="{% url 'members:like_user' username=profile.username %}">
-                                              <span>Like <i class="fa-solid fa-heart"></i></span>
-                                          </button>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      {% endfor %}
-                  </div>
+																					<!-- Like Button -->
+																					{% if profile.id not in liked_user_ids %}
+																							<button class="default-btn like-button"
+																									data-url="{% url 'members:like_user' username=profile.username %}">
+																									<span>Like <i class="fa-solid fa-heart"></i></span>
+																							</button> <br><br>
+
+																							<!-- View Profile Button -->
+																							<a href="{% url 'members:user_profile' user_id=profile.id %}" class="default-btn ms-2">
+																							    <span>View Profile</span>
+																							</a>
+																					{% else %}
+																					<button class="default-btn like-button" data-url="{% url 'members:like_user' username=profile.username %}">
+																						<span>Matched<i class="fa-solid fa-"></i></span>
+																					</button> <br><br>
+
+																					<!-- View Profile Button -->
+																					<a href="{% url 'members:user_profile' user_id=profile.id %}" class="default-btn ms-2">
+																					    <span>View Profile</span>
+																					</a>
+																					{% endif %}
+
+																			</div>
+																	</div>
+															</div>
+													</div>
+											{% endfor %}
+									</div>
               {% else %}
                   <p>No users found matching "{{ query }}".</p>
               {% endif %}

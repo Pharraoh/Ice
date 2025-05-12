@@ -52,7 +52,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-
+import uuid
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
@@ -64,6 +64,7 @@ class Status(models.Model):
         ('video', 'Video'),
     ]
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="statuses")
     status_type = models.CharField(max_length=10, choices=STATUS_TYPES)
     text = models.TextField(blank=True, null=True)  # For text statuses

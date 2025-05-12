@@ -83,6 +83,15 @@ def get_lgas(request, state_id):
         return JsonResponse({'error': 'State not found'}, status=404)
 
 
+# from django.shortcuts import render
+# from .models import College  # assuming College is the model name
+#
+# def get_colleges(request):
+#     colleges = College.objects.all()  # Fetch all colleges from the database
+#     return render(request, 'accounts/register.html', {'colleges': colleges})
+
+
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm

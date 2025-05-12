@@ -118,14 +118,44 @@ CHANNEL_LAYERS = {
 # }
 
 
-import dj_database_url
+# import dj_database_url
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+
+import os
+
+# Directly add your database URL here
+DATABASE_URL = "postgresql://ice_db_user:MTrYcfLPA3x590QValHKmLqDHBJOvdyo@dpg-d0gq0fk9c44c7392qr20-a.oregon-postgres.render.com:5432/ice_db"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ice_db',  # Extract dbname from URL
+        'USER': 'ice_db_user',  # Extract user from URL
+        'PASSWORD': 'MTrYcfLPA3x590QValHKmLqDHBJOvdyo',  # Extract password from URL
+        'HOST': 'dpg-d0gq0fk9c44c7392qr20-a.oregon-postgres.render.com',  # Extract host from URL
+        'PORT': '5432',  # Corrected extraction of port
     }
 }
+
+
+
+
+
+# import dj_database_url
+# from dotenv import load_dotenv
+#
+# load_dotenv()
+#
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+# }
 
 
 

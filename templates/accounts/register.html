@@ -322,13 +322,172 @@
 															</div>
 														</div>
 
-														<!-- College Dropdown -->
+														
+
 														<div class="form-group">
+																<label for="{{ form.college.id_for_label }}">Select College:</label>
+																<select name="college" id="collegeSelect" class="banner__inputlist">
+																    <option value="">--Select College--</option>
+																</select>
+																<input type="hidden" id="userCollegeId" value="{{ form.college.value }}">
+														</div>
+
+
+														<!-- College Dropdown -->
+														<!-- <div class="form-group">
 																<label for="{{ form.college.id_for_label }}">Select College:</label>
 																<div class="banner__inputlist">
 																		{{ form.college }}
 																</div>
-														</div>
+														</div> -->
+
+														<!-- <div class="form-group">
+															<label>College*</label>
+															<div class="banner__inputlist">
+																<select name="college">
+																	<option value="Abia State University, Uturu">Abia State University, Uturu</option>
+																	<option value="Abubakar Tafawa Balewa University, Bauchi">Abubakar Tafawa Balewa University, Bauchi</option>
+																	<option value="Achievers University, Owo">Achievers University, Owo</option>
+																	<option value="Adamawa State University Mubi">Adamawa State University, Mubi</option>
+																	<option value="Adekunle Ajasin University, Akungba">Adekunle Ajasin University, Akungba</option>
+																	<option value="Adeleke University, Ede">Adeleke University, Ede</option>
+																	<option value="Afe Babalola University, Ado-Ekiti - Ekiti State">Afe Babalola University, Ado-Ekiti - Ekiti State</option>
+																	<option value="African University of Science & Technology, Abuja">African University of Science & Technology, Abuja</option>
+																	<option value="Ahmadu Bello University, Zaria">Ahmadu Bello University, Zaria</option>
+																	<option value="Ajayi Crowther University, Ibadan">Ajayi Crowther University, Ibadan</option>
+																	<option value="Akwa Ibom State University, Ikot Akpaden">Akwa Ibom State University, Ikot Akpaden</option>
+																	<option value="Al-Hikmah University, Ilorin">Al-Hikmah University, Ilorin</option>
+																	<option value="Al-Qalam University, Katsina">Al-Qalam University, Katsina</option>
+																	<option value="Ambrose Alli University, Ekpoma">Ambrose Alli University, Ekpoma</option>
+																	<option value="American University of Nigeria, Yola">American University of Nigeria, Yola</option>
+																	<option value="Anchor University Ayobo, Lagos State">Anchor University Ayobo, Lagos State</option>
+																	<option value="Arthur Javis University Akpoyubo Cross river State">Arthur Javis University Akpoyubo, Cross River State</option>
+																	<option value="Atiba University Oyo">Atiba University, Oyo</option>
+																	<option value="Augustine University">Augustine University</option>
+																	<option value="Babcock University, Ilishan-Remo">Babcock University, Ilishan-Remo</option>
+																	<option value="Bauchi State University, Gadau">Bauchi State University, Gadau</option>
+																	<option value="Bayero University, Kano">Bayero University, Kano</option>
+																	<option value="Baze University">Baze University</option>
+																	<option value="Bells University of Technology, Otta">Bells University of Technology, Otta</option>
+																	<option value="Benue State University, Makurdi">Benue State University, Makurdi</option>
+																	<option value="Benson Idahosa University, Benin City">Benson Idahosa University, Benin City</option>
+																	<option value="Bingham University, New Karu">Bingham University, New Karu</option>
+																	<option value="Bowen University, Iwo">Bowen University, Iwo</option>
+																	<option value="Caleb University, Lagos">Caleb University, Lagos</option>
+																	<option value="Caritas University, Enugu">Caritas University, Enugu</option>
+																	<option value="Chrisland University">Chrisland University</option>
+																	<option value="Christopher University Mowe">Christopher University, Mowe</option>
+																	<option value="Chukwuemeka Odumegwu Ojukwu University, Uli">Chukwuemeka Odumegwu Ojukwu University, Uli</option>
+																	<option value="Covenant University Ota">Covenant University, Ota</option>
+																	<option value="Crawford University Igbesa">Crawford University, Igbesa</option>
+																	<option value="Crescent University">Crescent University</option>
+																	<option value="Cross River State University of Science & Technology, Calabar">Cross River State University of Science & Technology, Calabar</option>
+																	<option value="Delta State University Abraka">Delta State University, Abraka</option>
+																	<option value="Dominican University Ibadan Oyo State">Dominican University, Ibadan Oyo State</option>
+																	<option value="Eastern Palm University Ogboko, Imo State">Eastern Palm University, Ogboko, Imo State</option>
+																	<option value="Edo University Iyamo">Edo University, Iyamo</option>
+																	<option value="Ekiti State University">Ekiti State University</option>
+																	<option value="Elizade University, Ilara-Mokin">Elizade University, Ilara-Mokin</option>
+																	<option value="Eko University of Medical and Health Sciences Ijanikin, Lagos">Eko University of Medical and Health Sciences, Ijanikin, Lagos</option>
+																	<option value="Enugu State University of Science and Technology, Enugu">Enugu State University of Science and Technology, Enugu</option>
+																	<option value="Evangel University, Akaeze">Evangel University, Akaeze</option>
+																	<option value="Federal University Gashua, Yobe">Federal University Gashua, Yobe</option>
+																	<option value="Federal University of Agriculture, Abeokuta">Federal University of Agriculture, Abeokuta</option>
+																	<option value="Federal University of Petroleum Resources, Effurun">Federal University of Petroleum Resources, Effurun</option>
+																	<option value="Federal University of Technology, Akure">Federal University of Technology, Akure</option>
+																	<option value="Federal University of Technology, Minna">Federal University of Technology, Minna</option>
+																	<option value="Federal University of Technology, Owerri">Federal University of Technology, Owerri</option>
+																	<option value="Federal University, Birnin Kebbi">Federal University, Birnin Kebbi</option>
+																	<option value="Federal University, Dutse, Jigawa State">Federal University, Dutse, Jigawa State</option>
+																	<option value="Federal University, Dutsin-Ma, Katsina">Federal University, Dutsin-Ma, Katsina</option>
+																	<option value="Federal University, Gusau Zamfara">Federal University, Gusau Zamfara</option>
+																	<option value="Federal University, Kashere, Gombe State">Federal University, Kashere, Gombe State</option>
+																	<option value="Federal University, Lafia, Nasarawa State">Federal University, Lafia, Nasarawa State</option>
+																	<option value="Federal University, Lokoja, Kogi State">Federal University, Lokoja, Kogi State</option>
+																	<option value="Federal University, Otuoke, Bayelsa">Federal University, Otuoke, Bayelsa</option>
+																	<option value="Federal University, Oye-Ekiti, Ekiti State">Federal University, Oye-Ekiti, Ekiti State</option>
+																	<option value="Federal University, Wukari, Taraba State">Federal University, Wukari, Taraba State</option>
+																	<option value="Fountain University, Oshogbo">Fountain University, Oshogbo</option>
+																	<option value="Godfrey Okoye University, Ugwuomu-Nike - Enugu State">Godfrey Okoye University, Ugwuomu-Nike - Enugu State</option>
+																	<option value="Gombe State University, Gombe">Gombe State University, Gombe</option>
+																	<option value="Gregory University, Uturu">Gregory University, Uturu</option>
+																	<option value="Hallmark University, Ijebu-Itele, Ogun">Hallmark University, Ijebu-Itele, Ogun</option>
+																	<option value="Hezekiah University, Umudi">Hezekiah University, Umudi</option>
+																	<option value="Ibrahim Badamasi Babangida University, Lapai">Ibrahim Badamasi Babangida University, Lapai</option>
+																	<option value="Igbinedion University Okada">Igbinedion University, Okada</option>
+																	<option value="Ignatius Ajuru University of Education, Rumuolumeni">Ignatius Ajuru University of Education, Rumuolumeni</option>
+																	<option value="Imo State University, Owerri">Imo State University, Owerri</option>
+																	<option value="Joseph Ayo Babalola University, Ikeji-Arakeji">Joseph Ayo Babalola University, Ikeji-Arakeji</option>
+																	<option value="Kaduna State University, Kaduna">Kaduna State University, Kaduna</option>
+																	<option value="Kano University of Science & Technology, Wudil">Kano University of Science & Technology, Wudil</option>
+																	<option value="Kebbi State University of Science and Technology, Aliero">Kebbi State University of Science and Technology, Aliero</option>
+																	<option value="Kings University, Ode Omu">Kings University, Ode Omu</option>
+																	<option value="Kogi State University Anyigba">Kogi State University, Anyigba</option>
+																	<option value="Kwara State University, Ilorin">Kwara State University, Ilorin</option>
+																	<option value="Ladoke Akintola University of Technology, Ogbomoso">Ladoke Akintola University of Technology, Ogbomoso</option>
+																	<option value="Lagos State University, Ojo">Lagos State University, Ojo</option>
+																	<option value="Landmark University, Omu-Aran.">Landmark University, Omu-Aran</option>
+																	<option value="Lead City University, Ibadan">Lead City University, Ibadan</option>
+																	<option value="Madonna University, Okija">Madonna University, Okija</option>
+																	<option value="Mcpherson University, Seriki Sotayo, Ajebo">Mcpherson University, Seriki Sotayo, Ajebo</option>
+																	<option value="Michael Okpara University of Agricultural Umudike">Michael Okpara University of Agricultural, Umudike</option>
+																	<option value="Modibbo Adama University of Technology, Yola">Modibbo Adama University of Technology, Yola</option>
+																	<option value="Mountain Top University">Mountain Top University</option>
+																	<option value="Nasarawa State University Keffi">Nasarawa State University, Keffi</option>
+																	<option value="Niger Delta University Yenagoa">Niger Delta University, Yenagoa</option>
+																	<option value="Nigerian Defence Academy Kaduna">Nigerian Defence Academy, Kaduna</option>
+																	<option value="Nigerian Police Academy Wudil">Nigerian Police Academy, Wudil</option>
+																	<option value="Nile University of Nigeria, Abuja">Nile University of Nigeria, Abuja</option>
+																	<option value="Nnamdi Azikiwe University, Awka">Nnamdi Azikiwe University, Awka</option>
+																	<option value="Novena University, Ogume">Novena University, Ogume</option>
+																	<option value="Obafemi Awolowo University, Ile-Ife">Obafemi Awolowo University, Ile-Ife</option>
+																	<option value="Obong University, Obong Ntak">Obong University, Obong Ntak</option>
+																	<option value="Oduduwa University, Ipetumodu - Osun State">Oduduwa University, Ipetumodu - Osun State</option>
+																	<option value="Olabisi Onabanjo University, Ago Iwoye">Olabisi Onabanjo University, Ago Iwoye</option>
+																	<option value="Ondo State University of Science and Technology Okitipupa">Ondo State University of Science and Technology, Okitipupa</option>
+																	<option value="Pan-Atlantic University, Lagos">Pan-Atlantic University, Lagos</option>
+																	<option value="Paul University, Awka - Anambra State">Paul University, Awka - Anambra State</option>
+																	<option value="Plateau State University Bokkos">Plateau State University, Bokkos</option>
+																	<option value="Redeemers University, Ede">Redeemers University, Ede</option>
+																	<option value="Renaissance University, Enugu">Renaissance University, Enugu</option>
+																	<option value="Rhema University, Obeama-Asa - Rivers State">Rhema University, Obeama-Asa - Rivers State</option>
+																	<option value="Ritman University, Ikot-Ekpene, Akwa Ibom">Ritman University, Ikot-Ekpene, Akwa Ibom</option>
+																	<option value="Rivers State University">Rivers State University</option>
+																	<option value="Salem University, Lokoja">Salem University, Lokoja</option>
+																	<option value="Samuel Adegboyega University, Ogwa">Samuel Adegboyega University, Ogwa</option>
+																	<option value="Skyline University, Kano">Skyline University, Kano</option>
+																	<option value="Sokoto State University">Sokoto State University</option>
+																	<option value="Southwestern University, Oku Owa">Southwestern University, Oku Owa</option>
+																	<option value="Summit University">Summit University</option>
+																	<option value="Tai Solarin University of Education Ijebu Ode">Tai Solarin University of Education, Ijebu Ode</option>
+																	<option value="Tansian University, Umunya">Tansian University, Umunya</option>
+																	<option value="Taraba State University, Jalingo">Taraba State University, Jalingo</option>
+																	<option value="The Technical University, Ibadan">The Technical University, Ibadan</option>
+																	<option value="Umaru Musa Yar' Adua University Katsina">Umaru Musa Yar' Adua University, Katsina</option>
+																	<option value="University of Abuja, Gwagwalada">University of Abuja, Gwagwalada</option>
+																	<option value="University of Agriculture, Makurdi">University of Agriculture, Makurdi</option>
+																	<option value="University of Benin">University of Benin</option>
+																	<option value="University of Calabar">University of Calabar</option>
+																	<option value="University of Ibadan">University of Ibadan</option>
+																	<option value="University of Ilorin">University of Ilorin</option>
+																	<option value="University of Jos">University of Jos</option>
+																	<option value="University of Lagos">University of Lagos</option>
+																	<option value="University of Maiduguri">University of Maiduguri</option>
+																	<option value="University of Medical Sciences, Ondo">University of Medical Sciences, Ondo</option>
+																	<option value="University of Mkar, Mkar">University of Mkar, Mkar</option>
+																	<option value="University of Nigeria, Nsukka">University of Nigeria, Nsukka</option>
+																	<option value="University of Port-Harcourt">University of Port-Harcourt</option>
+																	<option value="University of Uyo">University of Uyo</option>
+																	<option value="Usmanu Danfodiyo University">Usmanu Danfodiyo University</option>
+																	<option value="Veritas University, Abuja">Veritas University, Abuja</option>
+																	<option value="Wesley University of Science & Technology, Ondo">Wesley University of Science & Technology, Ondo</option>
+																	<option value="Western Delta University, Oghara Delta State">Western Delta University, Oghara Delta State</option>
+																	<option value="Yobe State University, Damaturu">Yobe State University, Damaturu</option>
+																	<option value="Yusuf Maitama Sule University Kano">Yusuf Maitama Sule University, Kano</option>
+																	<option value="Zamfara State University">Zamfara State University</option>
+																  </select>
+															</div>
+														</div> -->
 
 
 

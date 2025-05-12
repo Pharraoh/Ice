@@ -24,12 +24,17 @@ class SignUpForm(UserCreationForm):
         empty_label="Select an LGA",
         widget=forms.Select(attrs={'id': 'lgaSelect'})
     )
+
     college = forms.ModelChoiceField(
         queryset=College.objects.all(),
-        required=True,
-        empty_label="Select a college",
         widget=forms.Select(attrs={'id': 'collegeSelect'})
     )
+    # college = forms.ModelChoiceField(
+    #     queryset=College.objects.all(),
+    #     required=True,
+    #     empty_label="Select a college",
+    #     widget=forms.Select(attrs={'id': 'collegeSelect'})
+    # )
     grad_year = forms.ModelChoiceField(
         queryset=GradYear.objects.all(),
         required=True,

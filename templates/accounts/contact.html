@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
 	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
 	<link rel="stylesheet" href="../../static/assets/css/style.css">
+	<link rel="stylesheet" href="../../static/assets/css/msg-indicator(hamburger).css">
 
 </head>
 
@@ -78,6 +79,7 @@
 							<ul>
 								<li>
 									<a href="{% url 'accounts:dashboard' %}" >Dashboard</a>
+									<li class="active"><a href="{% url 'accounts:contact' %}">contact</a></li>
 									<!-- <a href="#0">Home</a> -->
 									<!-- <ul>
 										<li><a href="/" class="active">Home Page One</a></li>
@@ -105,7 +107,7 @@
 									</ul>
 								</li> -->
 								<li>
-									<a href="#0">Find Matches</a>
+									<a href="#0">Matches</a>
 									<ul>
 										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
 										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
@@ -113,7 +115,12 @@
 										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
 									</ul>
 								</li>
-								<li><a href="{% url 'members:matched_users' %}" class="nav-link">My Matches</a></li>
+								<li style="position: relative;">
+								  <a href="{% url 'members:matched_users' %}">
+								    <i class="fa fa-comments"></i>
+								    <span class="message-indicator" style="display: none;"></span>
+								  </a>
+								</li>
 								<!-- <li>
 									<a href="#0">Shops</a>
 									<ul>
@@ -125,7 +132,6 @@
 								<!-- <li>
 									<a href="{% url 'blog:blog' %}">Blog</a>
 								</li> -->
-								<li class="active"><a href="{% url 'accounts:contact' %}">contact</a></li>
 							</ul>
 						</div>
 						<!-- <div class="header__more">
@@ -377,9 +383,12 @@
 										<div class="footer__content--desc">
 											<ul>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Our Team</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
+												{% if user.is_authenticated %}
+												<li><a href="{% url 'accounts:edit_profile' %}"><i class="fa-solid fa-angle-right"></i> Edit Profile</a></li>
+												<li><a href="{% url 'accounts:password_reset' %}"><i class="fa-solid fa-angle-right"></i> Reset Password</a></li>
+												{% endif %}
+												<!-- <li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li> -->
+												<li><a href="{% url 'accounts:contact' %}"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> FAQ</a></li>
 											</ul>
 										</div>
@@ -461,6 +470,33 @@
 	<script src="../../static/assets/js/vendor/bootstrap.bundle.min.js"></script>
 	<script src="../../static/assets/js/plugins.js"></script>
 	<script src="../../static/assets/js/main.js"></script>
+
+
+<!-- js for msg-indicator -->
+	<script>
+		function checkNewMessages() {
+			console.log("Checking for new messages...");
+
+			fetch("{% url 'chats:check_unread_messages' %}")
+				.then(response => response.json())
+				.then(data => {
+					console.log("Message check response:", data);
+
+					const indicator = document.querySelector('.message-indicator');
+
+					if (indicator) {
+						if (data.has_new === true) {
+							indicator.style.display = 'block';
+						} else {
+							indicator.style.display = 'none';
+						}
+					}
+				});
+			}
+
+			setInterval(checkNewMessages, 3000); // check every no of seconds
+
+	</script>
 
 
 

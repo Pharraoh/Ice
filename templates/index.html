@@ -19,6 +19,9 @@
 	<link rel="stylesheet" href="./static/assets/css/swiper.min.css">
 	<link rel="stylesheet" href="./static/assets/css/lightcase.css">
 	<link rel="stylesheet" href="./static/assets/css/style.css">
+	<link rel="stylesheet" href="./static/assets/css/msg-indicator.css">
+	<link rel="stylesheet" href="../../static/assets/css/member-single(style).css">
+	<link rel="stylesheet" href="../../static/assets/css/member-single.css">
 
 </head>
 
@@ -76,16 +79,17 @@
 				</div>
 			</div>
 		</div> -->
+
 		<div class="header__bottom">
 			<div class="container">
 				<nav class="navbar navbar-expand-lg">
 					<a class="navbar-brand" href="/"><img src="" alt="logo"></a>
-					<button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+					<!-- <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
 						data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
 						aria-label="Toggle navigation">
 						<span class="navbar-toggler--icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+					</button> -->
+					<div class="navbar-collapse justify-content-end" id="navbarNavAltMarkup">
 						<div class="navbar-nav mainmenu">
 							<ul>
 								<li class="active">
@@ -99,7 +103,12 @@
 								</li>
 								{% if user.is_authenticated %}
 									<li><a href="{% url 'accounts:dashboard' %}" class="nav-link">Dashboard</a></li>
-									<li><a href="{% url 'members:matched_users' %}" class="nav-link">My Matches</a></li>
+									<li style="position: relative;">
+									  <a href="{% url 'members:matched_users' %}">
+									    <i class="fa fa-comments"></i>
+									    <span class="message-indicator" style="display: none;"></span>
+									  </a>
+									</li>
 								{% else %}
 									<li><a class="dropdown-item" href="{% url 'accounts:login' %}">Log In</a></li>
 	                <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Sign Up</a></li>
@@ -1539,9 +1548,12 @@
 										<div class="footer__content--desc">
 											<ul>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Our Team</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
+												{% if user.is_authenticated %}
+												<li><a href="{% url 'accounts:edit_profile' %}"><i class="fa-solid fa-angle-right"></i> Edit Profile</a></li>
+												<li><a href="{% url 'accounts:password_reset' %}"><i class="fa-solid fa-angle-right"></i> Reset Password</a></li>
+												{% endif %}
+												<!-- <li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li> -->
+												<li><a href="{% url 'accounts:contact' %}"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> FAQ</a></li>
 											</ul>
 										</div>
@@ -1622,6 +1634,33 @@
 	<script src="./static/assets/js/vendor/bootstrap.bundle.min.js"></script>
 	<script src="./static/assets/js/plugins.js"></script>
 	<script src="./static/assets/js/main.js"></script>
+
+
+<!-- js for msg-indicator -->
+	<script>
+		function checkNewMessages() {
+			console.log("Checking for new messages...");
+
+			fetch("{% url 'chats:check_unread_messages' %}")
+				.then(response => response.json())
+				.then(data => {
+					console.log("Message check response:", data);
+
+					const indicator = document.querySelector('.message-indicator');
+
+					if (indicator) {
+						if (data.has_new === true) {
+							indicator.style.display = 'block';
+						} else {
+							indicator.style.display = 'none';
+						}
+					}
+				});
+			}
+
+			setInterval(checkNewMessages, 3000); // check every 10 seconds
+
+	</script>
 
 
 

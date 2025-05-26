@@ -1,0 +1,86 @@
+@media (max-width: 600px) {
+  body {
+    font-size: 2px;
+  }
+  h2{
+    font-size: 2px;
+  }
+  body{
+    font-size: 15px;
+  }
+  body h2 {
+    font-size: 22px;
+  }
+  body h4 {
+    font-size: 22px;
+  }
+  body p{
+    font-size: 15px;
+  }
+  .banner__content p {
+    font-size: 15px;
+  }
+  .banner__content a {
+    font-size: 12px;
+  }
+  .about--style2 .about__left .about__content p {
+    font-size: 15px;
+  }
+  .story__content h4 {
+    font-size: 18px;
+  }
+  .story__content h6 {
+    font-size: 15px;
+  }
+  .story__content p {
+    font-size: 12px;
+  }
+  .work--style2 .work__content h3{
+    font-size: 18px;
+  }
+  .work--style2 .work__content p{
+    font-size: 15px;
+  }
+  .log-reg .log-reg-inner .main-content .content-title {
+    font-size: 18px;
+  }
+  .log-reg .log-reg-inner .main-content .form-group label {
+    font-size: 15px;
+  }
+  .log-reg .log-reg-inner .main-content .form-group > .banner__inputlist label {
+    font-size: 13px;
+  }
+  .log-reg .top-menu-area .backto-home {
+    font-size: 13px;
+  }
+  .app__content p {
+    font-size: 15px;
+  }
+  nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent;
+  }
+  nav ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul li {
+    margin: 0 7px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  nav ul li a:hover {
+    color: #007bff;
+  }
+
+}

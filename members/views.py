@@ -74,15 +74,19 @@ def like_user(request, username):
     return JsonResponse({'status': 'already_liked', 'message': f"You already liked {other_user.username}!"}, status=200)
 
 
-
+from django.utils import timezone
 @login_required
 def matched_users(request):
+    request.user.last_checked_messages_at = timezone.now()
+    request.user.save(update_fields=['last_checked_messages_at'])
+
     user = request.user
     matched_users = User.objects.filter(
         likes_received__user_from=user,
         likes_sent__user_to=user
     )
     return render(request, "members/cht.html", {"matched_users": matched_users})
+
 
 
 from django.shortcuts import render, get_object_or_404

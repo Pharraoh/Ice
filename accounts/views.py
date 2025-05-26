@@ -5,6 +5,7 @@ from .forms import LowercaseAuthenticationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
+from .utils import send_welcome_email
 
 def signup_view(request):
     if request.method == 'POST':
@@ -13,6 +14,8 @@ def signup_view(request):
         if form.is_valid():
             print("Form is valid")
             form.save()
+            user = form.save()
+            send_welcome_email(user)  # <--- Send email here
             return redirect('accounts:login')
         else:
             print("Form errors:", form.errors)

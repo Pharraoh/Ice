@@ -127,7 +127,7 @@
                 </div>
             </form>
         </div>
-        <div class="left-sidebar-content">
+        <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
           <ul class="list-group list-group-flush">
               {% for match in matched_users %}
                   <li class="list-group-item chat-user" data-username="{{ match.username }}" data-profile-pic="{{ match.profile_image.url }}">
@@ -245,25 +245,27 @@
                 </ul>
             </div>
         </div>
-        <div class="chat-body">
-            <div class="messages">
 
-            </div>
-        </div>
 
-        <div class="chat-footer" data-intro-js="6">
-            <form class="d-flex" id="messageForm">
-                {% csrf_token %}
-                <input type="hidden" id="csrf_token" value="{{ csrf_token }}">  <!-- Hidden CSRF Token -->
+            <div class="chat-body" style="max-height: 80%; overflow-y: auto;">
+                <div class="messages">
 
-                <input type="text" class="form-control form-control-main" id="messageInput" placeholder="Write a message.">
-                <div>
-                    <button class="btn btn-primary ml-2 btn-floating" id="sendButton" type="submit">
-                        <i class="fa fa-send"></i>
-                    </button>
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="chat-footer" data-intro-js="6">
+                <form class="d-flex" id="messageForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="csrf_token" value="{{ csrf_token }}">  <!-- Hidden CSRF Token -->
+
+                    <input type="text" class="form-control form-control-main" id="messageInput" placeholder="Write a message.">
+                    <div>
+                        <button class="btn btn-primary ml-2 btn-floating" id="sendButton" type="submit">
+                            <i class="fa fa-send"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
 
 
     </div>

@@ -18,7 +18,9 @@
 	<link rel="stylesheet" href="../../static/assets/css/all.min.css">
 	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
 	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
-	<link rel="stylesheet" href="../../static/assets/css/style.css">
+	<!-- <link rel="stylesheet" href="../../static/assets/css/style.css"> -->
+	<link rel="stylesheet" href="../../static/assets/css/member-single(style).css">
+	<link rel="stylesheet" href="../../static/assets/css/member-single.css">
 
 </head>
 
@@ -40,108 +42,49 @@
 
 
     <!-- ================> header section start here <================== -->
-    <header class="header" id="navbar">
-        <!-- <div class="header__top d-none d-lg-block">
-			<div class="container">
-				<div class="header__top--area">
-					<div class="header__top--left">
-						<ul>
-                            <li>
-                                <i class="fa-solid fa-phone"></i> <span>+800-123-4567 6587</span>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-location-dot"></i> Beverley, New York 224 USA
-                            </li>
-                        </ul>
-					</div>
-					<div class="header__top--right">
-						<ul>
-                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
-                            <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
-                            <li><a href="#"><i class="fa-brands fa-youtube"></i> Youtube</a></li>
-                        </ul>
-					</div>
-				</div>
-			</div>
-		</div> -->
+
+
+  <header class="header" id="navbar">
 		<div class="header__bottom">
 			<div class="container">
 				<nav class="navbar navbar-expand-lg">
 					<a class="navbar-brand" href="/"><img src="" alt="logo"></a>
-					<button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+					<!-- <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
 						data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
 						aria-label="Toggle navigation">
 						<span class="navbar-toggler--icon"></span>
-					</button>
-					<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+					</button> -->
+					<div class="navbar-collapse justify-content-end" id="navbarNavAltMarkup">
 						<div class="navbar-nav mainmenu">
 							<ul>
-								<!-- <li>
-									<a href="/" >Home</a>
-								</li> -->
 								<li>
-									<a href="#0">Settings</a>
-									<ul>
-										<li><a href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
-                    <li><a href="{% url 'accounts:password_reset' %}">Reset Password</a></li>
-										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
+									<a href="#0">Matches</a>
+									<ul class="for">
+										<li><a href="{% url 'members:allmembers' %}" style="padding: 0px 0px 0px 0px !important;">All Members</a></li>
+										<li><a href="{% url 'members:search_members' %}" style="padding: 0px 0px 0px 0px !important;">Search Members</a></li>
+										<li><a href="{% url 'accounts:online_users' %}" style="padding: 0px 0px 0px 0px !important;">Online Members</a></li>
 									</ul>
 								</li>
-								<!-- <li>
-									<a href="#0">Pages</a>
-									<ul>
-										<li><a href="{% url 'pages:about' %}">About Us</a></li>
-                    <li><a href="{% url 'pages:membership' %}">Membership</a></li>
-										<a href="{% url 'blog:blog' %}">Blog</a>
-                    <li><a href="comingsoon.html">comingsoon</a></li>
-                    <li><a href="404.html">404</a></li>
-									</ul>
-								</li> -->
-								<!-- <li>
-									<a href="#0">Community</a>
-									<ul>
-										<li><a href="community.html">Community</a></li>
-										<li><a href="group.html">All Group</a></li>
-										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
-										<li><a href="{% url 'community:activity' %}">Activity</a></li>
+								<li style="position: relative;">
+								  <a href="{% url 'members:matched_users' %}">
+								    <i class="fa fa-comments"></i>
+								    <span class="message-indicator" style="display: none;"></span>
+								  </a>
+								</li>
 
-									</ul>
-								</li> -->
-								<!-- <li>
-									<a href="#0">Shops</a>
-									<ul>
-										<li><a href="shop.html">Product</a></li>
-										<li><a href="shop-single.html">Product Details</a></li>
-										<li><a href="shop-cart.html">Product Cart</a></li>
-									</ul>
-								</li> -->
-								<li>
-									<a href="#0">Find Matches</a>
-									<ul>
-										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
-										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
-										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
-										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
-									</ul>
-								</li>
-								<li><a href="{% url 'members:matched_users' %}">My Matches</a></li>
-								<li><a href="{% url 'accounts:contact' %}">contact</a></li>
+								<!-- <li><a href="{% url 'members:matched_users' %}"><i class="fa fa-comments"></i></a></li> -->
+								<!-- <li><a href="{% url 'members:matched_users' %}">ghost</a></li> -->
+								<!-- <li><a href="{% url 'accounts:contact' %}">contact</a></li> -->
 								<!-- <li><a href="{% url 'chats:chat_list' %}"><i class="fa fa-comments"></i> Messages</a></li> -->
 							</ul>
 						</div>
-						<!-- <div class="header__more">
-                            <button class="default-btn dropdown-toggle" type="button" id="moreoption" data-bs-toggle="dropdown" aria-expanded="false">My Account</button>
-                            <ul class="dropdown-menu" aria-labelledby="moreoption">
-                                <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Log In</a></li>
-                                <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Sign Up</a></li>
-                            </ul>
-						</div> -->
+
 					</div>
 				</nav>
 			</div>
 		</div>
-    </header>
-    <!-- ================> header section end here <================== -->
+	</header>
+<!-- ================> header section end here <================== -->
 
 
 
@@ -2749,9 +2692,10 @@
 										<div class="footer__content--desc">
 											<ul>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Our Team</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li>
-												<li><a href="#"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
+												<li><a href="{% url 'accounts:edit_profile' %}"><i class="fa-solid fa-angle-right"></i> Edit Profile</a></li>
+												<li><a href="{% url 'accounts:password_reset' %}"><i class="fa-solid fa-angle-right"></i> Reset Password</a></li>
+												<!-- <li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li> -->
+												<li><a href="{% url 'accounts:contact' %}"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
 												<li><a href="#"><i class="fa-solid fa-angle-right"></i> FAQ</a></li>
 											</ul>
 										</div>
@@ -2833,6 +2777,33 @@
 	<script src="../../static/assets/js/vendor/bootstrap.bundle.min.js"></script>
 	<script src="../../static/assets/js/plugins.js"></script>
 	<script src="../../static/assets/js/main.js"></script>
+
+	<script>
+		function checkNewMessages() {
+			console.log("Checking for new messages...");
+
+			fetch("{% url 'chats:check_unread_messages' %}")
+				.then(response => response.json())
+				.then(data => {
+					console.log("Message check response:", data);
+
+					const indicator = document.querySelector('.message-indicator');
+
+					if (indicator) {
+						if (data.has_new === true) {
+							indicator.style.display = 'block';
+						} else {
+							indicator.style.display = 'none';
+						}
+					}
+				});
+			}
+
+			setInterval(checkNewMessages, 3000); // check every 10 seconds
+
+	</script>
+
+
 
 
 

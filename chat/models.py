@@ -76,3 +76,29 @@ class Status(models.Model):
 
     def is_expired(self):
         return self.created_at < now() - timedelta(hours=24)  # ✅ Check if 24 hours have passed
+
+
+# import uuid
+# from django.db import models
+# from django.conf import settings
+# from django.utils.timezone import now
+#
+# class Story(models.Model):
+#     STORY_TYPES = [
+#         ('text', 'Text'),
+#         ('image', 'Image'),
+#         ('video', 'Video'),
+#     ]
+#
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="statuses")
+#     story_type = models.CharField(max_length=10, choices=STORY_TYPES)
+#     text = models.TextField(blank=True, null=True)  # For text stories
+#     media = models.FileField(upload_to="stories/", blank=True, null=True)  # For images/videos
+#     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp
+#
+#     def __str__(self):
+#         return f"{self.user.username} - {self.story_type} ({self.created_at})"
+#
+#     def is_expired(self):
+#         return self.created_at < now() - timedelta(hours=24)  # ✅ Check if 24 hours have passed

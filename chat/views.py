@@ -383,3 +383,106 @@ def fetch_statuses(request):
     ]
 
     return JsonResponse({"statuses": status_data})
+
+
+
+from django.utils import timezone
+from chat.models import ChatMessage
+
+@login_required
+def check_unread_messages(request):
+    user = request.user
+    last_checked = user.last_checked_messages_at
+
+    new_messages = ChatMessage.objects.filter(
+        models.Q(room__user1=user) | models.Q(room__user2=user),
+    ).exclude(sender=user)
+
+    if last_checked:
+        new_messages = new_messages.filter(timestamp__gt=last_checked)
+
+    has_new = new_messages.exists()
+
+    return JsonResponse({"has_new": has_new})
+
+
+
+
+# from django.shortcuts import render, get_object_or_404
+# from django.http import JsonResponse
+# from django.contrib.auth.decorators import login_required
+# from .models import Story
+# from accounts.models import User
+# import json
+#
+# from django.core.files.storage import default_storage
+#
+# @login_required
+# def post_story(request):
+#     """Handles posting a new story (text, image, or video)."""
+#     if request.method == "POST":
+#         user = request.user
+#         data = request.POST
+#
+#         story_type = data.get("story_type")
+#         text = data.get("text", "").strip()
+#         media = request.FILES.get("media", None)  # Image or video file
+#
+#         print(f"📝 DEBUG: Received story request - {story_type}")
+#
+#         if story_type not in ["text", "image", "video"]:
+#             print("❌ Invalid story type")
+#             return JsonResponse({"story": "error", "message": "Invalid story type."}, status=400)
+#
+#         if story_type == "text" and not text:
+#             print("❌ Text story cannot be empty")
+#             return JsonResponse({"story": "error", "message": "Text story cannot be empty."}, status=400)
+#
+#         # Save the story
+#         story = Story.objects.create(user=user, story_type=story_type, text=text, media=media)
+#         print(f"✅ Story saved: {story}")
+#
+#         return JsonResponse({"story": "success", "message": "Story posted successfully!"})
+#
+#     return JsonResponse({"story": "error", "message": "Invalid request"}, status=400)
+#
+#
+#
+#
+#
+# from django.utils.timezone import now
+# from datetime import timedelta
+# from django.http import JsonResponse
+# from django.contrib.auth.decorators import login_required
+# from .models import Story
+# from accounts.models import User
+#
+# @login_required
+# def fetch_stories(request):
+#     user = request.user
+#
+#     # ✅ Get matched users + the logged-in user
+#     matched_users = User.objects.filter(
+#         likes_received__user_from=user,
+#         likes_sent__user_to=user
+#     ) | User.objects.filter(id=user.id)  # Include self
+#
+#     expiry_time = now() - timedelta(hours=24)  # ✅ Fetch only the last 24 hours' statuses
+#     stories = Story.objects.filter(user__in=matched_users, created_at__gte=expiry_time).order_by("-created_at")
+#
+#     # ✅ Format response (include time remaining)
+#     story_data = [
+#         {
+#             "username": story.user.username,
+#             "profile_image": story.user.profile_image.url if story.user.profile_image else "/static/default.jpg",
+#             "story_type": story.story_type,
+#             "text": story.text if story.text else "",
+#             "media_url": story.media.url if story.media else "",
+#             "timestamp": story.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+#             "expires_in": (story.created_at + timedelta(hours=24)).isoformat(),  # ✅ Expiration timestamp
+#             "is_owner": story.user == user,
+#         }
+#         for story in stories
+#     ]
+#
+#     return JsonResponse({"stories": story_data})

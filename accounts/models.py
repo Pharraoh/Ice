@@ -55,6 +55,7 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, null=True)
     middle_name = models.TextField(blank=True, null=True)
     last_seen = models.DateTimeField(default=timezone.now)
+    last_checked_messages_at = models.DateTimeField(null=True, blank=True)
 
     # Profile Images
     profile_image = models.ImageField(upload_to='profile/', default='avatar.png', null=True, blank=True)

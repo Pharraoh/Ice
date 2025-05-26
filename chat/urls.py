@@ -13,5 +13,8 @@ urlpatterns = [
     path("post_status/", views.post_status, name='post_status'),
     path("fetch_statuses/", views.fetch_statuses, name='fetch_statuses'),
 
+    path('check-unread-messages/', views.check_unread_messages, name='check_unread_messages'),
+
+
 ]
-# 
+#

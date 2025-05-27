@@ -74,18 +74,72 @@ def like_user(request, username):
     return JsonResponse({'status': 'already_liked', 'message': f"You already liked {other_user.username}!"}, status=200)
 
 
+# from django.utils import timezone
+# @login_required
+# def matched_users(request):
+#     request.user.last_checked_messages_at = timezone.now()
+#     request.user.save(update_fields=['last_checked_messages_at'])
+#
+#     user = request.user
+#     matched_users = User.objects.filter(
+#         likes_received__user_from=user,
+#         likes_sent__user_to=user
+#     )
+#     return render(request, "members/cht.html", {"matched_users": matched_users})
+
+
+from datetime import datetime, timezone as dt_timezone
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.db.models import Q
 from django.utils import timezone
+from chat.models import ChatRoom, ChatMessage
+from accounts.models import User  # Your custom User model
+
 @login_required
 def matched_users(request):
     request.user.last_checked_messages_at = timezone.now()
     request.user.save(update_fields=['last_checked_messages_at'])
 
     user = request.user
+    # Get users that match with current user
     matched_users = User.objects.filter(
         likes_received__user_from=user,
         likes_sent__user_to=user
+    ).distinct()
+
+    matched_users_with_last_msg = []
+    for matched in matched_users:
+        # Get the chat room between both users
+        room = ChatRoom.objects.filter(
+            (Q(user1=user) & Q(user2=matched)) | (Q(user1=matched) & Q(user2=user))
+        ).first()
+
+        last_msg = (
+            ChatMessage.objects
+            .filter(room=room)
+            .order_by('-timestamp')
+            .first()
+        )
+
+        matched_users_with_last_msg.append({
+            'user': matched,
+            'last_msg_time': last_msg.timestamp if last_msg else None,
+            'last_msg_text': last_msg.message if last_msg else None,
+            'last_msg_read': True if not last_msg else (last_msg.is_read or last_msg.sender == request.user)
+        })
+
+    # Sort by last message time (most recent first)
+    matched_users_with_last_msg.sort(
+        key=lambda x: x['last_msg_time'] or datetime.min.replace(tzinfo=dt_timezone.utc),
+        reverse=True
     )
-    return render(request, "members/cht.html", {"matched_users": matched_users})
+
+    return render(request, "members/cht.html", {
+        "matched_users": matched_users_with_last_msg
+    })
+
+
 
 
 

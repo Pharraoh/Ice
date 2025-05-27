@@ -128,6 +128,65 @@ def chat_list(request):
 
 
 
+# from django.http import JsonResponse
+# from django.db import models
+# from django.shortcuts import get_object_or_404
+# from django.contrib.auth.decorators import login_required
+# import logging
+# from .models import ChatRoom, ChatMessage
+# from accounts.models import User
+#
+# logger = logging.getLogger(__name__)
+#
+# @login_required
+# def fetch_messages(request, username):
+#     logger.info(f"🔍 Fetching messages for {request.user} and {username}")
+#
+#     try:
+#         # ✅ Print received username for debugging
+#         print(f"🔍 Received username for fetching messages: {username}")
+#
+#         # ✅ Ensure other user exists
+#         other_user = get_object_or_404(User, username=username)
+#
+#         # ✅ Find chat room
+#         room = ChatRoom.objects.filter(
+#             models.Q(user1=request.user, user2=other_user) |
+#             models.Q(user1=other_user, user2=request.user)
+#         ).first()
+#
+#         if not room:
+#             logger.warning(f"⚠️ No chat room found between {request.user} and {username}")
+#             return JsonResponse({'messages': []})
+#
+#         # ✅ Fetch messages (ordering ensures newest at the bottom)
+#         messages = ChatMessage.objects.filter(room=room).order_by('timestamp')
+#
+#         # ✅ Log messages
+#         print(f"💬 DEBUG: Found {messages.count()} messages for chat {room.id}")
+#         for msg in messages:
+#             print(f"📝 {msg.sender.username}: {msg.message} ({msg.timestamp})")
+#
+#         # ✅ Format messages for JSON response
+#         messages_data = [
+#             {
+#                 'sender': message.sender.username,
+#                 'message': message.message,
+#                 'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+#             }
+#             for message in messages
+#         ]
+#
+#         return JsonResponse({'messages': messages_data})
+#
+#     except Exception as e:
+#         logger.error(f"❌ ERROR in fetch_messages: {str(e)}")
+#         return JsonResponse({'error': 'Something went wrong'}, status=500)
+
+
+
+
+
 from django.http import JsonResponse
 from django.db import models
 from django.shortcuts import get_object_or_404
@@ -162,6 +221,13 @@ def fetch_messages(request, username):
         # ✅ Fetch messages (ordering ensures newest at the bottom)
         messages = ChatMessage.objects.filter(room=room).order_by('timestamp')
 
+        # ✅ Mark unread messages from the other user as read
+        ChatMessage.objects.filter(
+            room=room,
+            sender=other_user,
+            is_read=False
+        ).update(is_read=True)
+
         # ✅ Log messages
         print(f"💬 DEBUG: Found {messages.count()} messages for chat {room.id}")
         for msg in messages:
@@ -182,12 +248,6 @@ def fetch_messages(request, username):
     except Exception as e:
         logger.error(f"❌ ERROR in fetch_messages: {str(e)}")
         return JsonResponse({'error': 'Something went wrong'}, status=500)
-
-
-
-
-
-
 
 
 

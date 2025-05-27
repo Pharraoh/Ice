@@ -127,7 +127,7 @@
                 </div>
             </form>
         </div>
-        <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
+        <!-- <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
           <ul class="list-group list-group-flush">
               {% for match in matched_users %}
                   <li class="list-group-item chat-user" data-username="{{ match.username }}" data-profile-pic="{{ match.profile_image.url }}">
@@ -146,7 +146,59 @@
               {% endfor %}
             </ul>
 
+        </div> -->
+        <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
+          <ul class="list-group list-group-flush">
+            {% for match in matched_users %}
+              <li class="list-group-item chat-user" data-username="{{ match.user.username }}" data-profile-pic="{{ match.user.profile_image.url }}">
+                <div style="display: flex; align-items: center;">
+                  <figure class="avatar mr-3">
+                    <img src="{{ match.user.profile_image.url }}" class="rounded-circle" alt="image">
+                  </figure>
+                  <div class="users-list-body">
+                    <div>
+                      <h5>{{ match.user.username|title }}</h5>
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <!-- <p style="margin: 0; {% if not match.last_msg_read %}font-weight: bold;{% endif %}">
+                          {{ match.last_msg_text|truncatechars:30 }}
+                        </p> -->
+                        <p style="{% if not match.last_msg_read %}font-weight: bold;{% endif %}">
+                          {{ match.last_msg_text|truncatechars:30 }}
+                        </p>
+
+                        <small style="color: #888; margin-left: 10px;">
+                          {{ match.last_msg_time|date:"H:i" }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- <li class="list-group-item chat-user" data-username="{{ match.user.username }}" data-profile-pic="{{ match.user.profile_image.url }}">
+                <div>
+                  <figure class="avatar mr-3">
+                    <img src="{{ match.user.profile_image.url }}" class="rounded-circle" alt="image">
+                  </figure>
+                </div>
+                <div class="users-list-body">
+                  <div>
+                    <h5>{{ match.user.username|title }}</h5>
+                    {% if match.last_msg_text %}
+                      <p class="text-muted" style="font-size: 14px; margin-bottom: 0;">
+                        {{ match.last_msg_text|truncatechars:40 }}
+                      </p>
+                      <small class="text-muted">{{ match.last_msg_time|date:"M d, H:i" }}</small>
+                    {% else %}
+                      <p class="text-muted" style="font-size: 14px;">No messages yet</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </li> -->
+            {% endfor %}
+          </ul>
         </div>
+
     </div>
     <!-- ./ Friends left sidebar -->
 

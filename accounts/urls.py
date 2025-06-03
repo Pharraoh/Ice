@@ -5,6 +5,7 @@ from .views import get_lgas
 
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LogoutView
 
 app_name = "accounts"
 
@@ -13,7 +14,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('contact/', views.contact, name='contact'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('logout/', views.logout, name='logout'),
+    path('logout/', LogoutView.as_view(next_page='accounts:login'), name='logout'),
 
     path('get-lgas/<int:state_id>/', get_lgas, name='get_lgas'),
     path('edit-profile/', views.edit_profile, name="edit_profile"),

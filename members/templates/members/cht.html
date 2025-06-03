@@ -102,7 +102,11 @@
 
                         <a href="{% url 'accounts:dashboard' %}" class="dropdown-item">Dashboard</a>
                         <a href="{% url 'members:allmembers' %}" class="dropdown-item">Find Matches</a>
-                        <a href="{% url 'accounts:logout' %}" class="dropdown-item text-danger">Logout</a>
+                        <form action="{% url 'accounts:logout' %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item text-danger">Logout</a>
+                        </form>
+                        <!-- <a href="" class="dropdown-item text-danger">Logout</a> -->
                     </div>
                 </li>
             </ul>

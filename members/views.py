@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 # @login_required
 # def allmembers(request):
@@ -52,6 +53,7 @@ from django.http import JsonResponse
 from members.models import UserProfile, Like
 from accounts.models import User  # Use your custom user model if applicable
 
+@never_cache
 @login_required
 def like_user(request, username):
     """
@@ -96,6 +98,7 @@ from django.utils import timezone
 from chat.models import ChatRoom, ChatMessage
 from accounts.models import User  # Your custom User model
 
+@never_cache
 @login_required
 def matched_users(request):
     request.user.last_checked_messages_at = timezone.now()
@@ -146,6 +149,7 @@ def matched_users(request):
 from django.shortcuts import render, get_object_or_404
 from accounts.models import User  # or your custom user model
 
+@never_cache
 @login_required
 def user_profile(request, user_id):
     user_profile = get_object_or_404(User, id=user_id)

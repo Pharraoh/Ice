@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
 from .utils import send_welcome_email
+from django.views.decorators.cache import never_cache
 
 def signup_view(request):
     if request.method == 'POST':
@@ -61,17 +62,15 @@ def login_view(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
-
+@never_cache
 @login_required
 def dashboard(request):
     return render(request, "accounts/member-single.html")
 
+@never_cache
 @login_required
 def contact(request):
     return render(request, "accounts/contact.html")
-
-def logout(request):
-    return render(request, "accounts/logout.html")
 
 
 from django.http import JsonResponse
@@ -99,6 +98,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 
+@never_cache
 @login_required
 def edit_profile(request):
     user = request.user

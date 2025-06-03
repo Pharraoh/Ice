@@ -79,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'accounts.middleware.active_user_middleware.ActiveUserMiddleware',
+    'chat.middleware.NoCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'ice.urls'

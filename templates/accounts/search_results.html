@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
 	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
 	<link rel="stylesheet" href="../../static/assets/css/style.css">
+	<link rel="stylesheet" href="../../static/assets/css/msg-indicator(hamburger).css">
 
 </head>
 
@@ -103,15 +104,21 @@
 										<li><a href="{% url 'community:activity' %}">Activity</a></li>
 									</ul>
 								</li> -->
-								<li>
-									<a href="#0">Find Matches</a>
+								<li class="active">
+									<a href="#0">Matches</a>
 									<ul>
 										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
 										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
 										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
+										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
 									</ul>
 								</li>
-								<li><a href="{% url 'members:matched_users' %}" class="nav-link">My Matches</a></li>
+								<li style="position: relative;">
+									<a href="{% url 'members:matched_users' %}">
+										<i class="fa fa-comments"></i>
+										<span class="message-indicator" style="display: none;"></span>
+									</a>
+								</li>
 								<!-- <li>
 									<a href="#0">Shops</a>
 									<ul>
@@ -230,7 +237,7 @@
 																	<div class="member__inner">
 																			<div class="member__thumb">
 																					<img src="{{ profile.profile_image.url }}" alt="member-img">
-																					<span class="member__activity"></span>
+																					<!-- <span class="member__activity"></span> -->
 																			</div>
 																			<div class="member__content">
 																							<h5>{{ profile.username }}</h5> <br>
@@ -454,6 +461,31 @@
 		            });
 		        });
 		    });
+		</script>
+
+		<script>
+			function checkNewMessages() {
+				console.log("Checking for new messages...");
+
+				fetch("{% url 'chats:check_unread_messages' %}")
+					.then(response => response.json())
+					.then(data => {
+						console.log("Message check response:", data);
+
+						const indicator = document.querySelector('.message-indicator');
+
+						if (indicator) {
+							if (data.has_new === true) {
+								indicator.style.display = 'block';
+							} else {
+								indicator.style.display = 'none';
+							}
+						}
+					});
+				}
+
+				setInterval(checkNewMessages, 3000); // check every 10 seconds
+
 		</script>
 
 

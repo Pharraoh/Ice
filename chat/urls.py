@@ -12,6 +12,7 @@ urlpatterns = [
     # path('fetch-messages/<int:room_id>/', views.fetch_messages, name='fetch_messages'),
     path("post_status/", views.post_status, name='post_status'),
     path("fetch_statuses/", views.fetch_statuses, name='fetch_statuses'),
+    path('delete_status/<uuid:status_id>/', views.delete_status, name='delete_status'),
 
     path('check-unread-messages/', views.check_unread_messages, name='check_unread_messages'),
 

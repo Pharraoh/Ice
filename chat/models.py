@@ -72,6 +72,7 @@ class Status(models.Model):
     media = models.FileField(upload_to="statuses/", blank=True, null=True)  # For images/videos
     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp
 
+
     def __str__(self):
         return f"{self.user.username} - {self.status_type} ({self.created_at})"
 

@@ -506,11 +506,26 @@ def fetch_statuses(request):
             "timestamp": status.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "expires_in": (status.created_at + timedelta(hours=24)).isoformat(),  # ✅ Expiration timestamp
             "is_owner": status.user == user,
+            "id": str(status.id),
         }
         for status in statuses
     ]
 
     return JsonResponse({"statuses": status_data})
+
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import Status
+
+@login_required
+def delete_status(request, status_id):
+    if request.method == "POST":
+        status = get_object_or_404(Status, id=status_id, user=request.user)
+        status.delete()
+        return JsonResponse({"status": "success", "message": "Status deleted successfully!"})
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
 
 
 

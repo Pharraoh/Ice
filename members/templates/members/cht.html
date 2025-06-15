@@ -249,6 +249,7 @@
         -----------------------------
 
 
+  <!-- size and length limit for status -->
   <script>
   document.getElementById("statusType").addEventListener("change", function () {
       const type = this.value;
@@ -294,10 +295,10 @@
 
 
 
-
         <!-- Status Fullscreen Modal (For Mobile View) -->
         <div id="status-modal" class="status-modal">
             <div class="status-content">
+                <span class="delete-modal"><i class="fa fa-trash delete-status-icon" title="Delete"></i></span>
                 <span id="close-modal" class="close-modal">&times;</span>
                 <div id="status-display"></div>
             </div>
@@ -813,9 +814,11 @@ document.addEventListener("DOMContentLoaded", function () {
         let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
         if (hours > 0) {
-            return `Expires in ${hours}h ${minutes}m`;
+            // return `Expires in ${hours}h ${minutes}m`;
+            return `${hours}h ${minutes}m`;
         } else {
-            return `Expires in ${minutes}m`;
+            // return `Expires in ${minutes}m`;
+            return `${minutes}m`;
         }
     }
 
@@ -854,6 +857,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function showCurrentStatus() {
             let status = statuses[currentIndex];
+            window.currentlyViewingStatus = status;
 
             if (!status) {
                 console.error("⚠️ Status is undefined!");
@@ -1001,6 +1005,49 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial load
     fetchStatuses();
 });
+</script>
+
+
+// js for status deletion
+<script>
+  document.querySelector(".delete-status-icon")?.addEventListener("click", function () {
+      const status = window.currentlyViewingStatus;
+
+      if (!status) {
+          alert("⚠️ No status selected.");
+          return;
+      }
+
+      if (!status.is_owner) {
+          alert("❌ You can't delete this status.");
+          return;
+      }
+
+      if (!confirm("Are you sure you want to delete this status?")) return;
+
+      fetch(`/chat/delete_status/${status.id}/`, {
+          method: "POST",
+          headers: {
+              "X-CSRFToken": document.getElementById("csrf_token").value,
+          },
+      })
+      .then(res => res.json())
+      .then(data => {
+          if (data.status === "success") {
+              alert("✅ Status deleted!");
+              document.getElementById("status-modal").style.display = "none";
+              fetchStatuses(); // refresh the status list
+          } else {
+              alert("❌ " + data.message);
+          }
+      })
+      // .catch(err => {
+      //     console.error("❌ Delete failed:", err);
+      //     alert("An error occurred.");
+      // });
+  });
+
+
 </script>
 
 

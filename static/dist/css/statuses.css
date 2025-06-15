@@ -72,6 +72,7 @@
 }
 
 .status-modal img, .status-modal video {
+    margin-top: 50px;
     max-width: 100%;
     max-height: 80vh;
     /* border-radius: 10px; */
@@ -85,6 +86,15 @@
     font-size: 25px;
     cursor: pointer;
     color: #fff;
+}
+
+.delete-modal {
+    position: absolute;
+    top: 16px;
+    right: 55px;
+    font-size: 20px;
+    cursor: pointer;
+    color: red;
 }
 
 

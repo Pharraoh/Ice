@@ -407,6 +407,7 @@ from django.core.files.storage import default_storage
 from django.utils.timezone import now
 from .models import Status
 import tempfile, os
+os.environ["SDL_AUDIODRIVER"] = "dummy"
 from moviepy.editor import VideoFileClip
 
 @login_required
@@ -444,9 +445,9 @@ def post_status(request):
                 temp_file.flush()
                 temp_path = temp_file.name
 
-            clip = VideoFileClip(temp_path)
+            clip = VideoFileClip(temp_file.name, audio=False)
             duration = clip.duration
-            clip.reader.close()
+            clip.close()
             if clip.audio:
                 clip.audio.reader.close_proc()
 

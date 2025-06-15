@@ -74,7 +74,7 @@
 .status-modal img, .status-modal video {
     max-width: 100%;
     max-height: 80vh;
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 
 /* Close Button */

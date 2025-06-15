@@ -121,14 +121,14 @@
         <div class="left-sidebar-header">
             <form>
                 <h4 class="mb-4">Friends</h4>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <div class="input-group-prepend">
                         <button class="btn" type="button">
                             <i class="ti-search"></i>
                         </button>
                     </div>
                     <input type="text" class="form-control" placeholder="Search friends">
-                </div>
+                </div> -->
             </form>
         </div>
         <!-- <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
@@ -239,11 +239,58 @@
                 <input type="text" name="text" id="statusText" placeholder="Enter text status">
                 <!-- File Input Wrapper -->
                 <div id="mediaInputWrapper" style="display: none;">
-                    <input type="file" name="media" id="statusMedia">
+                    <input type="file" name="media" id="statusMedia" accept="image/*,video/*">
                 </div>
                 <button type="submit">Post Status</button>
             </form>
         </div>
+
+        -----------------------------
+        -----------------------------
+
+
+  <script>
+  document.getElementById("statusType").addEventListener("change", function () {
+      const type = this.value;
+      const mediaWrapper = document.getElementById("mediaInputWrapper");
+      const textInput = document.getElementById("statusText");
+
+      if (type === "text") {
+          mediaWrapper.style.display = "none";
+          textInput.style.display = "block";
+      } else {
+          mediaWrapper.style.display = "block";
+          textInput.style.display = "none";
+      }
+  });
+
+  document.getElementById("statusUploadForm").addEventListener("submit", function (e) {
+      const type = document.getElementById("statusType").value;
+      const fileInput = document.getElementById("statusMedia");
+      const textInput = document.getElementById("statusText").value;
+      const MAX_SIZE_MB = 30;
+
+      if (type === "text" && textInput.trim() === "") {
+          alert("Text status cannot be empty.");
+          e.preventDefault();
+          return;
+      }
+
+      if ((type === "image" || type === "video") && fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const sizeMB = file.size / (1024 * 1024);
+          const isVideo = file.type.startsWith("video");
+
+          if (sizeMB > MAX_SIZE_MB) {
+              alert(`File too large! Max allowed size is ${MAX_SIZE_MB}MB.`);
+              e.preventDefault();
+              return;
+          }
+      }
+  });
+  </script>
+
+
 
 
 
@@ -858,28 +905,45 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // ✅ Auto-advance to next status after 5 seconds (like WhatsApp)
-        function autoAdvance() {
-            if (currentIndex < statuses.length - 1) {
-                setTimeout(() => {
-                    currentIndex++;
-                    showCurrentStatus();
-                    autoAdvance(); // Recursively call for the next status
-                }, 5000); // Adjust delay as needed
-            } else {
-                setTimeout(() => {
-                    statusModal.style.display = "none"; // Close modal after last status
-                    if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
-                }, 5000);
-            }
-        }
-        autoAdvance(); // Start auto-advance
+        // function autoAdvance() {
+        //     if (currentIndex < statuses.length - 1) {
+        //         setTimeout(() => {
+        //             currentIndex++;
+        //             showCurrentStatus();
+        //             autoAdvance(); // Recursively call for the next status
+        //         }, 5000); // Adjust delay as needed
+        //     } else {
+        //         setTimeout(() => {
+        //             statusModal.style.display = "none"; // Close modal after last status
+        //             if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
+        //         }, 5000);
+        //     }
+        // }
+        // autoAdvance(); // Start auto-advance
 
         // ❌ Close modal manually
+        // closeModal.addEventListener("click", function () {
+        //     console.log("❌ Closing status modal...");
+        //     statusModal.style.display = "none";
+        //     if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
+        // });
+
+        // close modal ensuring video stops playing in Background
         closeModal.addEventListener("click", function () {
             console.log("❌ Closing status modal...");
             statusModal.style.display = "none";
+
+            // ✅ Pause any video inside the modal
+            const video = statusModal.querySelector("video");
+            if (video) {
+                video.pause();
+                video.currentTime = 0;  // optional: reset to beginning
+            }
+
             if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
         });
+
+
     }
 
 

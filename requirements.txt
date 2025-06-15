@@ -99,6 +99,7 @@ lxml>=4.9.3
 MarkupSafe==2.1.1
 matplotlib==3.10.0
 MouseInfo==0.1.3
+moviepy==1.0.3
 mpmath==1.3.0
 msgpack==1.1.0
 mss==9.0.1

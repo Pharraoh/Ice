@@ -374,30 +374,98 @@ import json
 
 from django.core.files.storage import default_storage
 
+# @login_required
+# def post_status(request):
+#     """Handles posting a new status (text, image, or video)."""
+#     if request.method == "POST":
+#         user = request.user
+#         data = request.POST
+#
+#         status_type = data.get("status_type")
+#         text = data.get("text", "").strip()
+#         media = request.FILES.get("media", None)  # Image or video file
+#
+#         print(f"📝 DEBUG: Received status request - {status_type}")
+#
+#         if status_type not in ["text", "image", "video"]:
+#             print("❌ Invalid status type")
+#             return JsonResponse({"status": "error", "message": "Invalid status type."}, status=400)
+#
+#         if status_type == "text" and not text:
+#             print("❌ Text status cannot be empty")
+#             return JsonResponse({"status": "error", "message": "Text status cannot be empty."}, status=400)
+#
+#         # Save the status
+#         status = Status.objects.create(user=user, status_type=status_type, text=text, media=media)
+#         print(f"✅ Status saved: {status}")
+#
+#         return JsonResponse({"status": "success", "message": "Status posted successfully!"})
+#
+#     return JsonResponse({"status": "error", "message": "Invalid request"}, status=400)
+
+
+from django.utils.timezone import now
+from .models import Status
+import tempfile, os
+from moviepy.editor import VideoFileClip
+
 @login_required
 def post_status(request):
-    """Handles posting a new status (text, image, or video)."""
     if request.method == "POST":
         user = request.user
         data = request.POST
 
         status_type = data.get("status_type")
         text = data.get("text", "").strip()
-        media = request.FILES.get("media", None)  # Image or video file
+        media = request.FILES.get("media", None)
 
         print(f"📝 DEBUG: Received status request - {status_type}")
 
         if status_type not in ["text", "image", "video"]:
-            print("❌ Invalid status type")
             return JsonResponse({"status": "error", "message": "Invalid status type."}, status=400)
 
         if status_type == "text" and not text:
-            print("❌ Text status cannot be empty")
             return JsonResponse({"status": "error", "message": "Text status cannot be empty."}, status=400)
 
-        # Save the status
-        status = Status.objects.create(user=user, status_type=status_type, text=text, media=media)
-        print(f"✅ Status saved: {status}")
+        # ✅ Limit file size
+        if media:
+            MAX_FILE_SIZE_MB = 30
+            if media.size > MAX_FILE_SIZE_MB * 1024 * 1024:
+                return JsonResponse({
+                    "status": "error",
+                    "message": f"File too large. Max allowed is {MAX_FILE_SIZE_MB}MB."
+                }, status=400)
+
+        # ✅ Check video duration
+        if status_type == "video" and media:
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+                for chunk in media.chunks():
+                    temp_file.write(chunk)
+                temp_file.flush()
+                temp_path = temp_file.name
+
+            clip = VideoFileClip(temp_path)
+            duration = clip.duration
+            clip.reader.close()
+            if clip.audio:
+                clip.audio.reader.close_proc()
+
+            os.unlink(temp_path)  # ✅ Clean up temp file
+
+            MAX_DURATION = 30  # seconds
+            if duration > MAX_DURATION:
+                return JsonResponse({
+                    "status": "error",
+                    "message": f"Video too long. Max duration is {MAX_DURATION} seconds."
+                }, status=400)
+
+        # ✅ Save the status
+        status = Status.objects.create(
+            user=user,
+            status_type=status_type,
+            text=text,
+            media=media
+        )
 
         return JsonResponse({"status": "success", "message": "Status posted successfully!"})
 

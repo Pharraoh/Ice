@@ -129,48 +129,33 @@ CHANNEL_LAYERS = {
 # }
 
 
-# import dj_database_url
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / "db.sqlite3",
-#     }
-# }
+import dj_database_url
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
+
 
 
 # import os
 #
 # # Directly add your database URL here
-# DATABASE_URL = "postgresql://ice_db_user:MTrYcfLPA3x590QValHKmLqDHBJOvdyo@dpg-d0gq0fk9c44c7392qr20-a.oregon-postgres.render.com:5432/ice_db"
+# DATABASE_URL = "postgresql://ice_db_lct4_user:j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU@dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com:5432/ice_db_lct4"
+#
 #
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'ice_db',  # Extract dbname from URL
-#         'USER': 'ice_db_user',  # Extract user from URL
-#         'PASSWORD': 'MTrYcfLPA3x590QValHKmLqDHBJOvdyo',  # Extract password from URL
-#         'HOST': 'dpg-d0gq0fk9c44c7392qr20-a.oregon-postgres.render.com',  # Extract host from URL
+#         'NAME': 'ice_db_lct4',  # Extract dbname from URL
+#         'USER': 'ice_db_lct4_user',  # Extract user from URL
+#         'PASSWORD': 'j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU',  # Extract password from URL
+#         'HOST': 'dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com',  # Extract host from URL
 #         'PORT': '5432',  # Corrected extraction of port
 #     }
 # }
-
-import os
-
-# Directly add your database URL here
-DATABASE_URL = "postgresql://ice_db_lct4_user:j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU@dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com:5432/ice_db_lct4"
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ice_db_lct4',  # Extract dbname from URL
-        'USER': 'ice_db_lct4_user',  # Extract user from URL
-        'PASSWORD': 'j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU',  # Extract password from URL
-        'HOST': 'dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com',  # Extract host from URL
-        'PORT': '5432',  # Corrected extraction of port
-    }
-}
 
 
 

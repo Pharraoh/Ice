@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="../../static/dist/css/app.min.css">
 
     <link rel="stylesheet" href="../../static/dist/css/statuses.css">
+    <link rel="stylesheet" href="../../static/dis/css/loading_animation.css">
 
 
     <!-- preloader css  -->
@@ -223,6 +224,7 @@
             </div>
         </div>
 
+
         <!-- Floating '+' Button -->
         <button id="openStatusModal" class="fab">+</button>
 
@@ -241,8 +243,13 @@
                 <div id="mediaInputWrapper" style="display: none;">
                     <input type="file" name="media" id="statusMedia" accept="image/*,video/*">
                 </div>
-                <button type="submit">Post Status</button>
+                <button type="submit" id="postStatusBtn">Post Status</button>
             </form>
+
+            <!-- ✅ Move loader here -->
+            <!-- <div id="statusLoader" style="display: none; position: fixed; top: 0; left: 0; width: 50%; height: 50%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+              <div class="spinner"></div>
+            </div> -->
         </div>
 
         -----------------------------
@@ -298,7 +305,7 @@
         <!-- Status Fullscreen Modal (For Mobile View) -->
         <div id="status-modal" class="status-modal">
             <div class="status-content">
-                <span class="delete-modal"><i class="fa fa-trash delete-status-icon" title="Delete"></i></span>
+
                 <span id="close-modal" class="close-modal">&times;</span>
                 <div id="status-display"></div>
             </div>
@@ -775,25 +782,36 @@ document.addEventListener("DOMContentLoaded", function () {
                         groupedStatuses[status.username].push(status);
                     });
 
-                    // ✅ Create a single status item per user
-                    Object.keys(groupedStatuses).forEach(username => {
+                    const currentUsername = "{{ request.user.username }}"; // optional if templated
+                    const orderedUsernames = Object.keys(groupedStatuses);
+
+                    // ✅ Move current user to the top
+                    orderedUsernames.sort((a, b) => {
+                        if (a === currentUsername) return -1;
+                        if (b === currentUsername) return 1;
+                        return 0;
+                    });
+
+                    orderedUsernames.forEach(username => {
+                        const firstStatus = groupedStatuses[username][0];
                         let statusItem = document.createElement("div");
                         statusItem.classList.add("status-item");
 
-                        let highlightClass = groupedStatuses[username][0].is_owner ? "owner-status" : "";
-                        let expirationTime = new Date(groupedStatuses[username][0].expires_in); // ✅ Convert expiration timestamp
-                        let timeRemaining = getTimeRemaining(expirationTime); // ✅ Get formatted countdown
+                        const highlightClass = firstStatus.is_owner ? "owner-status" : "";
+                        const expirationTime = new Date(firstStatus.expires_in);
+                        const timeRemaining = getTimeRemaining(expirationTime);
 
                         statusItem.innerHTML = `
-                            <img src="${groupedStatuses[username][0].profile_image}" alt="${username}" class="status-owner-pic ${highlightClass}">
+                            <img src="${firstStatus.profile_image}" alt="${username}" class="status-owner-pic ${highlightClass}">
                             <span class="${highlightClass}">${username} ${highlightClass ? "(You)" : ""}</span>
-                            <small class="status-timer" data-expiry="${expirationTime}">${timeRemaining}</small> <!-- ✅ Show countdown -->
+                            <small class="status-timer" data-expiry="${expirationTime}">${timeRemaining}</small>
                         `;
 
                         statusItem.setAttribute("data-expiry", expirationTime);
                         statusItem.addEventListener("click", () => openStatus(groupedStatuses[username]));
                         statusList.appendChild(statusItem);
                     });
+
 
                     updateTimers(); // ✅ Start real-time countdown
                 }
@@ -815,7 +833,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (hours > 0) {
             // return `Expires in ${hours}h ${minutes}m`;
-            return `${hours}h ${minutes}m`;
+            // return `${hours}h ${minutes}m`;
+            return `${hours}h`;
         } else {
             // return `Expires in ${minutes}m`;
             return `${minutes}m`;
@@ -841,10 +860,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ✅ Auto-refresh statuses every 10 seconds
-    setInterval(fetchStatuses, 10000);
+    // setInterval(fetchStatuses, 10000);
 
     // ✅ Initial load
-    fetchStatuses();
+    // fetchStatuses();
 
 
 
@@ -866,6 +885,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             statusDisplay.innerHTML = ""; // Clear previous content
 
+
             if (status.status_type === "image") {
                 statusDisplay.innerHTML = `<img src="${status.media_url}" alt="Status Image">`;
             } else if (status.status_type === "video") {
@@ -875,9 +895,45 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             statusDisplay.innerHTML += `
+              <div class="status-controls">
                 <button id="prevStatus" class="status-nav prev">&larr;</button>
                 <button id="nextStatus" class="status-nav next">&rarr;</button>
+
+                ${status.is_owner ? `<span class="delete-status" title="Delete">🗑️</span>` : ""}
+              </div>
             `;
+
+            setTimeout(() => {
+              const deleteBtn = document.querySelector(".delete-status");
+              if (deleteBtn) {
+                deleteBtn.addEventListener("click", function () {
+                  if (!confirm("Are you sure you want to delete this status?")) return;
+
+                  fetch(`/chat/delete_status/${status.id}/`, {
+                    method: "POST",
+                    headers: {
+                      "X-CSRFToken": csrfToken,
+                    },
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (data.status === "success") {
+                        alert("✅ Status deleted!");
+                        statusModal.style.display = "none";
+                        fetchStatuses();
+                      } else {
+                        alert("❌ " + data.message);
+                      }
+                    })
+                    .catch((err) => {
+                      console.error("❌ Delete failed:", err);
+                      alert("An error occurred.");
+                    });
+                });
+              }
+            }, 50); // slight delay ensures DOM is ready
+
+
 
             statusModal.style.display = "flex"; // Show status modal
 
@@ -971,36 +1027,95 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    /** ✅ Handle Status Upload */
+    /** ✅ Handle Status Upload & load animation */
+
     statusUploadForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        console.log("📤 Form submit event triggered!");
+      event.preventDefault();
 
-        let formData = new FormData(statusUploadForm);
+      const postBtn = document.getElementById("postStatusBtn");
+      let originalText = postBtn.textContent;
 
-        // ✅ Get CSRF token from Django's hidden input
-        formData.append("csrfmiddlewaretoken", csrfToken);
+      // Disable button and start loader simulation
+      postBtn.disabled = true;
+      let progress = 0;
+      postBtn.textContent = "Uploading";
 
-        fetch("/chat/post_status/", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("✅ Response received:", data);
-            if (data.status === "success") {
-                console.log("✅ Status posted successfully!");
-                fetchStatuses(); // Refresh statuses
-                uploadModal.style.display = "none"; // Close modal after posting
-            } else {
-                console.error("❌ Error posting status:", data.message);
-            }
-        })
-        .catch(error => console.error("❌ Fetch error:", error));
-    });
+      // Simulate a loading bar using dots
+      const loadingInterval = setInterval(() => {
+          progress = (progress + 1) % 4; // cycle 0–3
+          postBtn.textContent = "Uploading" + ".".repeat(progress);
+      }, 500); // update every 0.5 sec
+
+      let formData = new FormData(statusUploadForm);
+      formData.append("csrfmiddlewaretoken", csrfToken);
+
+      fetch("/chat/post_status/", {
+          method: "POST",
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          clearInterval(loadingInterval);
+          postBtn.disabled = false;
+          postBtn.textContent = originalText;
+
+          if (data.status === "success") {
+              fetchStatuses();
+              uploadModal.style.display = "none";
+          } else {
+              alert(data.message || "Something went wrong.");
+          }
+      })
+      .catch(error => {
+          clearInterval(loadingInterval);
+          postBtn.disabled = false;
+          postBtn.textContent = originalText;
+          alert("❌ An error occurred while posting.");
+          console.error(error);
+      });
+  });
+
+
+    // statusUploadForm.addEventListener("submit", function (event) {
+    //     event.preventDefault();
+    //     console.log("📤 Form submit event triggered!");
+    //
+    //     // 👇 Show loader
+    //     const postBtn = document.getElementById("postStatusBtn");
+    //     postBtn.classList.add("loading");
+    //
+    //     let formData = new FormData(statusUploadForm);
+    //     formData.append("csrfmiddlewaretoken", csrfToken);
+    //
+    //     fetch("/chat/post_status/", {
+    //         method: "POST",
+    //         body: formData
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log("✅ Response received:", data);
+    //
+    //         // 👇 Hide loader after success
+    //         postBtn.classList.remove("loading");
+    //
+    //         if (data.status === "success") {
+    //             console.log("✅ Status posted successfully!");
+    //             fetchStatuses(); // Refresh statuses
+    //             uploadModal.style.display = "none"; // Close modal
+    //         } else {
+    //             alert(data.message || "Something went wrong.");
+    //         }
+    //     })
+    //     .catch(error => {
+    //         postBtn.classList.remove("loading");
+    //         alert("❌ An error occurred while posting.");
+    //         console.error(error);
+    //     });
+    // });
+
 
     // Auto-refresh statuses every 10 seconds
-    setInterval(fetchStatuses, 10000);
+    // setInterval(fetchStatuses, 10000);
 
     // Initial load
     fetchStatuses();
@@ -1009,46 +1124,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // js for status deletion
-<script>
-  document.querySelector(".delete-status-icon")?.addEventListener("click", function () {
-      const status = window.currentlyViewingStatus;
-
-      if (!status) {
-          alert("⚠️ No status selected.");
-          return;
-      }
-
-      if (!status.is_owner) {
-          alert("❌ You can't delete this status.");
-          return;
-      }
-
-      if (!confirm("Are you sure you want to delete this status?")) return;
-
-      fetch(`/chat/delete_status/${status.id}/`, {
-          method: "POST",
-          headers: {
-              "X-CSRFToken": document.getElementById("csrf_token").value,
-          },
-      })
-      .then(res => res.json())
-      .then(data => {
-          if (data.status === "success") {
-              alert("✅ Status deleted!");
-              document.getElementById("status-modal").style.display = "none";
-              fetchStatuses(); // refresh the status list
-          } else {
-              alert("❌ " + data.message);
-          }
-      })
-      // .catch(err => {
-      //     console.error("❌ Delete failed:", err);
-      //     alert("An error occurred.");
-      // });
-  });
-
-
-</script>
+// <script>
+//   document.querySelector(".delete-status-icon")?.addEventListener("click", function () {
+//       const status = window.currentlyViewingStatus;
+//
+//       if (!status) {
+//           alert("⚠️ No status selected.");
+//           return;
+//       }
+//
+//       if (!status.is_owner) {
+//           alert("❌ You can't delete this status.");
+//           return;
+//       }
+//
+//       if (!confirm("Are you sure you want to delete this status?")) return;
+//
+//       fetch(`/chat/delete_status/${status.id}/`, {
+//           method: "POST",
+//           headers: {
+//               "X-CSRFToken": document.getElementById("csrf_token").value,
+//           },
+//       })
+//       .then(res => res.json())
+//       .then(data => {
+//           if (data.status === "success") {
+//               alert("✅ Status deleted!");
+//               document.getElementById("status-modal").style.display = "none";
+//               fetchStatuses(); // refresh the status list
+//           } else {
+//               alert("❌ " + data.message);
+//           }
+//       })
+//       // .catch(err => {
+//       //     console.error("❌ Delete failed:", err);
+//       //     alert("An error occurred.");
+//       // });
+//   });
+//
+//
+// </script>
 
 
 

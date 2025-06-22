@@ -544,9 +544,10 @@
 
 	/* Ensure images fit within the card */
 	.member__thumb img {
-	    width: 100%; /* Make images responsive */
-	    height: auto; /* Maintain aspect ratio */
-	    border-radius: 4px; /* Slight rounding for images */
+	    width: 100px; /* Make images responsive */
+	    height: 100px; /* Maintain aspect ratio */
+	    border-radius: 50%; /* Slight rounding for images */
+			object-fit: cover;
 	}
 
 	/* Center text inside the cards */
@@ -608,7 +609,7 @@
 											          {% else %}
 																	<br>
 																	<div class="default-btn like-button" data-url="{% url 'members:like_user' username=profile.username %}">
-																		<span>Matched<i class=""></i></span>
+																		<span>Matched   <i class="fa fa-lock"></i></span>
 																	</div> <br><br>
 
 																	<!-- View Profile Button -->

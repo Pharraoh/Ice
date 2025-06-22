@@ -88,15 +88,6 @@
     color: #fff;
 }
 
-.delete-modal {
-    position: absolute;
-    top: 16px;
-    right: 55px;
-    font-size: 20px;
-    cursor: pointer;
-    color: red;
-}
-
 
 /* first FAB */
 /* .fab {
@@ -243,6 +234,9 @@
     color: #007bff;
 }
 .status-owner-pic.owner-status {
+    border: none;
+}
+.status-owner-pic {
     border: 2px solid #007bff;
 }
 
@@ -259,19 +253,50 @@
     color: white;
     border: none;
     padding: 10px;
-    font-size: 18px;
+    font-size: 30px;
     cursor: pointer;
     border-radius: 50%;
 }
 
 .status-nav.prev {
-    left: 10px;
+    margin-top: 20px;
+    right: 300px;
 }
 
 .status-nav.next {
-    right: 10px;
+    margin-top: 20px;
+    right: 50px;
+}
+
+@media (max-width: 768px) {
+    .status-nav.prev {
+        right: 200px;
+    }
 }
 
 .status-nav:hover {
     background: rgba(0, 0, 0, 0.8);
+}
+
+.status-controls {
+  position: absolute;
+  top: 10px;
+  right: 50px; /* adjust this if needed */
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-status {
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: red;
+    transition: transform 0.2s ease;
+}
+
+
+.delete-status:hover {
+    transform: scale(1.2);
 }

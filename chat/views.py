@@ -506,7 +506,7 @@ def fetch_statuses(request):
             "media_url": status.media.url if status.media else "",
             "timestamp": status.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "expires_in": (status.created_at + timedelta(hours=24)).isoformat(),  # ✅ Expiration timestamp
-            "is_owner": status.user == user,
+            "is_owner": status.user == request.user,
             "id": str(status.id),
         }
         for status in statuses

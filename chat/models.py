@@ -71,6 +71,7 @@ class Status(models.Model):
     text = models.TextField(blank=True, null=True)  # For text statuses
     media = models.FileField(upload_to="statuses/", blank=True, null=True)  # For images/videos
     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp
+    caption = models.CharField(max_length=100, blank=True, null=True)  # ✅ For image/video captions
 
 
     def __str__(self):

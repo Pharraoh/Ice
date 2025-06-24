@@ -242,6 +242,9 @@
                 <!-- File Input Wrapper -->
                 <div id="mediaInputWrapper" style="display: none;">
                     <input type="file" name="media" id="statusMedia" accept="image/*,video/*">
+
+                    <!-- ✅ New caption field -->
+                    <input type="text" name="caption" id="statusCaption" placeholder="Add a caption (max 100 chars)" maxlength="100">
                 </div>
                 <button type="submit" id="postStatusBtn">Post Status</button>
             </form>
@@ -886,13 +889,71 @@ document.addEventListener("DOMContentLoaded", function () {
             statusDisplay.innerHTML = ""; // Clear previous content
 
 
+            // if (status.status_type === "image") {
+            //     statusDisplay.innerHTML = `<img src="${status.media_url}" alt="Status Image">`;
+            // } else if (status.status_type === "video") {
+            //     statusDisplay.innerHTML = `<video controls autoplay><source src="${status.media_url}" type="video/mp4"></video>`;
+            // } else {
+            //     statusDisplay.innerHTML = `<p>${status.text}</p>`;
+            // }
+
             if (status.status_type === "image") {
-                statusDisplay.innerHTML = `<img src="${status.media_url}" alt="Status Image">`;
+              statusDisplay.innerHTML = `
+                <div class="media-container">
+                  <img src="${status.media_url}" alt="Status Image" class="status-media">
+                  ${status.caption ? `
+                    <div class="status-caption-overlay">
+                      <span class="caption-text">${status.caption}</span>
+                      <span class="toggle-caption" style="display: none;">Show More</span>
+                    </div>` : ""}
+                </div>
+              `;
             } else if (status.status_type === "video") {
-                statusDisplay.innerHTML = `<video controls autoplay><source src="${status.media_url}" type="video/mp4"></video>`;
+              statusDisplay.innerHTML = `
+                <div class="media-container">
+                  <video controls autoplay class="status-media">
+                    <source src="${status.media_url}" type="video/mp4">
+                  </video>
+                  ${status.caption ? `
+                    <div class="status-caption-overlay">
+                      <span class="caption-text">${status.caption}</span>
+                      <span class="toggle-caption" style="display: none;">Show More</span>
+                    </div>` : ""}
+                </div>
+              `;
             } else {
-                statusDisplay.innerHTML = `<p>${status.text}</p>`;
+              statusDisplay.innerHTML = `<p class="status-text">${status.text}</p>`;
             }
+
+            // ✅ Add "Show More / Show Less" behavior
+            setTimeout(() => {
+              const captionText = document.querySelector(".caption-text");
+              const toggleBtn = document.querySelector(".toggle-caption");
+
+              if (captionText && toggleBtn) {
+                // Temporarily force full height
+                captionText.classList.add("caption-expanded");
+
+                // Allow DOM to paint fully
+                requestAnimationFrame(() => {
+                  const fullHeight = captionText.scrollHeight;
+                  captionText.classList.remove("caption-expanded");
+                  const clampedHeight = captionText.offsetHeight;
+
+                  if (fullHeight > clampedHeight + 5) {
+                    toggleBtn.style.display = "inline-block";
+
+                    toggleBtn.addEventListener("click", () => {
+                      const expanded = captionText.classList.toggle("caption-expanded");
+                      toggleBtn.textContent = expanded ? "Show Less" : "Show More";
+                    });
+                  }
+                });
+              }
+            }, 100);
+
+
+
 
             statusDisplay.innerHTML += `
               <div class="status-controls">
@@ -1048,6 +1109,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let formData = new FormData(statusUploadForm);
       formData.append("csrfmiddlewaretoken", csrfToken);
+
+      // Append caption manually if needed
+      const captionInput = document.getElementById("statusCaption");
+      if (captionInput) {
+          formData.append("caption", captionInput.value.trim());
+      }
 
       fetch("/chat/post_status/", {
           method: "POST",

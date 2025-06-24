@@ -170,19 +170,20 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 30% !important;
+    /* max-height: 50vh: */
+    height: auto !important;
     background: #ecf0f3;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .modal {
       height: 35vh !important;
     }
 
-}
+} */
 
 #statusUploadForm {
   margin-top: 40px
@@ -300,3 +301,106 @@
 .delete-status:hover {
     transform: scale(1.2);
 }
+
+/* ------------- caption ------------- */
+  .media-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .status-media {
+    width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* .status-caption-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+  } */
+
+  .status-caption-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-height: 90px; /* Add this to control visible height before expand */
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+
+  .status-text {
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+  }
+
+/* ------------- */
+
+
+  .caption-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* clamp to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .caption-expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .toggle-caption {
+    display: none;
+    /* margin-bottom: 25px; */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 6px;
+    align-self: flex-end;
+    text-decoration: underline;
+  }
+
+
+/* --------------- */
+
+.caption-text {
+  position: relative;
+}
+
+.caption-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1em;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+  display: none;
+}
+
+/* .caption-text:not(.caption-expanded)::after {
+  display: block;
+} */

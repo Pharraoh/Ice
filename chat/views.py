@@ -410,25 +410,92 @@ import tempfile, os
 os.environ["SDL_AUDIODRIVER"] = "dummy"
 from moviepy.editor import VideoFileClip
 
+# @login_required
+# def post_status(request):
+#     if request.method == "POST":
+#         user = request.user
+#         data = request.POST
+#
+#         status_type = data.get("status_type")
+#         text = data.get("text", "").strip()
+#         media = request.FILES.get("media", None)
+#
+#         print(f"📝 DEBUG: Received status request - {status_type}")
+#
+#         if status_type not in ["text", "image", "video"]:
+#             return JsonResponse({"status": "error", "message": "Invalid status type."}, status=400)
+#
+#         if status_type == "text" and not text:
+#             return JsonResponse({"status": "error", "message": "Text status cannot be empty."}, status=400)
+#
+#         # ✅ Limit file size
+#         if media:
+#             MAX_FILE_SIZE_MB = 30
+#             if media.size > MAX_FILE_SIZE_MB * 1024 * 1024:
+#                 return JsonResponse({
+#                     "status": "error",
+#                     "message": f"File too large. Max allowed is {MAX_FILE_SIZE_MB}MB."
+#                 }, status=400)
+#
+#         # ✅ Check video duration
+#         if status_type == "video" and media:
+#             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+#                 for chunk in media.chunks():
+#                     temp_file.write(chunk)
+#                 temp_file.flush()
+#                 temp_path = temp_file.name
+#
+#             clip = VideoFileClip(temp_file.name, audio=False)
+#             duration = clip.duration
+#             clip.close()
+#             if clip.audio:
+#                 clip.audio.reader.close_proc()
+#
+#             os.unlink(temp_path)  # ✅ Clean up temp file
+#
+#             MAX_DURATION = 30  # seconds
+#             if duration > MAX_DURATION:
+#                 return JsonResponse({
+#                     "status": "error",
+#                     "message": f"Video too long. Max duration is {MAX_DURATION} seconds."
+#                 }, status=400)
+#
+#         # ✅ Save the status
+#         status = Status.objects.create(
+#             user=user,
+#             status_type=status_type,
+#             text=text,
+#             media=media
+#         )
+#
+#         return JsonResponse({"status": "success", "message": "Status posted successfully!"})
+#
+#     return JsonResponse({"status": "error", "message": "Invalid request"}, status=400)
+
+
 @login_required
 def post_status(request):
     if request.method == "POST":
         user = request.user
         data = request.POST
+        media = request.FILES.get("media", None)
 
         status_type = data.get("status_type")
         text = data.get("text", "").strip()
-        media = request.FILES.get("media", None)
+        caption = data.get("caption", "").strip()  # ✅ Get caption
 
-        print(f"📝 DEBUG: Received status request - {status_type}")
-
+        # Validate type
         if status_type not in ["text", "image", "video"]:
             return JsonResponse({"status": "error", "message": "Invalid status type."}, status=400)
 
+        # Validate content
         if status_type == "text" and not text:
             return JsonResponse({"status": "error", "message": "Text status cannot be empty."}, status=400)
 
-        # ✅ Limit file size
+        if len(caption) > 100:
+            return JsonResponse({"status": "error", "message": "Caption too long. Max 100 characters."}, status=400)
+
+        # File size check
         if media:
             MAX_FILE_SIZE_MB = 30
             if media.size > MAX_FILE_SIZE_MB * 1024 * 1024:
@@ -437,35 +504,26 @@ def post_status(request):
                     "message": f"File too large. Max allowed is {MAX_FILE_SIZE_MB}MB."
                 }, status=400)
 
-        # ✅ Check video duration
+        # Optional: video length check...
         if status_type == "video" and media:
+            from moviepy.editor import VideoFileClip
+            import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
                 for chunk in media.chunks():
                     temp_file.write(chunk)
                 temp_file.flush()
-                temp_path = temp_file.name
+                clip = VideoFileClip(temp_file.name)
+                duration = clip.duration
+            if duration > 30:
+                return JsonResponse({"status": "error", "message": "Video too long. Max 30 seconds."}, status=400)
 
-            clip = VideoFileClip(temp_file.name, audio=False)
-            duration = clip.duration
-            clip.close()
-            if clip.audio:
-                clip.audio.reader.close_proc()
-
-            os.unlink(temp_path)  # ✅ Clean up temp file
-
-            MAX_DURATION = 30  # seconds
-            if duration > MAX_DURATION:
-                return JsonResponse({
-                    "status": "error",
-                    "message": f"Video too long. Max duration is {MAX_DURATION} seconds."
-                }, status=400)
-
-        # ✅ Save the status
+        # ✅ Save
         status = Status.objects.create(
             user=user,
             status_type=status_type,
             text=text,
-            media=media
+            media=media,
+            caption=caption  # ✅ Save caption
         )
 
         return JsonResponse({"status": "success", "message": "Status posted successfully!"})
@@ -508,6 +566,7 @@ def fetch_statuses(request):
             "expires_in": (status.created_at + timedelta(hours=24)).isoformat(),  # ✅ Expiration timestamp
             "is_owner": status.user == request.user,
             "id": str(status.id),
+            "caption": status.caption or "",
         }
         for status in statuses
     ]

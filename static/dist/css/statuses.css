@@ -171,19 +171,19 @@
     transform: translate(-50%, -50%);
     width: 300px;
     /* max-height: 50vh: */
-    height: 30% !important;
+    height: auto !important;
     background: #ecf0f3;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .modal {
       height: 35vh !important;
     }
 
-}
+} */
 
 #statusUploadForm {
   margin-top: 40px

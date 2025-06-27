@@ -208,8 +208,8 @@
     <!-- ./ Friends left sidebar -->
 
     <!-- Favorites left sidebar -->
-    <div id="favorites" style="max-height: 80%; overflow-y: auto;">
-        <div class="chat-container">
+    <div id="favorites">
+        <div class="chat-container" style="min-height: 100vh; position: relative;">
             <!-- Status Sidebar (Desktop View) -->
             <div class="status-sidebar">
                 <h4>Statuses</h4>
@@ -229,7 +229,7 @@
         <button id="openStatusModal" class="fab">+</button>
 
         <!-- Neumorphic Status Modal -->
-        <div id="status-upload-modal" class="modal" style="max-height: 80%; overflow-y: auto;">
+        <div id="status-upload-modal" class="modal">
             <span class="close-modal">&times;</span>
             <!-- <h3>Post a Status</h3> -->
             <form id="statusUploadForm" enctype="multipart/form-data" method="POST">
@@ -255,8 +255,8 @@
             </div> -->
         </div>
 
-        -----------------------------
-        -----------------------------
+        <!-- -----------------------------
+        ----------------------------- -->
 
 
   <!-- size and length limit for status -->

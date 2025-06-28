@@ -404,3 +404,28 @@
 /* .caption-text:not(.caption-expanded)::after {
   display: block;
 } */
+
+
+/* ------------ layout shift------------ */
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#favorites {
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+#status-upload-modal {
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; */
+    overflow-y: auto;
+    background-color: white; /* or your custom background */
+    z-index: 1000;
+}

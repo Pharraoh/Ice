@@ -47,7 +47,9 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://cozy-enchantment-production.up.railway.app",
-    "https://ice-inro.onrender.com"
+    "https://ice-inro.onrender.com",
+    "www.linklovers.ng",
+    "linklovers.ng"
 ]
 
 

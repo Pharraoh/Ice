@@ -177,6 +177,9 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.urls import reverse
 
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
 User = get_user_model()
 
 
@@ -195,9 +198,19 @@ def custom_password_reset(request):
                 )
 
                 # ✅ Send Reset Email
+
                 subject = "Password Reset Request"
-                message = render_to_string('accounts/password_reset_email.html', {'reset_link': reset_link})
-                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to = [email]
+
+                # Render your HTML template
+                html_content = render_to_string('accounts/password_reset_email.html', {'reset_link': reset_link})
+
+                # Create the email message and attach HTML
+                email_message = EmailMultiAlternatives(subject, '', from_email, to)
+                email_message.attach_alternative(html_content, "text/html")
+                email_message.send()
+
 
             return redirect('accounts:password_reset_done')  # Redirect to success page
 

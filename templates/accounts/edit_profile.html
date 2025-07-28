@@ -208,19 +208,27 @@
 
 
 														<div class="form-group">
-														    <label for="{{ form.gender.id_for_label }}">Looking for a</label>
-														    <div class="banner__inputlist">
-														        <div class="s-input me-3">
-														            <input type="radio" name="gender" id="male" value="male"
+																<label for="{{ form.gender.id_for_label }}">I am a</label>
+																<div class="banner__inputlist" value="{{ form.gender.value }}">
+																		<div class="s-input me-3">
+																				<input type="radio" name="gender" id="male" value="male"
 														                {% if form.gender.value == "male" %}checked{% endif %}>
 														            <label for="male">Man</label>
-														        </div>
-														        <div class="s-input me-3">
-														            <input type="radio" name="gender" id="female" value="female"
-														                {% if form.gender.value == "female" %}checked{% endif %}>
-														            <label for="female">Woman</label>
-														        </div>
-														    </div>
+																		</div>
+																		<div class="s-input me-3">
+																			<input type="radio" name="gender" id="female" value="female"
+																					{% if form.gender.value == "female" %}checked{% endif %}>
+																			<label for="female">Woman</label>
+																		</div>
+																		<!-- <div class="s-input">
+																				<input type="radio" name="gender" id="other" value="other"><label for="female">Other</label>
+																		</div> -->
+																</div>
+																{% if form.gender.errors %}
+																		<div class="text-danger">
+																				{{ form.gender.errors }}
+																		</div>
+																{% endif %}
 														</div>
 
 

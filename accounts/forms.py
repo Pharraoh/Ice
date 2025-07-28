@@ -66,6 +66,7 @@ class SignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['profile_image'].required = False
 
         # Debug: Log the state of the form's data and queryset initialization
         print("Form initialized with data:", self.data)
@@ -95,11 +96,15 @@ class SignUpForm(UserCreationForm):
         user.first_name = self.cleaned_data['first_name']
         user.middle_name = self.cleaned_data['middle_name']
         user.last_name = self.cleaned_data['last_name']
-        user.profile_image = self.cleaned_data['profile_image']
+
         user.state = self.cleaned_data['state']  # State object
         user.lga = self.cleaned_data['lga']  # LGA object
         user.college = self.cleaned_data['college']  # College object
         user.grad_year = self.cleaned_data['grad_year']
+
+        if self.cleaned_data.get('profile_image'):
+            user.profile_image = self.cleaned_data['profile_image']
+
         print("Saving profile image:", self.cleaned_data['profile_image'])  # Debugging profile image
 
         # Debug: Log the user data being saved

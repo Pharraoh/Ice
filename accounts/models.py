@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 
+from cloudinary.models import CloudinaryField
+
 
 class State(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -58,12 +60,19 @@ class User(AbstractUser):
     last_checked_messages_at = models.DateTimeField(null=True, blank=True)
 
     # Profile Images
-    profile_image = models.ImageField(upload_to='profile/', default='avatar.png', null=True, blank=True)
-    image1 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
-    image2 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
-    image3 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
-    image4 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
-    image5 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
+    # profile_image = models.ImageField(upload_to='profile/', default='avatar.png', null=True, blank=True)
+    profile_image = CloudinaryField('image', null=True, blank=True)
+    image1 = CloudinaryField('image', null=True, blank=True, default='avatar.jpg')
+    image2 = CloudinaryField('image', null=True, blank=True, default='avatar.jpg')
+    image3 = CloudinaryField('image', null=True, blank=True, default='avatar.jpg')
+    image4 = CloudinaryField('image', null=True, blank=True, default='avatar.jpg')
+    image5 = CloudinaryField('image', null=True, blank=True, default='avatar.jpg')
+
+    # image1 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
+    # image2 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
+    # image3 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
+    # image4 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
+    # image5 = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar.jpg')
 
 
     def save(self, *args, **kwargs):

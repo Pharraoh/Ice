@@ -38,6 +38,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "cozy-enchantment-production.up.railway.app",
+    "www.linklovers.ng"
+    "linklovers.ng"
     "ice-inro.onrender.com",
     "127.0.0.1",  # Keep this for local development
     "localhost",   # Also useful for debugging
@@ -68,6 +70,8 @@ INSTALLED_APPS = [
     'members',
     'tasks',
     'django_celery_beat',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -143,20 +147,52 @@ CHANNEL_LAYERS = {
 import os
 
 # Directly add your database URL here
-DATABASE_URL = "postgresql://ice_db_lct4_user:j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU@dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com:5432/ice_db_lct4"
+# DATABASE_URL = "postgresql://link_db_p4un_user:AjPBlWXQwkb9IiEMyf7IPS7wUP9n6ooB@dpg-d1ugrf3e5dus73dnj2jg-a.oregon-postgres.render.com:5432/link_db_p4un"
+#
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'link_db_p4un',  # Extract dbname from URL
+#         'USER': 'link_db_p4un_user',  # Extract user from URL
+#         'PASSWORD': 'AjPBlWXQwkb9IiEMyf7IPS7wUP9n6ooB',  # Extract password from URL
+#         'HOST': 'dpg-d1ugrf3e5dus73dnj2jg-a.oregon-postgres.render.com',  # Extract host from URL
+#         'PORT': '5432',  # Corrected extraction of port
+#     }
+# }
+
+DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ice_db_lct4',  # Extract dbname from URL
-        'USER': 'ice_db_lct4_user',  # Extract user from URL
-        'PASSWORD': 'j3rtTvogI9UHyPP2jnDVJbM9P1GfIHuU',  # Extract password from URL
-        'HOST': 'dpg-d163eim3jp1c73d44g50-a.oregon-postgres.render.com',  # Extract host from URL
-        'PORT': '5432',  # Corrected extraction of port
+        'NAME': 'postgres',
+        'USER': 'postgres.dspxvkiqrxviiinfvbyl',
+        'PASSWORD': 'XpUO6qH9j7PCzy4B',
+        'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
+        'PORT': '5432',
     }
 }
 
+
+
+# media hosting
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dstefwn3l',
+    'API_KEY': '235168181554165',
+    'API_SECRET': 'g1eSXg-ryFRKKBkWRPB7gF4Kd1I'
+}
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name = "dstefwn3l",
+    api_key = "235168181554165",
+    api_secret = "g1eSXg-ryFRKKBkWRPB7gF4Kd1I"
+)
 
 
 
@@ -194,15 +230,30 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Email Configuration (Use an SMTP server)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = '92c9d0001@smtp-brevo.com'
+EMAIL_HOST_PASSWORD = 'xsmtpsib-ab7b5dd16565e4ffeb8e6c25a04853394cc7fb701698f4b13e2a6bdd79171da8-rA4zsv12K8mfV3Qh'
+DEFAULT_FROM_EMAIL = 'Link Lovers<linkloversng@gmail.com>'
 
-
+# EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+#
+# ANYMAIL = {
+#      "SENDINBLUE_API_KEY": "xsmtpsib-ab7b5dd16565e4ffeb8e6c25a04853394cc7fb701698f4b13e2a6bdd79171da8-rA4zsv12K8mfV3Qh"
+# }
+#
+# DEFAULT_FROM_EMAIL = "Link Lovers <no-reply@yourdomain.com>"
 
 
 
@@ -230,8 +281,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_ROOT = BASE_DIR/'media'
 
 # Enable WhiteNoise to serve static files

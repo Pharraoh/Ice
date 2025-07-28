@@ -38,8 +38,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "cozy-enchantment-production.up.railway.app",
-    "www.linklovers.ng"
-    "linklovers.ng"
+    "www.linklovers.ng",
+    "linklovers.ng",
     "ice-inro.onrender.com",
     "127.0.0.1",  # Keep this for local development
     "localhost",   # Also useful for debugging

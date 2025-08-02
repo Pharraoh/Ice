@@ -47,7 +47,7 @@ class ChatMessage(models.Model):
         return f"{self.sender}: {self.message[:30]}"
 
 
-
+from cloudinary.models import CloudinaryField
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -69,10 +69,17 @@ class Status(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="statuses")
     status_type = models.CharField(max_length=10, choices=STATUS_TYPES)
     text = models.TextField(blank=True, null=True)  # For text statuses
-    media = models.FileField(upload_to="statuses/", blank=True, null=True)  # For images/videos
+    # media = CloudinaryField('media', resource_type='video', null=True)
+    # media = models.FileField(upload_to="statuses/", blank=True, null=True)  # For images/videos
+    image = CloudinaryField('image', resource_type='image', blank=True, null=True)
+    video = CloudinaryField('video', resource_type='video', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp
     caption = models.CharField(max_length=100, blank=True, null=True)  # ✅ For image/video captions
 
+
+    @property
+    def media_url(self):
+        return self.image.url if self.status_type == 'image' else self.video.url if self.status_type == 'video' else None
 
     def __str__(self):
         return f"{self.user.username} - {self.status_type} ({self.created_at})"

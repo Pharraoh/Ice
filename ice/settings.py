@@ -185,7 +185,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dstefwn3l',
     'API_KEY': '235168181554165',
-    'API_SECRET': 'g1eSXg-ryFRKKBkWRPB7gF4Kd1I'
+    'API_SECRET': 'g1eSXg-ryFRKKBkWRPB7gF4Kd1I',
+    'RESOURCE_TYPE': 'auto'
 }
 
 import cloudinary
@@ -193,7 +194,8 @@ import cloudinary
 cloudinary.config(
     cloud_name = "dstefwn3l",
     api_key = "235168181554165",
-    api_secret = "g1eSXg-ryFRKKBkWRPB7gF4Kd1I"
+    api_secret = "g1eSXg-ryFRKKBkWRPB7gF4Kd1I",
+    resource_type = "auto"
 )
 
 
@@ -283,9 +285,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR/'media'
+
+import os
+from django.conf import settings
+
+# Local storage path for video uploads
+VIDEO_MEDIA_ROOT = os.path.join(BASE_DIR, 'media/videos')
+VIDEO_MEDIA_URL = '/media/videos/'
+
 
 # Enable WhiteNoise to serve static files
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")

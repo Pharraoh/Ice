@@ -250,3 +250,6 @@ def custom_password_reset_confirm(request, uidb64, token):
 # ✅ Password Reset Complete View
 def custom_password_reset_complete(request):
     return render(request, 'accounts/password_reset_complete.html')
+
+def single(request):
+    return render(request, "accounts/single.html")

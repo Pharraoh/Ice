@@ -77,14 +77,43 @@
 																		<!-- {{ form.username }} -->
                                     <!-- <input type="text" class="my-form-control" value="{{ form.username }}"> -->
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="id_password">Password</label>
 																		<div class="my-form-control">
 																			{{ form.password }}
 																		</div>
-																		<!-- {{ form.password }} -->
-                                    <!-- <input type="text" class="my-form-control" value="{{ form.password.value }}" placeholder="Enter Your Password"> -->
-                                </div>
+                                </div> -->
+
+																<div class="form-group relative">
+																    <label>Password</label>
+																    <div style="position: relative;">
+																        <input type="password" name="password" class="my-form-control" id="id_password">
+																        <i class="fa fa-eye-slash toggle-password" onclick="togglePassword('id_password', this)"
+																           style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+																    </div>
+																    {% if form.password.errors %}
+																        <div class="text-danger">
+																            {{ form.password.errors }}
+																        </div>
+																    {% endif %}
+																</div>
+
+																<script>
+																function togglePassword(fieldId, icon) {
+																    const input = document.getElementById(fieldId);
+																    if (input.type === "password") {
+																        input.type = "text";
+																        icon.classList.remove("fa-eye-slash");
+																        icon.classList.add("fa-eye");
+																    } else {
+																        input.type = "password";
+																        icon.classList.remove("fa-eye");
+																        icon.classList.add("fa-eye-slash");
+																    }
+																}
+																</script>
+
+
 
                                 <p class="f-pass">Forgot your password? <a href="{% url 'accounts:password_reset' %}">recover password</a></p>
 

@@ -41,13 +41,27 @@
 
 
     <!-- ================> login section start here <================== -->
+		<style>
+				.logo {
+					width: 93px;
+					margin-bottom: -20px;
+					margin-top: -10px;
+				}
+
+				@media (max-width: 991px) {
+					.logo {
+						width: 73px;
+					}
+				}
+		</style>
+
     <section class="log-reg">
         <div class="top-menu-area">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-7">
                         <div class="logo">
-                            <a href="/"><img src="/" alt="logo"></a>
+                            <a class="navbar-brand" href="/"><img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-5">

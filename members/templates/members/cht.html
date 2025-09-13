@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -59,6 +60,19 @@
   </div>
 <!-- preloader ending here -->
 
+<style>
+    .logo img {
+      width: 63px;
+    }
+
+    @media (max-width: 991px) {
+      .logo {
+        width: 63px;
+      }
+    }
+</style>
+<!-- <a class="navbar-brand" href="/"><img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo" class="logo"></a> -->
+
 <!-- layout -->
 <div class="layout">
 
@@ -68,7 +82,7 @@
             <ul>
                 <li class="logo">
                     <a href="/">
-                        <img src="" alt="logo">
+                        <img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo" class="logo">
                     </a>
                 </li>
 

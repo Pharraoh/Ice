@@ -127,14 +127,14 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import dj_database_url
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# import dj_database_url
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 
@@ -156,19 +156,19 @@ import os
 #     }
 # }
 
-# DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
-#
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres.dspxvkiqrxviiinfvbyl',
-#         'PASSWORD': 'XpUO6qH9j7PCzy4B',
-#         'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
-#         'PORT': '5432',
-#     }
-# }
+DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.dspxvkiqrxviiinfvbyl',
+        'PASSWORD': 'XpUO6qH9j7PCzy4B',
+        'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
+        'PORT': '5432',
+    }
+}
 
 
 

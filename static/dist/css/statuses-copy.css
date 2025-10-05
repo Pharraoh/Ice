@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Knewave&display=swap');
-
-
 /* Layout */
 .chat-container {
     display: flex;
@@ -77,7 +73,7 @@
 
 
 .status-modal img, .status-modal video {
-    /* margin-top: 50px; */
+    margin-top: 50px;
     max-width: 100%;
     max-height: 80vh;
     /* border-radius: 10px; */
@@ -180,7 +176,7 @@
     background: #ecf0f3;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 5px 5px 1000px #babecc, -5px -5px 10px #ffffff;
+    box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
 }
 
 /* @media (max-width: 768px) {
@@ -208,20 +204,6 @@
     box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
     font-size: 16px;
 }
-
-.modal textarea {
-  min-width: 250px !important;
-  /* min-width: 200px; */
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 8px;
-  background: #ecf0f3;
-  box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff;
-  font-size: 16px;
-}
-
-
 .modal button {
     cursor: pointer;
     box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff;
@@ -254,12 +236,10 @@
     color: #007bff;
 }
 .status-owner-pic.owner-status {
-    /* border: none; */
-    border: 2px solid #007bff;
+    border: none;
 }
 .status-owner-pic {
-    /* border: 2px solid #007bff; */
-    border: 2px solid #c13584;
+    border: 2px solid #007bff;
 }
 
 /*  */
@@ -281,18 +261,18 @@
 }
 
 .status-nav.prev {
-    margin-top: 40vh;
-    right: 330px;
+    margin-top: 20px;
+    right: 300px;
 }
 
 .status-nav.next {
-    margin-top: 40vh;
-    /* right: 50px; */
+    margin-top: 20px;
+    right: 50px;
 }
 
 @media (max-width: 768px) {
     .status-nav.prev {
-        right: 290px;
+        right: 200px;
     }
 }
 
@@ -320,10 +300,6 @@
 
 
 .delete-status:hover {
-    transform: scale(1.2);
-}
-
-.close-status:hover {
     transform: scale(1.2);
 }
 
@@ -454,179 +430,3 @@ html, body {
     background-color: white; /* or your custom background */
     z-index: 1000;
 }
-
-
-
-
-
-/* --------------------------------------- */
-
-
-
-.status-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 450px;
-  max-height: 800px;
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-
-.status-content h2 {
-    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
-    /* font-family: "UnifrakturMaguntia", cursive; */
-    font-family: "Knewave", system-ui;
-    font-size: 20px;
-}
-
-
-.status-header {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: white;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 20;
-}
-
-.status-header-pic {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 2px solid rgba(255,255,255,0.8);
-}
-
-.status-header-username {
-  font-weight: 600;
-  margin-right: auto;
-}
-
-/* .status-time {
-  font-size: 0.8em;
-  opacity: 0.8;
-  margin-left: 10px;
-} */
-
-.status-header .close-modal {
-  margin-left: 10px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* ---------- */
-
-.story-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    z-index: 20;
-}
-
-#close-status {
-  z-index: 9999;
-}
-
-
-.nav-zone {
-    height: 100%;
-    cursor: pointer;
-}
-.nav-zone.prev { width: 30%; }
-.nav-zone.next { width: 70%; }
-
-
-/* .status-progress {
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.status-progress .progress-bar {
-  height: 100%;
-  width: 0;
-  background: #fff;
-  transition: width linear;
-} */
-
-
-
-/* --- Keyframe Animations --- */
-
-@keyframes fillProgress {
-    from { width: 0%; }
-    to { width: 100%; }
-}
-
-@keyframes kenBurns {
-    0% { transform: scale(1.05) translate(-2%, 2%); }
-    100% { transform: scale(1.15) translate(2%, -2%); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-
-
-
-/* ------------------------------- */
-body.modal-open {
-  filter: none !important;
-  backdrop-filter: none !important;
-  overflow: hidden; /* keep this if you want to prevent scroll */
-}
-.layout,
-.left-sidebar,
-.chat {
-  filter: none !important;
-  backdrop-filter: none !important;
-}
-
-
-
-
-/* Dimmed background overlay */
-.modal-overlay {
-  display: none; /* hidden by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 999; /* sits below the modal but above the page */
-  pointer-events: all; /* blocks clicks on background */
-}
-
-/* Ensure modal stays above the overlay */
-#status-upload-modal {
-  z-index: 1000;
-}
-
-
-
-
-/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-border: 3px solid #c13584; */

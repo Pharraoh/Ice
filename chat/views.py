@@ -562,7 +562,7 @@ def post_status(request):
 
         # File validations
         if media:
-            MAX_FILE_SIZE_MB = 30
+            MAX_FILE_SIZE_MB = 20
             if media.size > MAX_FILE_SIZE_MB * 1024 * 1024:
                 return JsonResponse({
                     "status": "error",

@@ -42,15 +42,9 @@
     <link rel="stylesheet" href="../../static/dist/css/statuses.css">
     <link rel="stylesheet" href="../../static/dist/css/loading_animation.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-
 
     <!-- preloader css  -->
     <link rel="stylesheet" href="../../static/assets/css/preloader.css">
-
-    <!-- <script type="text/javascript" href="../../static/dist/js/newstory.js"></script> -->
 </head>
 <body>
 
@@ -228,9 +222,6 @@
         <!-- Floating '+' Button -->
         <button id="openStatusModal" class="fab">+</button>
 
-        <!-- Background overlay -->
-        <div id="modal-overlay" class="modal-overlay"></div>
-
         <!-- Neumorphic Status Modal -->
         <div id="status-upload-modal" class="modal">
             <span class="close-modal">&times;</span>
@@ -239,74 +230,24 @@
                 <select name="status_type" id="statusType">
                     <option value="text">Text</option>
                     <option value="image">Image</option>
-                    <!-- <option value="video">Video</option> -->
+                    <option value="video">Video</option>
                 </select>
-                <!-- <input type="text" name="text" id="statusText" placeholder="Enter text status"> -->
-                <textarea name="text" id="statusText" placeholder="Enter text status"></textarea>
+                <input type="text" name="text" id="statusText" placeholder="Enter text status">
                 <!-- File Input Wrapper -->
                 <div id="mediaInputWrapper" style="display: none;">
                     <input type="file" name="media" id="statusMedia" accept="image/*,video/*">
 
                     <!-- ✅ New caption field -->
-                    <!-- <input type="text" name="caption" id="statusCaption" placeholder="Add a caption (max 100 chars)" maxlength="100"> -->
+                    <input type="text" name="caption" id="statusCaption" placeholder="Add a caption (max 100 chars)" maxlength="100">
                 </div>
                 <button type="submit" id="postStatusBtn">Post Status</button>
             </form>
-
 
             <!-- ✅ Move loader here -->
             <!-- <div id="statusLoader" style="display: none; position: fixed; top: 0; left: 0; width: 50%; height: 50%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
               <div class="spinner"></div>
             </div> -->
         </div>
-
-        <script>
-            const openModalBtn = document.getElementById('openStatusModal');
-            const closeModalBtn = document.querySelector('.close-modal');
-            const modal = document.getElementById('status-upload-modal');
-            const overlay = document.getElementById('modal-overlay');
-
-            openModalBtn.addEventListener('click', () => {
-            modal.style.display = 'block';
-            overlay.style.display = 'block';
-            document.body.classList.add('modal-open'); // optional: disables scroll
-            });
-
-            closeModalBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-            overlay.style.display = 'none';
-            document.body.classList.remove('modal-open');
-            });
-
-        </script>
-
-        <script>
-        const statusTypeSelect = document.getElementById("statusType");
-        const statusText = document.getElementById("statusText");
-        const mediaInputWrapper = document.getElementById("mediaInputWrapper");
-
-        statusTypeSelect.addEventListener("change", function() {
-          if (this.value === "text") {
-            // Show text area, hide file input
-            mediaInputWrapper.style.display = "none";
-            statusText.style.display = "block";
-            statusText.style.height = "120px"; // ✅ expand for longer text
-            statusText.placeholder = "Type your text status here...";
-          } else if (this.value === "image") {
-            // Show file input, shrink text
-            mediaInputWrapper.style.display = "block";
-            statusText.style.height = "40px"; // back to normal height
-            statusText.placeholder = "Add a caption for your image (optional)";
-          }
-        });
-
-        statusText.addEventListener("input", function() {
-          this.style.height = "auto";
-          this.style.height = (this.scrollHeight) + "px";
-        });
-
-
-        </script>
 
 
 
@@ -330,7 +271,7 @@
       const type = document.getElementById("statusType").value;
       const fileInput = document.getElementById("statusMedia");
       const textInput = document.getElementById("statusText").value;
-      const MAX_SIZE_MB = 20;
+      const MAX_SIZE_MB = 30;
 
       if (type === "text" && textInput.trim() === "") {
           alert("Text status cannot be empty.");
@@ -359,18 +300,9 @@
         <!-- Status Fullscreen Modal (For Mobile View) -->
         <div id="status-modal" class="status-modal">
             <div class="status-content">
-                <div class="story-header">
-                   <div class="progress-bars">
-                       </div>
-                </div>
 
-                <span id="close-status" class="close-modal">&times;</span>
+                <span id="close-modal" class="close-modal">&times;</span>
                 <div id="status-display"></div>
-
-                <div class="story-nav">
-                    <div class="nav-zone prev"></div>
-                    <div class="nav-zone next"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -717,7 +649,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let statusList = document.getElementById("status-list");
     let statusModal = document.getElementById("status-modal");
     let statusDisplay = document.getElementById("status-display");
-    // let closeModal = document.querySelector(".close-modal");
+    let closeModal = document.querySelector(".close-modal");
 
     // Dummy Data (Replace this with a fetch request to your backend)
     let statuses = [
@@ -776,9 +708,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let statusList = document.getElementById("status-list");
     let statusModal = document.getElementById("status-modal");
     let statusDisplay = document.getElementById("status-display");
-    let closeModal = document.getElementById("close-status");
-    console.log("closeModal element found?", closeModal);
-
+    let closeModal = document.getElementById("close-modal");
     // let closeModal = document.querySelector(".close-modal");
 
     console.log("✅ Script Loaded: Checking close button...");
@@ -803,17 +733,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /** ✅ Open Status Post Modal */
     openStatusModalBtn.addEventListener("click", function () {
-        if (uploadModal) {
-            uploadModal.style.display = "flex";
-            document.body.classList.add("modal-open");   // 🚀 disable background
-        }
+        if (uploadModal) uploadModal.style.display = "flex";
     });
 
     /** ❌ Close Status Post Modal */
     if (closeUploadModal) {
         closeUploadModal.addEventListener("click", function () {
             uploadModal.style.display = "none";
-            document.body.classList.remove("modal-open"); // 🚀 re-enable background
         });
     }
 
@@ -828,9 +754,6 @@ document.addEventListener("DOMContentLoaded", function () {
             mediaInputWrapper.style.display = "block"; // Show file input wrapper
         }
     });
-
-
-
 
     /** ✅ Fetch Matched Users' Statuses */
     function fetchStatuses() {
@@ -957,89 +880,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
             statusDisplay.innerHTML = ""; // Clear previous content
 
-            // Header + progress
-            statusDisplay.innerHTML = `
-              <!-- Progress bar container -->
-              <div class="status-progress">
-                <div class="progress-bar"></div>
-              </div>
 
-              <!-- Header -->
-              <div class="status-header">
-                <img src="${status.profile_image}" alt="${status.username}" class="status-header-pic">
-                <span class="status-header-username">${status.username}</span>
-              </div>
-            `;
+            // if (status.status_type === "image") {
+            //     statusDisplay.innerHTML = `<img src="${status.media_url}" alt="Status Image">`;
+            // } else if (status.status_type === "video") {
+            //     statusDisplay.innerHTML = `<video controls autoplay><source src="${status.media_url}" type="video/mp4"></video>`;
+            // } else {
+            //     statusDisplay.innerHTML = `<p>${status.text}</p>`;
+            // }
 
-            // Media rendering
             if (status.status_type === "image") {
-                statusDisplay.innerHTML += `
-                  <div class="media-container">
-                    <img src="${status.media_url}" alt="Status Image" class="status-media">
-                    ${status.caption ? `
-                      <div class="status-caption-overlay">
-                        <span class="caption-text">${status.caption}</span>
-                        <span class="toggle-caption" style="display: none;">Show More</span>
-                      </div>` : ""}
-                  </div>
-                `;
+              statusDisplay.innerHTML = `
+                <div class="media-container">
+                  <img src="${status.media_url}" alt="Status Image" class="status-media">
+                  ${status.caption ? `
+                    <div class="status-caption-overlay">
+                      <span class="caption-text">${status.caption}</span>
+                      <span class="toggle-caption" style="display: none;">Show More</span>
+                    </div>` : ""}
+                </div>
+              `;
             } else if (status.status_type === "video") {
-                statusDisplay.innerHTML += `
-                  <div class="media-container">
-                    <video controls autoplay class="status-media">
-                      <source src="${status.media_url}" type="video/mp4">
-                    </video>
-                    ${status.caption ? `
-                      <div class="status-caption-overlay">
-                        <span class="caption-text">${status.caption}</span>
-                        <span class="toggle-caption" style="display: none;">Show More</span>
-                      </div>` : ""}
-                  </div>
-                `;
+              statusDisplay.innerHTML = `
+                <div class="media-container">
+                  <video controls autoplay class="status-media">
+                    <source src="${status.media_url}" type="video/mp4">
+                  </video>
+                  ${status.caption ? `
+                    <div class="status-caption-overlay">
+                      <span class="caption-text">${status.caption}</span>
+                      <span class="toggle-caption" style="display: none;">Show More</span>
+                    </div>` : ""}
+                </div>
+              `;
             } else {
-                statusDisplay.innerHTML += `<h2 class="status-text">${status.text}</h2>`;
+              statusDisplay.innerHTML = `<p class="status-text">${status.text}</p>`;
             }
-
-            // Controls
-            // statusDisplay.innerHTML += `
-            //   <div class="status-controls">
-            //     <button id="prevStatus" class="status-nav prev">&larr;</button>
-            //     <button id="nextStatus" class="status-nav next">&rarr;</button>
-            //     ${status.is_owner ? `<span class="delete-status" title="Delete">🗑️</span>` : ""}
-            //   </div>
-            // `;
-
-            // ✅ Progress bar function
-            function startProgressBar(duration = 5000) {
-                const progressBar = document.querySelector('.progress-bar');
-                if (progressBar) {
-                    // Clear any previous animation
-                    clearTimeout(progressTimeout);
-                    progressBar.style.transition = 'none';
-                    progressBar.style.width = '0';
-
-                    // Start animation
-                    setTimeout(() => {
-                        progressBar.style.transition = `width ${duration}ms linear`;
-                        progressBar.style.width = '100%';
-                    }, 50);
-
-                    // Auto-next when finished
-                    progressTimeout = setTimeout(() => {
-                        if (currentIndex < statuses.length - 1) {
-                            currentIndex++;
-                            showCurrentStatus();
-                        } else {
-                            // Close modal after last status
-                            statusModal.style.display = "none";
-                        }
-                    }, duration);
-                }
-            }
-
-
-
-
 
             // ✅ Add "Show More / Show Less" behavior
             setTimeout(() => {
@@ -1165,7 +1041,20 @@ document.addEventListener("DOMContentLoaded", function () {
         //     if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
         // });
 
+        // close modal ensuring video stops playing in Background
+        closeModal.addEventListener("click", function () {
+            console.log("❌ Closing status modal...");
+            statusModal.style.display = "none";
 
+            // ✅ Pause any video inside the modal
+            const video = statusModal.querySelector("video");
+            if (video) {
+                video.pause();
+                video.currentTime = 0;  // optional: reset to beginning
+            }
+
+            if (imgFluid) imgFluid.style.display = "block"; // Restore img-fluid
+        });
 
 
     }
@@ -1173,25 +1062,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (closeModal) {
-      closeModal.addEventListener("click", function () {
-        console.log("❌ Closing status modal...");
-        statusModal.style.display = "none";
+        closeModal.addEventListener("click", function () {
+            console.log("❌ Closing status modal..."); // ✅ Debugging log
+            statusModal.style.display = "none"; // Hide the modal
 
-        // Pause/reset video if exists
-        const video = statusModal.querySelector("video");
-        if (video) {
-          video.pause();
-          video.currentTime = 0;
-        }
-
-        // Restore .img-fluid
-        let imgFluid = document.querySelector(".img-fluid");
-        if (imgFluid) imgFluid.style.display = "block";
-      });
+            // Optional: Restore the `.img-fluid` if hidden
+            let imgFluid = document.querySelector(".img-fluid");
+            if (imgFluid) {
+                imgFluid.style.display = "block";
+            }
+        });
     } else {
-      console.error("❌ Close button not found!");
+        console.error("❌ Close button (.close-modal) not found!");
     }
-
 
 
 
@@ -1238,8 +1121,6 @@ document.addEventListener("DOMContentLoaded", function () {
           if (data.status === "success") {
               fetchStatuses();
               uploadModal.style.display = "none";
-              overlay.style.display = "none";
-              document.body.classList.remove("modal-open"); // ✅ release page
           } else {
               alert(data.message || "Something went wrong.");
           }
@@ -1248,9 +1129,6 @@ document.addEventListener("DOMContentLoaded", function () {
           clearInterval(loadingInterval);
           postBtn.disabled = false;
           postBtn.textContent = originalText;
-          uploadModal.style.display = "none"; // optional: close on error
-          overlay.style.display = "none";
-          document.body.classList.remove("modal-open"); // ✅ release page
           alert("❌ An error occurred while posting.");
           console.error(error);
       });

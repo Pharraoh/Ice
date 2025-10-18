@@ -154,3 +154,6 @@ from accounts.models import User  # or your custom user model
 def user_profile(request, user_id):
     user_profile = get_object_or_404(User, id=user_id)
     return render(request, 'members/user_profile.html', {'profile': user_profile})
+
+def reelcht(request):
+    return render(request, "members/reelcht.html")

@@ -32,6 +32,7 @@ urlpatterns = [
     path('pages/', include(('pages.urls', 'pages'), namespace='pages')),
     path('chat/', include('chat.urls')),
     path('members/', include('members.urls')),
+    path('realtime_chat/', include('realtime_chat.urls')),
 ]
 
 

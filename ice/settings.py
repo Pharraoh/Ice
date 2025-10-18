@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'cloudinary',
     'cloudinary_storage',
+    'realtime_chat',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +118,10 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],  # Redis must be installed and running
+            'hosts': [
+                "redis://default:7817FguydxnXkAr2pcv1ZlY9ogWZ0J8y@redis-12290.c85.us-east-1-2.ec2.redns.redis-cloud.com:12290"
+            ],
+            # 'hosts': [('127.0.0.1', 6379)],  # Redis must be installed and running
         },
     },
 }

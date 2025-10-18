@@ -1,48 +1,22 @@
-"""
-ASGI config for ice project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
-"""
-
 import os
-
-from django.core.asgi import get_asgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ice.settings')
-
-application = get_asgi_application()
-
-
-
-# ...chat...
-
-import os
-from django.core.asgi import get_asgi_application
+import django
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from chat.routing import websocket_urlpatterns
+from django.core.asgi import get_asgi_application
+import realtime_chat.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ice.settings')
+django.setup()
 
+# Django's default ASGI app (for HTTP)
+django_asgi_app = get_asgi_application()
+
+# Combine Django's HTTP and Channels' WebSocket handlers
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
+    "http": django_asgi_app,  # ✅ handles normal HTTP requests
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            websocket_urlpatterns
-        )
-    ),
-})
-
-import chat.routing
-
-application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
-            chat.routing.websocket_urlpatterns
+            realtime_chat.routing.websocket_urlpatterns
         )
     ),
 })

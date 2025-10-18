@@ -1,0 +1,1145 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Link Lovers</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../static/dist/media/img/favicon.png" type="image/png">
+
+    <!-- Google Nunito font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- fa icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Themify icons -->
+    <link href="../../static/dist/icons/themify/themify-icons.css" rel="stylesheet">
+
+    <!-- Material design icons -->
+    <link href="../../static/dist/icons/materialicons/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <!-- Bundle styles -->
+    <link rel="stylesheet" href="../../static/dist/vendor/bundle.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" href="../../static/dist/vendor/slick/slick-theme.css">
+    <link rel="stylesheet" href="../../static/dist/vendor/slick/slick.css">
+
+    <!-- Fancybox -->
+    <link rel="stylesheet" href="../../static/dist/vendor/fancybox/jquery.fancybox.min.css" type="text/css"/>
+
+    <!-- Intro js -->
+    <link rel="stylesheet" href="../../static/dist/vendor/introjs/introjs.css" type="text/css"/>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="../../static/dist/css/app.min.css">
+
+    <link rel="stylesheet" href="../../static/dist/css/statuses.css">
+    <link rel="stylesheet" href="../../static/dist/css/loading_animation.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+
+    <!-- preloader css  -->
+    <link rel="stylesheet" href="../../static/assets/css/preloader.css">
+
+    <!-- <script type="text/javascript" href="../../static/dist/js/newstory.js"></script> -->
+</head>
+<body>
+
+
+<!-- preloader start here -->
+  <div class="preloader">
+      <div class="preloader-inner">
+          <div class="preloader-icon">
+              <span></span>
+              <span></span>
+          </div>
+      </div>
+  </div>
+<!-- preloader ending here -->
+
+<style>
+    .logo img {
+      width: 63px;
+    }
+
+    @media (max-width: 991px) {
+      .logo {
+        width: 63px;
+      }
+    }
+</style>
+<!-- <a class="navbar-brand" href="/"><img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo" class="logo"></a> -->
+
+<!-- layout -->
+<div class="layout">
+
+    <!-- navigation -->
+    <nav class="navigation">
+        <div class="nav-group">
+            <ul>
+                <li class="logo">
+                    <a href="/">
+                        <img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo" class="logo">
+                    </a>
+                </li>
+
+                <li style="display: none;">
+                    <a class="" data-intro-js="2" data-left-sidebar="chats" href="#" data-toggle="tooltip"
+                       title="Chats" data-placement="right">
+                        <span class="badge badge-warning"></span>
+                        <i data-feather="message-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <a class="active" data-left-sidebar="friends" href="#" data-toggle="tooltip"
+                       title="Friends" data-placement="right">
+                        <span class="badge badge-danger"></span>
+                        <i data-feather="user"></i>
+                    </a>
+                </li>
+                <li>
+                    <a data-left-sidebar="favorites" data-toggle="tooltip" title="Stories" data-placement="right"
+                       href="#">
+                        <i data-feather="star"></i>
+                    </a>
+                </li>
+
+                <li data-toggle="tooltip" title="User menu" data-placement="right">
+                    <a href="#" data-intro-js="3" data-toggle="dropdown">
+                        <figure class="avatar avatar-sm">
+                            <img src="{{ user.profile_image.url }}" class="rounded-circle" alt="image">
+                        </figure>
+                    </a>
+                    <div class="dropdown-menu">
+
+                        <a href="{% url 'accounts:dashboard' %}" class="dropdown-item">Dashboard</a>
+                        <a href="{% url 'members:allmembers' %}" class="dropdown-item">Find Matches</a>
+                        <form action="{% url 'accounts:logout' %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item text-danger">Logout</a>
+                        </form>
+                        <!-- <a href="" class="dropdown-item text-danger">Logout</a> -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ./ navigation -->
+
+
+
+    <!-- Friends left sidebar -->
+    <div id="friends" class="left-sidebar">
+        <div class="left-sidebar-header">
+            <form>
+                <h4 class="mb-4">Friends</h4>
+                <!-- <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn" type="button">
+                            <i class="ti-search"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search friends">
+                </div> -->
+            </form>
+        </div>
+        <!-- <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
+          <ul class="list-group list-group-flush">
+              {% for match in matched_users %}
+                  <li class="list-group-item chat-user" data-username="{{ match.username }}" data-profile-pic="{{ match.profile_image.url }}">
+                      <div>
+                          <figure class="avatar mr-3">
+                              <img src="{{ match.profile_image.url }}" class="rounded-circle" alt="image">
+                          </figure>
+                      </div>
+                      <div class="users-list-body">
+                          <div>
+                              <h5>{{ match.username|title }}</h5>
+                              <p>Click to chat</p>
+                          </div>
+                      </div>
+                  </li>
+              {% endfor %}
+            </ul>
+
+        </div> -->
+        <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
+          <ul class="list-group list-group-flush">
+            {% for match in matched_users %}
+              <li class="list-group-item chat-user" data-username="{{ match.user.username }}" data-profile-pic="{{ match.user.profile_image.url }}">
+                <div style="display: flex; align-items: center;">
+                  <figure class="avatar mr-3">
+                    <img src="{{ match.user.profile_image.url }}" class="rounded-circle" alt="image">
+                  </figure>
+                  <div class="users-list-body">
+                    <div>
+                      <h5>{{ match.user.username|title }}</h5>
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p style="{% if not match.last_msg_read %}font-weight: bold;{% endif %}">
+                          {{ match.last_msg_text|truncatechars:30 }}
+                        </p>
+                        <small style="color: #888; margin-left: 10px;">
+                          {{ match.last_msg_time|date:"H:i" }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% empty %}
+              <li class="list-group-item text-center text-muted">
+                Match with other users to start chatting with friends
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+
+    </div>
+    <!-- ./ Friends left sidebar -->
+
+    <!-- Favorites left sidebar -->
+    <div id="favorites" style="min-height: 100vh; position: relative;">
+        <div class="chat-container">
+            <!-- Status Sidebar (Desktop View) -->
+            <div class="status-sidebar">
+                <h4>Statuses</h4>
+                <div id="status-list">
+                    <!-- Status items will be loaded here dynamically -->
+                </div>
+            </div>
+
+            <!-- Main Chat Section -->
+            <div class="chat-main">
+                <!-- Your chat UI goes here -->
+            </div>
+        </div>
+
+
+        <!-- Floating '+' Button -->
+        <button id="openStatusModal" class="fab">+</button>
+
+        <!-- Background overlay -->
+        <div id="modal-overlay" class="modal-overlay"></div>
+
+        <!-- Neumorphic Status Modal -->
+        <div id="status-upload-modal" class="modal">
+            <span class="close-modal">&times;</span>
+            <!-- <h3>Post a Status</h3> -->
+            <form id="statusUploadForm" enctype="multipart/form-data" method="POST">
+                <select name="status_type" id="statusType">
+                    <option value="text">Text</option>
+                    <option value="image">Image</option>
+                    <!-- <option value="video">Video</option> -->
+                </select>
+                <!-- <input type="text" name="text" id="statusText" placeholder="Enter text status"> -->
+                <textarea name="text" id="statusText" placeholder="Enter text status"></textarea>
+                <!-- File Input Wrapper -->
+                <div id="mediaInputWrapper" style="display: none;">
+                    <input type="file" name="media" id="statusMedia" accept="image/*,video/*">
+
+                    <!-- ✅ New caption field -->
+                    <!-- <input type="text" name="caption" id="statusCaption" placeholder="Add a caption (max 100 chars)" maxlength="100"> -->
+                </div>
+                <button type="submit" id="postStatusBtn">Post Status</button>
+            </form>
+
+
+            <!-- ✅ Move loader here -->
+            <!-- <div id="statusLoader" style="display: none; position: fixed; top: 0; left: 0; width: 50%; height: 50%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+              <div class="spinner"></div>
+            </div> -->
+        </div>
+
+        <script>
+            const openModalBtn = document.getElementById('openStatusModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const modal = document.getElementById('status-upload-modal');
+            const overlay = document.getElementById('modal-overlay');
+
+            openModalBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            document.body.classList.add('modal-open'); // optional: disables scroll
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            });
+
+        </script>
+
+        <script>
+        const statusTypeSelect = document.getElementById("statusType");
+        const statusText = document.getElementById("statusText");
+        const mediaInputWrapper = document.getElementById("mediaInputWrapper");
+
+        statusTypeSelect.addEventListener("change", function() {
+          if (this.value === "text") {
+            // Show text area, hide file input
+            mediaInputWrapper.style.display = "none";
+            statusText.style.display = "block";
+            statusText.style.height = "120px"; // ✅ expand for longer text
+            statusText.placeholder = "Type your text status here...";
+          } else if (this.value === "image") {
+            // Show file input, shrink text
+            mediaInputWrapper.style.display = "block";
+            statusText.style.height = "40px"; // back to normal height
+            statusText.placeholder = "Add a caption for your image (optional)";
+          }
+        });
+
+        statusText.addEventListener("input", function() {
+          this.style.height = "auto";
+          this.style.height = (this.scrollHeight) + "px";
+        });
+
+
+        </script>
+
+
+
+  <!-- size and length limit for status -->
+  <script>
+  document.getElementById("statusType").addEventListener("change", function () {
+      const type = this.value;
+      const mediaWrapper = document.getElementById("mediaInputWrapper");
+      const textInput = document.getElementById("statusText");
+
+      if (type === "text") {
+          mediaWrapper.style.display = "none";
+          textInput.style.display = "block";
+      } else {
+          mediaWrapper.style.display = "block";
+          textInput.style.display = "none";
+      }
+  });
+
+  document.getElementById("statusUploadForm").addEventListener("submit", function (e) {
+      const type = document.getElementById("statusType").value;
+      const fileInput = document.getElementById("statusMedia");
+      const textInput = document.getElementById("statusText").value;
+      const MAX_SIZE_MB = 20;
+
+      if (type === "text" && textInput.trim() === "") {
+          alert("Text status cannot be empty.");
+          e.preventDefault();
+          return;
+      }
+
+      if ((type === "image" || type === "video") && fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const sizeMB = file.size / (1024 * 1024);
+          const isVideo = file.type.startsWith("video");
+
+          if (sizeMB > MAX_SIZE_MB) {
+              alert(`File too large! Max allowed size is ${MAX_SIZE_MB}MB.`);
+              e.preventDefault();
+              return;
+          }
+      }
+  });
+  </script>
+
+
+
+
+
+        <!-- Status Fullscreen Modal (For Mobile View) -->
+        <div id="status-modal" class="status-modal">
+            <div class="status-content">
+                <div class="story-header">
+                   <div class="progress-bars">
+                       </div>
+                </div>
+
+                <span id="close-status" class="close-modal">&times;</span>
+                <div id="status-display"></div>
+
+                <div class="story-nav">
+                    <div class="nav-zone prev"></div>
+                    <div class="nav-zone next"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- ./ Favorites left sidebar -->
+
+    <!-- Archived left sidebar -->
+
+    <!-- ./ Archived left sidebar -->
+
+    <!-- chat -->
+    <div class="chat"> <!-- no-message -->
+        <div class="chat-preloader d-none">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="no-message-container">
+            <div class="row mb-5">
+                <div class="col-md-4 offset-4">
+                    <img src="../../static/dist/media/svg/chat_empty.svg" class="img-fluid" alt="image">
+                </div>
+            </div>
+            <!-- <p class="lead">Choose a chat or start a <a href="#" data-left-sidebar="friends">new chat</a>.</p> -->
+        </div>
+        <div class="chat-header">
+            <div class="chat-header-user">
+                <!-- <figure class="avatar avatar-state-success"> -->
+                <figure class="avatar avatar-state">
+                    <img src="../../static/dist/media/img/avatar6.jpg" class="rounded-circle" alt="image">
+                </figure>
+                <div>
+                    <h5>Maribel Mallon</h5>
+                    <!-- <small class="text-success">Online</small> -->
+                </div>
+            </div>
+            <div class="chat-header-action">
+                <ul class="list-inline" data-intro-js="7">
+                    <li class="list-inline-item d-inline d-lg-none">
+                        <a href="{% url 'members:matched_users' %}" class="btn btn-danger btn-floating">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+            <div class="chat-body" style="max-height: 80%; overflow-y: auto;">
+                <div class="messages">
+
+                </div>
+            </div>
+
+            <div class="chat-footer" data-intro-js="6">
+                <form class="d-flex" id="messageForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="csrf_token" value="{{ csrf_token }}">  <!-- Hidden CSRF Token -->
+
+                    <input type="text" class="form-control form-control-main" id="messageInput" placeholder="Write a message.">
+                    <div>
+                        <button class="btn btn-primary ml-2 btn-floating" id="sendButton" type="submit">
+                            <i class="fa fa-send"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+    </div>
+    <!-- ./ chat -->
+
+</div>
+<!-- ./ layout -->
+
+
+
+
+
+
+<!-- Bundle scripts -->
+<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../../static/dist/vendor/bundle.js"></script>
+
+<!-- Feather icons -->
+<script src="../../static/dist/icons/feather/feather.min.js"></script>
+
+<!-- Slick -->
+<script src="../../static/dist/vendor/slick/slick.min.js"></script>
+
+<!-- Fancybox -->
+<script src="../../static/dist/vendor/fancybox/jquery.fancybox.min.js"></script>
+
+<!-- Intro js -->
+<script src="../../static/dist/vendor/introjs/intro.js"></script>
+
+<!-- Jquery Stopwatch -->
+<script src="../../static/dist/vendor/jquery.stopwatch.js"></script>
+
+<!-- Sweetalert2 -->
+<script src="../../static/dist/vendor/sweetalert2.js"></script>
+
+<!-- App scripts -->
+<script src="../../static/dist/js/app.min.js"></script>
+
+<!-- Examples -->
+<script src="../../static/dist/js/examples.min.js"></script>
+
+<!-- Theme customizer scripts -->
+<!-- <script src="../../static/dist/js/theme-customizer.min.js"></script> -->
+
+
+<!-- ------- load friends list js -------- -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ensure the Friends section is active on load
+        document.querySelector('[data-left-sidebar="friends"]').classList.add("active");
+        document.querySelector('[data-left-sidebar="chats"]').classList.remove("active");
+
+        // Show both Friends list and Chat section properly
+        document.getElementById("friends").style.display = "block";
+        document.querySelector(".chat").style.display = "block";
+
+        // Ensure the empty chat image is displayed until a friend is selected
+        let noMessageContainer = document.querySelector(".chat .no-message-container");
+        noMessageContainer.style.display = "flex";
+        noMessageContainer.style.justifyContent = "center";
+        noMessageContainer.style.alignItems = "center";
+        noMessageContainer.style.height = "100%";
+
+        // Ensure chat opens when a friend is clicked without hiding the friends list
+        document.querySelectorAll("#friends .list-group-item").forEach(item => {
+            item.addEventListener("click", function() {
+                noMessageContainer.style.display = "none";
+            });
+        });
+
+        // Ensure the empty chat image reappears when no chat is selected
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest(".chat") && !event.target.closest("#friends .list-group-item")) {
+                noMessageContainer.style.display = "flex";
+            }
+        });
+    });
+
+</script>
+
+
+
+<!-- ------ channels & redis chat feature ------ -->
+
+  <script>
+      const roomName = "{{ room_name }}";
+      const receiver = "{{ other_user.username }}";
+      const chatSocket = new WebSocket(
+          'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+      );
+
+      const chatBox = document.getElementById('chat-box');
+      const messageInput = document.getElementById('message-input');
+      const sendBtn = document.getElementById('send-btn');
+
+      // Auto-scroll to bottom
+      function scrollToBottom() {
+          chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      scrollToBottom();
+
+      chatSocket.onmessage = function(e) {
+          const data = JSON.parse(e.data);
+          const div = document.createElement('div');
+          div.classList.add('message');
+          if (data.sender === "{{ request.user.username }}") {
+              div.classList.add('sent');
+          } else {
+              div.classList.add('received');
+          }
+          div.innerHTML = `<b>${data.sender}:</b> ${data.message}`;
+          chatBox.appendChild(div);
+          scrollToBottom();
+      };
+
+      sendBtn.onclick = sendMessage;
+      messageInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') sendMessage();
+      });
+
+      function sendMessage() {
+          const message = messageInput.value;
+          if (message.trim()) {
+              chatSocket.send(JSON.stringify({
+                  'message': message,
+                  'receiver': receiver
+              }));
+              messageInput.value = '';
+          }
+      }
+  </script>
+
+<!-- ----------------------------------- -->
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          let chatBody = document.querySelector(".chat-body .messages");
+          let chatHeader = document.querySelector(".chat-header-user h5");
+          let chatImage = document.querySelector(".chat-header-user figure img");
+          let chatStatus = document.querySelector(".chat-header-user small");
+          let messageInput = document.querySelector("#messageInput");
+          let messageForm = document.querySelector("#messageForm");
+
+      });
+
+  </script>
+
+<!-- ---------- js for toggle ------------ -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get elements
+        const favorites = document.getElementById("favorites");
+        const friends = document.getElementById("friends");
+        const favoritesTab = document.querySelector('a[data-left-sidebar="favorites"]');
+        const friendsTab = document.querySelector('a[data-left-sidebar="friends"]');
+
+        // Ensure "friends" is visible and "favorites" is hidden on page load
+        if (favorites) favorites.style.display = "none";
+        if (friends) friends.style.display = "block";
+
+        // Function to toggle visibility
+        function showSection(showElement, hideElement) {
+            if (showElement) showElement.style.display = "block";
+            if (hideElement) hideElement.style.display = "none";
+        }
+
+        // Add event listeners to toggle between sections
+        if (favoritesTab) {
+            favoritesTab.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default link behavior
+                showSection(favorites, friends);
+            });
+        }
+
+        if (friendsTab) {
+            friendsTab.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default link behavior
+                showSection(friends, favorites);
+            });
+        }
+    });
+
+</script>
+
+
+<!-- ------------ js for stories -------------- -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let statusList = document.getElementById("status-list");
+        let statusModal = document.getElementById("status-modal");
+        let statusDisplay = document.getElementById("status-display");
+        // let closeModal = document.querySelector(".close-modal");
+
+        // Dummy Data (Replace this with a fetch request to your backend)
+        let statuses = [
+            { username: "Jane", type: "image", url: "https://via.placeholder.com/300" },
+            { username: "Alex", type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+            { username: "Mike", type: "text", content: "Feeling great today!" }
+        ];
+
+        function loadStatuses() {
+            statusList.innerHTML = "";
+            statuses.forEach(status => {
+                let statusItem = document.createElement("div");
+                statusItem.classList.add("status-item");
+                statusItem.innerHTML = `
+                    <img src="../../static/2.jpg" alt="${status.username}">
+                    <span>${status.username}</span>
+                `;
+                statusItem.addEventListener("click", () => openStatus(status));
+                statusList.appendChild(statusItem);
+            });
+        }
+
+        function openStatus(status) {
+            statusDisplay.innerHTML = ""; // Clear previous content
+
+            if (status.type === "image") {
+                statusDisplay.innerHTML = `<img src="${status.url}" alt="Status Image">`;
+            } else if (status.type === "video") {
+                statusDisplay.innerHTML = `<video controls autoplay><source src="${status.url}" type="video/mp4"></video>`;
+            } else {
+                statusDisplay.innerHTML = `<p>${status.content}</p>`;
+            }
+
+            // 📱 In Mobile View, Show Fullscreen
+            statusModal.style.display = "flex";
+        }
+
+        closeModal.addEventListener("click", function () {
+            statusModal.style.display = "none";
+        });
+
+        // Load statuses on page load
+        loadStatuses();
+    });
+
+</script>
+
+
+
+
+// -----------------------
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let statusList = document.getElementById("status-list");
+    let statusModal = document.getElementById("status-modal");
+    let statusDisplay = document.getElementById("status-display");
+    let closeModal = document.getElementById("close-status");
+    console.log("closeModal element found?", closeModal);
+
+    // let closeModal = document.querySelector(".close-modal");
+
+    console.log("✅ Script Loaded: Checking close button...");
+    console.log("closeModal:", closeModal); // Debug: Check if closeModal is found
+
+    let uploadModal = document.getElementById("status-upload-modal");
+    let openStatusModalBtn = document.getElementById("openStatusModal");
+    let closeUploadModal = document.querySelector(".close-modal"); // Ensure this is correctly referenced
+    let statusUploadForm = document.getElementById("statusUploadForm");
+    let csrfTokenElement = document.getElementById("csrf_token");
+
+    let statusType = document.getElementById("statusType");
+    let textInput = document.getElementById("statusText");
+    let mediaInput = document.getElementById("statusMedia");
+
+    if (!statusUploadForm || !csrfTokenElement || !openStatusModalBtn) {
+        console.error("❌ Required elements are missing. Check statusUploadForm, csrf_token, or openStatusModal.");
+        return; // Stop execution if elements are missing
+    }
+
+    let csrfToken = csrfTokenElement.value;
+
+    /** ✅ Open Status Post Modal */
+    openStatusModalBtn.addEventListener("click", function () {
+        if (uploadModal) {
+            uploadModal.style.display = "flex";
+            document.body.classList.add("modal-open");   // 🚀 disable background
+        }
+    });
+
+    /** ❌ Close Status Post Modal */
+    if (closeUploadModal) {
+        closeUploadModal.addEventListener("click", function () {
+            uploadModal.style.display = "none";
+            document.body.classList.remove("modal-open"); // 🚀 re-enable background
+        });
+    }
+
+    /** 🎯 Toggle Input Fields Based on Status Type */
+    statusType.addEventListener("change", function () {
+        if (this.value === "text") {
+            textInput.style.display = "block";
+            mediaInputWrapper.style.display = "none"; // Hide file input wrapper
+            mediaInput.value = ""; // Clear file input
+        } else {
+            textInput.style.display = "none";
+            mediaInputWrapper.style.display = "block"; // Show file input wrapper
+        }
+    });
+
+
+
+
+    /** ✅ Fetch Matched Users' Statuses */
+    function fetchStatuses() {
+        console.log("🔄 Fetching statuses...");
+        fetch("/chat/fetch_statuses/")
+            .then(response => response.json())
+            .then(data => {
+                console.log("✅ Statuses received:", data);
+                statusList.innerHTML = ""; // Clear existing statuses
+
+                if (data.statuses.length === 0) {
+                    statusList.innerHTML = "<p class='text-center text-muted'>No statuses yet.</p>";
+                } else {
+                    let groupedStatuses = {}; // Store statuses by user
+
+                    // ✅ Group statuses by username
+                    data.statuses.forEach(status => {
+                        if (!groupedStatuses[status.username]) {
+                            groupedStatuses[status.username] = [];
+                        }
+                        groupedStatuses[status.username].push(status);
+                    });
+
+                    const currentUsername = "{{ request.user.username }}"; // optional if templated
+                    const orderedUsernames = Object.keys(groupedStatuses);
+
+                    // ✅ Move current user to the top
+                    orderedUsernames.sort((a, b) => {
+                        if (a === currentUsername) return -1;
+                        if (b === currentUsername) return 1;
+                        return 0;
+                    });
+
+                    orderedUsernames.forEach(username => {
+                        const firstStatus = groupedStatuses[username][0];
+                        let statusItem = document.createElement("div");
+                        statusItem.classList.add("status-item");
+
+                        const highlightClass = firstStatus.is_owner ? "owner-status" : "";
+                        const expirationTime = new Date(firstStatus.expires_in);
+                        const timeRemaining = getTimeRemaining(expirationTime);
+
+                        statusItem.innerHTML = `
+                            <img src="${firstStatus.profile_image}" alt="${username}" class="status-owner-pic ${highlightClass}">
+                            <span class="${highlightClass}">${username} ${highlightClass ? "(You)" : ""}</span>
+                            <small class="status-timer" data-expiry="${expirationTime}">${timeRemaining}</small>
+                        `;
+
+                        statusItem.setAttribute("data-expiry", expirationTime);
+                        statusItem.addEventListener("click", () => openStatus(groupedStatuses[username]));
+                        statusList.appendChild(statusItem);
+                    });
+
+
+                    updateTimers(); // ✅ Start real-time countdown
+                }
+            })
+            .catch(error => console.error("❌ Error fetching statuses:", error));
+    }
+
+    /** ✅ Function to Calculate Time Remaining */
+    function getTimeRemaining(expiryDate) {
+        let now = new Date();
+        let diff = expiryDate - now; // Time difference in milliseconds
+
+        if (diff <= 0) {
+            return "Expired"; // If expired, show this
+        }
+
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (hours > 0) {
+            // return `Expires in ${hours}h ${minutes}m`;
+            // return `${hours}h ${minutes}m`;
+            return `${hours}h`;
+        } else {
+            // return `Expires in ${minutes}m`;
+            return `${minutes}m`;
+        }
+    }
+
+    /** ✅ Function to Auto-Remove Expired Statuses */
+    function updateTimers() {
+        let timers = document.querySelectorAll(".status-timer");
+
+        timers.forEach(timer => {
+            let expiryDate = new Date(timer.getAttribute("data-expiry"));
+            let timeLeft = getTimeRemaining(expiryDate);
+
+            if (timeLeft === "Expired") {
+                timer.closest(".status-item").remove(); // ✅ Remove expired status
+            } else {
+                timer.textContent = timeLeft;
+            }
+        });
+
+        setTimeout(updateTimers, 60000); // ✅ Refresh every minute
+    }
+
+
+
+    /** ✅ Open Status in Fullscreen Modal (WhatsApp-style) */
+    function openStatus(statuses) {
+        let imgFluid = document.querySelector(".img-fluid");
+        if (!statusModal || !statusDisplay) return; // Prevent errors
+
+        let currentIndex = 0; // Track which status is currently being viewed
+
+        function showCurrentStatus() {
+            let status = statuses[currentIndex];
+            window.currentlyViewingStatus = status;
+
+            if (!status) {
+                console.error("⚠️ Status is undefined!");
+                return;
+            }
+
+            statusDisplay.innerHTML = ""; // Clear previous content
+
+            // Header + progress
+            statusDisplay.innerHTML = `
+              <!-- Progress bar container -->
+              <div class="status-progress">
+                <div class="progress-bar"></div>
+              </div>
+
+              <!-- Header -->
+              <div class="status-header">
+                <img src="${status.profile_image}" alt="${status.username}" class="status-header-pic">
+                <span class="status-header-username">${status.username}</span>
+              </div>
+            `;
+
+            // Media rendering
+            if (status.status_type === "image") {
+                statusDisplay.innerHTML += `
+                  <div class="media-container">
+                    <img src="${status.media_url}" alt="Status Image" class="status-media">
+                    ${status.caption ? `
+                      <div class="status-caption-overlay">
+                        <span class="caption-text">${status.caption}</span>
+                        <span class="toggle-caption" style="display: none;">Show More</span>
+                      </div>` : ""}
+                  </div>
+                `;
+            } else if (status.status_type === "video") {
+                statusDisplay.innerHTML += `
+                  <div class="media-container">
+                    <video controls autoplay class="status-media">
+                      <source src="${status.media_url}" type="video/mp4">
+                    </video>
+                    ${status.caption ? `
+                      <div class="status-caption-overlay">
+                        <span class="caption-text">${status.caption}</span>
+                        <span class="toggle-caption" style="display: none;">Show More</span>
+                      </div>` : ""}
+                  </div>
+                `;
+            } else {
+                statusDisplay.innerHTML += `<h2 class="status-text">${status.text}</h2>`;
+            }
+
+            // ✅ Progress bar function
+            function startProgressBar(duration = 5000) {
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar) {
+                    // Clear any previous animation
+                    clearTimeout(progressTimeout);
+                    progressBar.style.transition = 'none';
+                    progressBar.style.width = '0';
+
+                    // Start animation
+                    setTimeout(() => {
+                        progressBar.style.transition = `width ${duration}ms linear`;
+                        progressBar.style.width = '100%';
+                    }, 50);
+
+                    // Auto-next when finished
+                    progressTimeout = setTimeout(() => {
+                        if (currentIndex < statuses.length - 1) {
+                            currentIndex++;
+                            showCurrentStatus();
+                        } else {
+                            // Close modal after last status
+                            statusModal.style.display = "none";
+                        }
+                    }, duration);
+                }
+            }
+
+
+
+
+
+            // ✅ Add "Show More / Show Less" behavior
+            setTimeout(() => {
+              const captionText = document.querySelector(".caption-text");
+              const toggleBtn = document.querySelector(".toggle-caption");
+
+              if (captionText && toggleBtn) {
+                // Temporarily force full height
+                captionText.classList.add("caption-expanded");
+
+                // Allow DOM to paint fully
+                requestAnimationFrame(() => {
+                  const fullHeight = captionText.scrollHeight;
+                  captionText.classList.remove("caption-expanded");
+                  const clampedHeight = captionText.offsetHeight;
+
+                  if (fullHeight > clampedHeight + 5) {
+                    toggleBtn.style.display = "inline-block";
+
+                    toggleBtn.addEventListener("click", () => {
+                      const expanded = captionText.classList.toggle("caption-expanded");
+                      toggleBtn.textContent = expanded ? "Show Less" : "Show More";
+                    });
+                  }
+                });
+              }
+            }, 100);
+
+
+
+
+            statusDisplay.innerHTML += `
+              <div class="status-controls">
+                <button id="prevStatus" class="status-nav prev">&larr;</button>
+                <button id="nextStatus" class="status-nav next">&rarr;</button>
+
+                ${status.is_owner ? `<span class="delete-status" title="Delete">🗑️</span>` : ""}
+              </div>
+            `;
+
+            setTimeout(() => {
+              const deleteBtn = document.querySelector(".delete-status");
+              if (deleteBtn) {
+                deleteBtn.addEventListener("click", function () {
+                  if (!confirm("Are you sure you want to delete this status?")) return;
+
+                  fetch(`/chat/delete_status/${status.id}/`, {
+                    method: "POST",
+                    headers: {
+                      "X-CSRFToken": csrfToken,
+                    },
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (data.status === "success") {
+                        alert("✅ Status deleted!");
+                        statusModal.style.display = "none";
+                        fetchStatuses();
+                      } else {
+                        alert("❌ " + data.message);
+                      }
+                    })
+                    .catch((err) => {
+                      console.error("❌ Delete failed:", err);
+                      alert("An error occurred.");
+                    });
+                });
+              }
+            }, 50); // slight delay ensures DOM is ready
+
+
+
+            statusModal.style.display = "flex"; // Show status modal
+
+            // ✅ Hide `.img-fluid`
+            let imgFluid = document.querySelector(".img-fluid");
+            if (imgFluid) {
+                imgFluid.style.display = "none"; // Hide the image when viewing a status
+            }
+
+            // Hide/Show navigation buttons based on position
+            document.getElementById("prevStatus").style.display = currentIndex === 0 ? "none" : "block";
+            document.getElementById("nextStatus").style.display = currentIndex === statuses.length - 1 ? "none" : "block";
+        }
+
+
+
+
+        showCurrentStatus(); // Show first status
+
+        // ✅ Event Listeners for Next & Previous
+        statusModal.addEventListener("click", function (event) {
+            if (event.target.id === "nextStatus" && currentIndex < statuses.length - 1) {
+                currentIndex++;
+                showCurrentStatus();
+            } else if (event.target.id === "prevStatus" && currentIndex > 0) {
+                currentIndex--;
+                showCurrentStatus();
+            }
+        });
+
+
+    }
+
+
+
+    if (closeModal) {
+      closeModal.addEventListener("click", function () {
+        console.log("❌ Closing status modal...");
+        statusModal.style.display = "none";
+
+        // Pause/reset video if exists
+        const video = statusModal.querySelector("video");
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+
+        // Restore .img-fluid
+        let imgFluid = document.querySelector(".img-fluid");
+        if (imgFluid) imgFluid.style.display = "block";
+      });
+    } else {
+      console.error("❌ Close button not found!");
+    }
+
+
+
+
+
+
+    /** ✅ Handle Status Upload & load animation */
+
+    statusUploadForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const postBtn = document.getElementById("postStatusBtn");
+      let originalText = postBtn.textContent;
+
+      // Disable button and start loader simulation
+      postBtn.disabled = true;
+      let progress = 0;
+      postBtn.textContent = "Uploading";
+
+      // Simulate a loading bar using dots
+      const loadingInterval = setInterval(() => {
+          progress = (progress + 1) % 4; // cycle 0–3
+          postBtn.textContent = "Uploading" + ".".repeat(progress);
+      }, 500); // update every 0.5 sec
+
+      let formData = new FormData(statusUploadForm);
+      formData.append("csrfmiddlewaretoken", csrfToken);
+
+      // Append caption manually if needed
+      const captionInput = document.getElementById("statusCaption");
+      if (captionInput) {
+          formData.append("caption", captionInput.value.trim());
+      }
+
+      fetch("/chat/post_status/", {
+          method: "POST",
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          clearInterval(loadingInterval);
+          postBtn.disabled = false;
+          postBtn.textContent = originalText;
+
+          if (data.status === "success") {
+              fetchStatuses();
+              uploadModal.style.display = "none";
+              overlay.style.display = "none";
+              document.body.classList.remove("modal-open"); // ✅ release page
+          } else {
+              alert(data.message || "Something went wrong.");
+          }
+      })
+      .catch(error => {
+          clearInterval(loadingInterval);
+          postBtn.disabled = false;
+          postBtn.textContent = originalText;
+          uploadModal.style.display = "none"; // optional: close on error
+          overlay.style.display = "none";
+          document.body.classList.remove("modal-open"); // ✅ release page
+          alert("❌ An error occurred while posting.");
+          console.error(error);
+      });
+  });
+
+
+    fetchStatuses();
+});
+</script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -81,7 +81,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         User = get_user_model()
 
 class ChatConsumer(AsyncWebsocketConsumer):
-    from .models import Message
     async def connect(self):
         # Main chat room group (for messages)
         self.room_name = self.scope['url_route']['kwargs']['room_name']

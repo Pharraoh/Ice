@@ -15,6 +15,7 @@ class Message(models.Model):
     content = models.TextField()
     room_name = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.sender} → {self.receiver}: {self.content[:20]}"

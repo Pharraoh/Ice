@@ -160,7 +160,7 @@
                             </figure>
                             <div class="users-list-body">
                                 <div>
-                                    <h5>{{ match.username|title }}</h5>
+                                    <strong><p>{{ match.username|title }}</p></strong>
                                     <p>Tap to chat</p>
                                 </div>
                             </div>
@@ -416,7 +416,7 @@
                     <img src="{{ other_user.profile_image.url }}" class="rounded-circle" alt="image">
                 </figure>
                 <div>
-                    <h5>{{ other_user.username|title }}</h5>
+                    <h5>@{{ other_user.username|title }}</h5>
                     <small class="text-success">Online</small>
                 </div>
             </div>
@@ -695,34 +695,41 @@
 
     // WebSocket message handler
     chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        const isSent = data.sender === currentUser;
+        try {
+            const data = JSON.parse(e.data);
 
-        const messagesContainer = document.querySelector('.messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message-item ${isSent ? 'outgoing-message' : 'incoming-message'}`;
+            // Ignore empty or system messages
+            if (!data.message) {
+                console.log("[DEBUG] Ignored message:", data);
+                return;
+            }
 
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        });
+            const isSent = data.sender === currentUser;
 
-        // const senderProfilePic = isSent
-        //     ? "{{ request.user.profile_image.url }}"
-        //     : "{{ other_user.profile_image.url }}";
+            const messagesContainer = document.querySelector('.messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message-item ${isSent ? 'outgoing-message' : 'incoming-message'}`;
 
-        messageDiv.innerHTML = `
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
 
-            <div class="message-content">
-                ${data.message}
-            </div>
-        `;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    ${data.message}
+                </div>
+            `;
 
-        messagesContainer.appendChild(messageDiv);
-        scrollToBottom();
+            messagesContainer.appendChild(messageDiv);
+            scrollToBottom();
+        } catch (error) {
+            console.error("[DEBUG] Error parsing message:", e.data, error);
+        }
     };
+
 
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
@@ -1460,6 +1467,30 @@ document.addEventListener("DOMContentLoaded", function () {
 //
 //
 // </script>
+
+<script>
+// This runs ONLY on the chat page
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for page to fully load and WebSocket to connect
+    setTimeout(function() {
+        fetch("{% url 'realtime_chat:mark_chat_read' other_user.username %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('[DEBUG] Messages marked as read:', data);
+        })
+        .catch(error => {
+            console.error('[DEBUG] Error marking messages as read:', error);
+        });
+    }, 500); // Wait 500ms for WebSocket to connect
+});
+</script>
 
 
 

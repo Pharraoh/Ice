@@ -138,9 +138,10 @@
 									</ul>
 								</li>
 								<li style="position: relative;">
-									<a href="{% url 'realtime_chat:matched_users' %}">
-										<i class="fa fa-comments"></i>
-										<span class="message-indicator" style="display: none;"></span>
+									<a href="{% url 'realtime_chat:matched_users' %}" class="messages-link">
+											<i class="fa fa-comments"></i>
+											<span class="message-indicator"
+														style="display:none; background:red; color:white; border-radius:50%; width:10px; height:10px; position:absolute; top:2px; right:2px;"></span>
 									</a>
 								</li>
 								<!-- <li>
@@ -1049,6 +1050,46 @@
 			setInterval(checkNewMessages, 3000); // check every 10 seconds
 
 	</script> -->
+
+	{% if request.user.is_authenticated %}
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	    const badge = document.querySelector('.message-indicator');
+
+	    // Helper to toggle badge visibility
+	    function updateBadge(count) {
+	        if (!badge) return;
+	        badge.style.display = (count > 0) ? 'inline-block' : 'none';
+	    }
+
+	    // ✅ Step 1: Fetch unread count immediately on load
+	    fetch("{% url 'realtime_chat:check_unread_messages' %}")
+	        .then(response => response.json())
+	        .then(data => {
+	            console.log('[DEBUG] Initial unread count:', data.unread_count);
+	            updateBadge(data.unread_count);
+	        })
+	        .catch(err => console.error('[DEBUG] Fetch unread failed:', err));
+
+	    // ✅ Step 2: Connect WebSocket for live updates
+	    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+	    const notificationSocket = new WebSocket(
+	        protocol + window.location.host + '/ws/chat/notifications/'
+	    );
+
+	    notificationSocket.onmessage = function(e) {
+	        const data = JSON.parse(e.data);
+	        console.log('[DEBUG] WebSocket data:', data);
+	        if (data.type === 'notify_unread') {
+	            updateBadge(data.unread_count);
+	        }
+	    };
+
+	    notificationSocket.onopen = () => console.log('[DEBUG] Notification socket connected');
+	    notificationSocket.onclose = () => console.warn('[DEBUG] Notification socket closed');
+	});
+	</script>
+	{% endif %}
 
 
 

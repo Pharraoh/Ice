@@ -146,7 +146,8 @@
 
         <div class="left-sidebar-content" style="max-height: 100%; overflow-y: auto;">
             <ul class="list-group list-group-flush">
-                {% for match in matched_users %}
+                {% for item in matched_data %}
+                {% with match=item.user %}
                     <li class="list-group-item chat-user"
                         data-username="{{ match.username }}"
                         data-user-id="{{ match.id }}"
@@ -159,18 +160,38 @@
                             </figure>
                             <div class="users-list-body">
                                 <div>
-                                    <h5>{{ match.username|title }}</h5>
-                                    <p>Tap to chat</p>
+                                  <strong><p>{{ match.username|title }}</p></strong>
+                                    {% if item.last_message %}
+                                    <p style="display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                      <span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                                                   {% if not item.is_read and item.last_message_sender != request.user.username %}
+                                                       font-weight: bold;
+                                                   {% endif %}">
+                                            {% if item.last_message_sender == request.user.username %}
+                                                {{ item.last_message|truncatechars:30 }}
+                                            {% else %}
+                                                {{ item.last_message|truncatechars:30 }}
+                                            {% endif %}
+                                            {% if item.timestamp %}
+                                                <small style="font-size: 0.8rem; color: #999; margin-left: 10px; white-space: nowrap;">{{ item.timestamp }}</small>
+                                            {% endif %}
+                                        </p>
+                                    {% else %}
+                                        <p>Tap to chat</p>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
                     </li>
+                    {% endwith %}
                 {% empty %}
                     <li class="list-group-item text-center text-muted">
                         Match with other users to start chatting with friends
                     </li>
                 {% endfor %}
             </ul>
+
         </div>
     </div>
     <!-- ./ Friends left sidebar -->
@@ -1397,6 +1418,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //
 //
 // </script>
+
+
 
 
 

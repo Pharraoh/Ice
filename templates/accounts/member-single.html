@@ -51,7 +51,7 @@
 
 
     <!-- ================> header section start here <================== -->
-		<style>
+		<!-- <style>
 				.logo {
 					width: 130px;
 					margin-bottom: -10px;
@@ -61,6 +61,32 @@
 					.logo {
 						width: 83px;
 					}
+				}
+		</style> -->
+
+		<style>
+				.logo {
+					width: 150px;
+				}
+
+				@media (max-width: 991px) {
+					.logo {
+						width: 150px;
+						margin-left: 100px;
+					}
+
+					.mainmenu ul li a {
+							padding: 10px 25px !important;
+					}
+
+					nav ul {
+							margin-left: 70px;
+					}
+
+					.mainmenu ul li > ul {
+							margin-left: -50px;
+					}
+
 				}
 		</style>
 
@@ -78,7 +104,7 @@
 						<div class="navbar-nav mainmenu">
 							<ul>
 								<li>
-									<a href="#0">Matches</a>
+									<a href="#0">Matches </a>
 									<ul class="for">
 										<li><a href="{% url 'members:allmembers' %}" style="padding: 0px 0px 0px 0px !important;">All Members</a></li>
 										<li><a href="{% url 'members:search_members' %}" style="padding: 0px 0px 0px 0px !important;">Search Members</a></li>

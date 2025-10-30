@@ -160,8 +160,8 @@ import os
 #     }
 # }
 
-DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
 
+# DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
 
 DATABASES = {
     'default': {

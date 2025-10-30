@@ -33,7 +33,13 @@ def chat_view(request, username):
 
     # ✅ Room name logic
     room_name = get_room_name(request.user, other_user)
-    messages = Message.objects.filter(room_name=room_name).select_related('sender', 'receiver')
+    messages = (
+        Message.objects
+        .filter(room_name=room_name)
+        .select_related('sender', 'receiver')
+        .order_by('timestamp')
+    )
+
 
     # ✅ Fetch all *mutual* matches for sidebar
     matched_users = User.objects.filter(

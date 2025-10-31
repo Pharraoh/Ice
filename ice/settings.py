@@ -145,21 +145,6 @@ CHANNEL_LAYERS = {
 
 import os
 
-# Directly add your database URL here
-# DATABASE_URL = "postgresql://link_db_p4un_user:AjPBlWXQwkb9IiEMyf7IPS7wUP9n6ooB@dpg-d1ugrf3e5dus73dnj2jg-a.oregon-postgres.render.com:5432/link_db_p4un"
-#
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'link_db_p4un',  # Extract dbname from URL
-#         'USER': 'link_db_p4un_user',  # Extract user from URL
-#         'PASSWORD': 'AjPBlWXQwkb9IiEMyf7IPS7wUP9n6ooB',  # Extract password from URL
-#         'HOST': 'dpg-d1ugrf3e5dus73dnj2jg-a.oregon-postgres.render.com',  # Extract host from URL
-#         'PORT': '5432',  # Corrected extraction of port
-#     }
-# }
-
 
 # DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
 
@@ -269,7 +254,7 @@ CELERY_TASK_SERIALIZER = 'json'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 

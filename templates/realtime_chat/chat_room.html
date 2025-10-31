@@ -685,48 +685,43 @@
     const messageForm = document.getElementById('messageForm');
     const messageSubmit = document.getElementById('chat-message-submit');
 
-    // Scroll to bottom function
     function scrollToBottom() {
         chatLog.scrollTop = chatLog.scrollHeight;
     }
-
-    // Initial scroll
     scrollToBottom();
 
-    // WebSocket message handler
+    // 🧱 Helper: create and append message instantly
+    function appendMessage(content, type, tempId = null) {
+        const messagesContainer = document.querySelector('.messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message-item ${type === 'sent' ? 'outgoing-message' : 'incoming-message'}`;
+        if (tempId) messageDiv.dataset.id = tempId;
+
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                ${content}
+            </div>
+        `;
+        messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+    }
+
+    // 🧠 Handle incoming WebSocket messages
     chatSocket.onmessage = function(e) {
         try {
             const data = JSON.parse(e.data);
-
-            // Ignore empty or system messages
-            if (!data.message) {
-                console.log("[DEBUG] Ignored message:", data);
-                return;
-            }
+            if (!data.message) return;
 
             const isSent = data.sender === currentUser;
 
-            const messagesContainer = document.querySelector('.messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message-item ${isSent ? 'outgoing-message' : 'incoming-message'}`;
+            // 🧠 Ignore backend echo of sender’s own message (since we already showed it)
+            if (isSent && data.temp_id && document.querySelector(`[data-id="${data.temp_id}"]`)) {
+                return; // ✅ already rendered, skip duplicate
+            }
 
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
-
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    ${data.message}
-                </div>
-            `;
-
-            messagesContainer.appendChild(messageDiv);
-            scrollToBottom();
+            appendMessage(data.message, isSent ? 'sent' : 'received', data.temp_id);
         } catch (error) {
-            console.error("[DEBUG] Error parsing message:", e.data, error);
+            console.error("Error parsing message:", e.data, error);
         }
     };
 
@@ -734,30 +729,34 @@
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
-
     chatSocket.onerror = function(e) {
         console.error('WebSocket error:', e);
     };
 
-    // Send message function
+    // 💨 Send message instantly (optimistic rendering)
     function sendMessage(e) {
         e.preventDefault();
         const message = messageInput.value.trim();
+        if (!message) return;
 
-        if (message) {
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'receiver': otherUser
-            }));
-            messageInput.value = '';
-        }
+        const tempId = Date.now().toString();
 
+        // 1️⃣ Show the message instantly on sender's screen
+        appendMessage(message, 'sent', tempId);
+
+        // 2️⃣ Send it to the backend asynchronously
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'receiver': otherUser,
+            'temp_id': tempId
+        }));
+
+        messageInput.value = '';
+        messageInput.focus();
         return false;
     }
 
-    // Event listeners
     messageForm.addEventListener('submit', sendMessage);
-
     messageInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -765,10 +764,113 @@
         }
     });
 
-    // Focus input
     messageInput.focus();
 </script>
 {% endif %}
+
+
+// {% if other_user %}
+// <script>
+//     const roomName = "{{ room_name }}";
+//     const currentUser = "{{ request.user.username }}";
+//     const otherUser = "{{ other_user.username }}";
+//     const otherUserId = "{{ other_user.id }}";
+//
+//     // WebSocket connection
+//     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+//     const chatSocket = new WebSocket(
+//         protocol + '//' + window.location.host + '/ws/chat/' + roomName + '/'
+//     );
+//
+//     const chatLog = document.getElementById('chat-log');
+//     const messageInput = document.getElementById('chat-message-input');
+//     const messageForm = document.getElementById('messageForm');
+//     const messageSubmit = document.getElementById('chat-message-submit');
+//
+//     // Scroll to bottom function
+//     function scrollToBottom() {
+//         chatLog.scrollTop = chatLog.scrollHeight;
+//     }
+//
+//     // Initial scroll
+//     scrollToBottom();
+//
+//     // WebSocket message handler
+//     chatSocket.onmessage = function(e) {
+//         try {
+//             const data = JSON.parse(e.data);
+//
+//             // Ignore empty or system messages
+//             if (!data.message) {
+//                 console.log("[DEBUG] Ignored message:", data);
+//                 return;
+//             }
+//
+//             const isSent = data.sender === currentUser;
+//
+//             const messagesContainer = document.querySelector('.messages');
+//             const messageDiv = document.createElement('div');
+//             messageDiv.className = `message-item ${isSent ? 'outgoing-message' : 'incoming-message'}`;
+//
+//             const now = new Date();
+//             const timeStr = now.toLocaleTimeString('en-US', {
+//                 hour: 'numeric',
+//                 minute: '2-digit',
+//                 hour12: true
+//             });
+//
+//             messageDiv.innerHTML = `
+//                 <div class="message-content">
+//                     ${data.message}
+//                 </div>
+//             `;
+//
+//             messagesContainer.appendChild(messageDiv);
+//             scrollToBottom();
+//         } catch (error) {
+//             console.error("[DEBUG] Error parsing message:", e.data, error);
+//         }
+//     };
+//
+//
+//     chatSocket.onclose = function(e) {
+//         console.error('Chat socket closed unexpectedly');
+//     };
+//
+//     chatSocket.onerror = function(e) {
+//         console.error('WebSocket error:', e);
+//     };
+//
+//     // Send message function
+//     function sendMessage(e) {
+//         e.preventDefault();
+//         const message = messageInput.value.trim();
+//
+//         if (message) {
+//             chatSocket.send(JSON.stringify({
+//                 'message': message,
+//                 'receiver': otherUser
+//             }));
+//             messageInput.value = '';
+//         }
+//
+//         return false;
+//     }
+//
+//     // Event listeners
+//     messageForm.addEventListener('submit', sendMessage);
+//
+//     messageInput.addEventListener('keypress', function(e) {
+//         if (e.key === 'Enter' && !e.shiftKey) {
+//             e.preventDefault();
+//             sendMessage(e);
+//         }
+//     });
+//
+//     // Focus input
+//     messageInput.focus();
+// </script>
+// {% endif %}
 
 
 <!--  -->

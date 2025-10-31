@@ -183,6 +183,47 @@ from accounts.models import User
 from django.utils import timezone
 from datetime import timedelta
 
+# @login_required
+# def matched_users_view(request):
+#     matched_users = User.objects.filter(
+#         likes_received__user_from=request.user,
+#         likes_sent__user_to=request.user
+#     ).distinct()
+#
+#     matched_data = []
+#
+#     for user in matched_users:
+#         last_msg = Message.objects.filter(
+#             Q(sender=request.user, receiver=user) |
+#             Q(sender=user, receiver=request.user)
+#         ).order_by('-timestamp').first()
+#
+#         # ✅ Format human-friendly time
+#         if last_msg:
+#             now = timezone.now()
+#             diff = now - last_msg.timestamp
+#
+#             if diff.days == 0:
+#                 # Same day → show exact time like "2:45 PM"
+#                 time_display = last_msg.timestamp.strftime("%I:%M %p")
+#             elif diff.days == 1:
+#                 time_display = "Yesterday"
+#             else:
+#                 # Older → show date like "Oct 10"
+#                 time_display = last_msg.timestamp.strftime("%b ") + str(last_msg.timestamp.day)
+#         else:
+#             time_display = None
+#
+#         matched_data.append({
+#             'user': user,
+#             'last_message': last_msg.content if last_msg else None,
+#             'last_message_sender': last_msg.sender.username if last_msg else None,
+#             'timestamp': time_display,  # 👈 formatted string
+#             'is_read': last_msg.is_read if last_msg else True,
+#         })
+#
+#     return render(request, 'realtime_chat/matched_users.html', {'matched_data': matched_data})
+
 @login_required
 def matched_users_view(request):
     matched_users = User.objects.filter(
@@ -198,18 +239,15 @@ def matched_users_view(request):
             Q(sender=user, receiver=request.user)
         ).order_by('-timestamp').first()
 
-        # ✅ Format human-friendly time
         if last_msg:
             now = timezone.now()
             diff = now - last_msg.timestamp
 
             if diff.days == 0:
-                # Same day → show exact time like "2:45 PM"
                 time_display = last_msg.timestamp.strftime("%I:%M %p")
             elif diff.days == 1:
                 time_display = "Yesterday"
             else:
-                # Older → show date like "Oct 10"
                 time_display = last_msg.timestamp.strftime("%b ") + str(last_msg.timestamp.day)
         else:
             time_display = None
@@ -218,11 +256,16 @@ def matched_users_view(request):
             'user': user,
             'last_message': last_msg.content if last_msg else None,
             'last_message_sender': last_msg.sender.username if last_msg else None,
-            'timestamp': time_display,  # 👈 formatted string
+            'timestamp': time_display,
             'is_read': last_msg.is_read if last_msg else True,
+            'sort_timestamp': last_msg.timestamp if last_msg else timezone.make_aware(timezone.datetime.min),
         })
 
+    # ✅ Sort by most recent message (descending order)
+    matched_data.sort(key=lambda x: x['sort_timestamp'], reverse=True)
+
     return render(request, 'realtime_chat/matched_users.html', {'matched_data': matched_data})
+
 
 
 

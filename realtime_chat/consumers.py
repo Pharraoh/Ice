@@ -104,6 +104,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         message = data['message']
         sender = self.scope['user']
+        temp_id = data.get('temp_id')  # ✅ capture this
         receiver_username = data['receiver']
 
         receiver = await self.get_user(receiver_username)
@@ -118,6 +119,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'sender': sender.username,
+                'temp_id': temp_id,  # ✅ send it back
             }
         )
 
@@ -137,6 +139,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'type': 'chat_message',
             'message': event['message'],
             'sender': event['sender'],
+            'temp_id': event.get('temp_id'),  # ✅ Pass it along
         }))
 
     async def notify_unread(self, event):

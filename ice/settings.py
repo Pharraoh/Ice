@@ -148,13 +148,26 @@ import os
 
 # DATABASE_URL = "postgresql://postgres.dspxvkiqrxviiinfvbyl:[YOUR-PASSWORD]@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.dspxvkiqrxviiinfvbyl',
+#         'PASSWORD': 'XpUO6qH9j7PCzy4B',
+#         'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
+#         'PORT': '5432',
+#     }
+# }
+
+# xK5WSHIOxlBRsioC
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres.dspxvkiqrxviiinfvbyl',
-        'PASSWORD': 'XpUO6qH9j7PCzy4B',
-        'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
+        'USER': 'postgres.cwvhmjitoneirhkraxpa',
+        'PASSWORD': 'xK5WSHIOxlBRsioC',
+        'HOST': 'aws-0-us-west-2.pooler.supabase.com',
         'PORT': '5432',
     }
 }

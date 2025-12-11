@@ -132,7 +132,7 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # import dj_database_url
-#
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

@@ -121,24 +121,6 @@
 																</div>
 															{% endif %}
 														</div>
-														<!-- <div class="form-group">
-															<label>Password*</label>
-															<input type="password" name="password1" class="my-form-control" id="is_password1" placeholder="Enter Your Password">
-															{% if form.password1.errors %}
-																		<div class="text-danger">
-																				{{ form.password1.errors }}
-																		</div>
-															{% endif %}
-														</div>
-														<div class="form-group">
-															<label>Confirm Password*</label>
-															<input type="password" name="password2" class="my-form-control" id="id_password2" placeholder="Enter Your Password">
-															{% if form.password2.errors %}
-																		<div class="text-danger">
-																				{{ form.password2.errors }}
-																		</div>
-															{% endif %}
-														</div> -->
 
 														<div class="form-group relative">
 														    <label>Password*</label>
@@ -847,6 +829,7 @@
 																  </select>
 															</div>
 														</div> -->
+
 														<div class="form-group">
 																<label for="{{ form.profile_image.id_for_label }}">Profile Image:</label>
 																<input type="file" name="profile_image" class="my-form-control" id="id_profileimage" value="{{ form.profile_image.value }}">
@@ -857,6 +840,34 @@
 																		</div>
 																{% endif %}
 														</div>
+
+														<style media="screen">
+															.custom-control-input {
+																	width: auto !important;
+															}
+														</style>
+														<div class="form-group">
+														    <div class="custom-control custom-checkbox">
+														        <input
+														            type="checkbox"
+														            name="agree_to_terms"
+														            class="custom-control-input"
+														            id="id_agree_to_terms"
+														            required
+														        >
+														        <label class="custom-control-label" for="id_agree_to_terms">
+														            I agree to the
+														            <a href="{% url 'pages:policy' %}" target="_blank" style="text-decoration: underline;">Terms & Conditions</a>
+														        </label>
+														    </div>
+
+														    {% if form.agree_to_terms.errors %}
+														        <div class="text-danger">
+														            {{ form.agree_to_terms.errors }}
+														        </div>
+														    {% endif %}
+														</div>
+
 
 														<!-- Submit Button -->
 														<button type="submit" class="default-btn reverse" data-toggle="modal" data-target="#email-confirm"><span>Create Your Profile</span></button>

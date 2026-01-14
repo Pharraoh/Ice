@@ -1,0 +1,713 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<!--blog-single.html :35:42 GMT -->
+<head>
+	<meta charset="utf-8">
+	<title>Blog</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- site favicon -->
+	<link rel="icon" type="image/png" href="../../static/assets/images/favicon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- All stylesheet and icons css  -->
+	<link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/animate.css">
+	<link rel="stylesheet" href="../../static/assets/css/all.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/swiper.min.css">
+	<link rel="stylesheet" href="../../static/assets/css/lightcase.css">
+	<link rel="stylesheet" href="../../static/assets/css/style.css">
+
+</head>
+
+<body>
+	<!-- preloader start here -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+	<!-- preloader ending here -->
+
+	<!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="fa-solid fa-angle-up"></i></a>
+    <!-- scrollToTop ending here -->
+
+
+		<!-- ================> header section start here <================== -->
+    <header class="header" id="navbar">
+        <!-- <div class="header__top d-none d-lg-block">
+			<div class="container">
+				<div class="header__top--area">
+					<div class="header__top--left">
+						<ul>
+                            <li>
+                                <i class="fa-solid fa-phone"></i> <span>+800-123-4567 6587</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-location-dot"></i> Beverley, New York 224 USA
+                            </li>
+                        </ul>
+					</div>
+					<div class="header__top--right">
+						<ul>
+                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                            <li><a href="#"><i class="fa-brands fa-youtube"></i> Youtube</a></li>
+                        </ul>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<style>
+				.logo {
+					width: 130px;
+				}
+
+				@media (max-width: 991px) {
+					.logo {
+						width: 150px;
+					}
+				}
+		</style>
+
+		<div class="header__bottom">
+			<div class="container">
+				<nav class="navbar navbar-expand-lg">
+					<a class="navbar-brand" href="/"><img src="{% static 'assets/images/logo/logo.png' %}"  alt="logo" class="logo"></a>
+					<button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler--icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+						<div class="navbar-nav mainmenu">
+							<ul>
+								<li>
+									<a href="{% url 'accounts:dashboard' %}" >Dashboard</a>
+									<li class="active"><a href="#">blog</a></li>
+									<!-- <a href="#0">Home</a> -->
+									<!-- <ul>
+										<li><a href="/" class="active">Home Page One</a></li>
+										<li><a href="index-2.html">Home Page Two</a></li>
+										<li><a href="index-3.html">Home Page Three</a></li>
+									</ul> -->
+								</li>
+								<!-- <li>
+									<a href="#0">Pages</a>
+									<ul>
+										<li><a href="{% url 'pages:about' %}">About Us</a></li>
+                                        <li><a href="{% url 'pages:membership' %}">Membership</a></li>
+                                        <li><a href="comingsoon.html">comingsoon</a></li>
+                                        <li><a href="404.html">404</a></li>
+									</ul>
+								</li> -->
+								<!-- <li>
+									<a href="#0">Community</a>
+									<ul>
+										<li><a href="community.html">Community</a></li>
+										<li><a href="group.html">All Group</a></li>
+										<li><a href="{% url 'community:members' %}">All Members</a></li>
+										<li><a href="{% url 'community:activity' %}">Activity</a></li>
+
+									</ul>
+								</li> -->
+								<li>
+									<a href="#0">Matches</a>
+									<ul>
+										<li><a href="{% url 'members:allmembers' %}">All Members</a></li>
+										<li><a href="{% url 'members:search_members' %}">Search Members</a></li>
+										<li><a href="{% url 'accounts:online_users' %}">Online Members</a></li>
+										<!-- <a href="{% url 'blog:blog' %}">Blog</a> -->
+									</ul>
+								</li>
+								<li style="position: relative;">
+									<a href="{% url 'realtime_chat:matched_users' %}" class="messages-link">
+											<i class="fa fa-comments"></i>
+											<span class="message-indicator"
+														style="display:none; background:red; color:white; border-radius:50%; width:10px; height:10px; position:absolute; top:10px; right:25px;"></span>
+									</a>
+								</li>
+								<!-- <li>
+									<a href="#0">Shops</a>
+									<ul>
+										<li><a href="shop.html">Product</a></li>
+										<li><a href="shop-single.html">Product Details</a></li>
+										<li><a href="shop-cart.html">Product Cart</a></li>
+									</ul>
+								</li> -->
+								<!-- <li>
+									<a href="{% url 'blog:blog' %}">Blog</a>
+								</li> -->
+							</ul>
+						</div>
+						<!-- <div class="header__more">
+														<button class="default-btn dropdown-toggle" type="button" id="moreoption" data-bs-toggle="dropdown" aria-expanded="false">My Account</button>
+														<ul class="dropdown-menu" aria-labelledby="moreoption">
+																<li><a class="dropdown-item" href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+																<li><a href="/" class="dropdown-item">Log Out</a></li>
+														</ul>
+						</div> -->
+					</div>
+				</nav>
+			</div>
+		</div>
+    </header>
+    <!-- ================> header section end here <================== -->
+
+
+
+    <!-- ================> Page Header section start here <================== -->
+    <div class="pageheader bg_img" style="background-image: url(../../static/assets/images/bg-img/pageheader.jpg);">
+        <div class="container">
+            <div class="pageheader__content text-center">
+                <h2>Blog</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                      <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Blog Single</li> -->
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ================> Page Header section end here <================== -->
+
+    <!-- ================> Blog section start here <================== -->
+    <div class="blog blog--style2 padding-top padding-bottom aside-bg">
+		<div class="container">
+			<div class="section-wrapper">
+				<div class="row justify-content-center pb-15">
+					<div class="col-lg-9 col-12">
+						<article>
+							<div class="blog__item">
+								<div class="blog__inner">
+									<div class="blog__thumb">
+										<img src="../../static/assets/images/story/03.jpg" alt="blog">
+									</div>
+									<div class="blog__content">
+										<h2>First Date Mistakes That Instantly Kill Attraction</h2>
+										<ul class="blog__date">
+											<li><span><i class="fa-solid fa-calendar-days"></i>December 01, 2025 10:59 am </span></li>
+											<!-- <li><span><i class="fa-solid fa-user"></i><a href="#">Rajib Raj</a></span></li> -->
+											<!-- <li><span><i class="fa-solid fa-comments"></i><a href="#">09 Comments</a></span></li> -->
+										</ul>
+										<p>First dates are exciting — but they’re also fragile. One wrong move can quietly shift the vibe from “I want to see you again” to “Yeah… probably not.” The tricky part? Most first-date mistakes aren’t dramatic. They’re subtle habits people don’t even realize they’re making. Here are the most common first date mistakes that instantly kill attraction — and how to avoid them.</p>
+										<!-- <blockquote class="single-quote mb-4">
+											<div class="quotes">
+												Dynamicaly recaptiuaze distribute technologies wherease
+												turnkey channels and onotonec provide aces to resource
+												levelng expert vias worldwide deve in rabes uoliticly extend
+												aserser are diverse vortals.
+												<span>...Melissa Hunter</span>
+											</div>
+										</blockquote> -->
+										<P><strong>1. Talking Too Much About Yourself</strong> <br>
+
+											Confidence is attractive. Dominating the conversation isn’t.
+
+											When a date feels like an interview about you, the other person can start to feel invisible. Attraction grows when both people feel heard and valued. <br><br>
+
+											<strong>Fix:</strong><br>
+
+											- Ask open-ended questions <br>
+
+											- Listen actively <br>
+
+											- Respond instead of redirecting the topic back to yourself <br>
+										</P>
+										<div class="blog__thumb mb-4"><img src="../../static/assets/images/blog/single/02.jpg" alt="blog-img">
+										</div>
+
+										<P><strong>2. Oversharing Too Soon</strong> <br>
+
+											Being open is great — trauma dumping is not.
+
+											Talking about exes, heartbreaks, family problems, or personal struggles on a first date can feel overwhelming. It shifts the mood from light and exciting to heavy and awkward. <br><br>
+
+											<strong>Fix:</strong><br>
+
+											- Keep the conversation fun and surface-level. Deep conversations come later, when trust has been built.
+										</P>
+
+										<div class="blog__thumb mb-4">
+											<img src="../../static/assets/images/blog/single/03.jpg" alt="blog">
+											<!-- <a href="https://www.youtube.com/embed/U9O8G5AreXE" class="play-btn"
+												data-rel="lightcase">
+												<i class="fa-solid fa-play"></i>
+												<span class="pluse_2"></span>
+											</a> -->
+										</div>
+										<P><strong>3. Being on Your Phone</strong> <br>
+
+											Nothing says “I’m not that interested” louder than checking your phone every few minutes.
+
+											Even quick glances can break emotional connection and kill the moment. <br><br>
+
+											<strong>Fix:</strong><br>
+
+											- Put your phone away or on silent. Give your date your full attention — it’s rare and attractive.
+										</P>
+										<br>
+
+										<P><strong>4. Forcing Chemistry</strong> <br>
+
+											Not every date will be magical — and that’s okay.
+
+											Trying to force intimacy, deep emotions, or future plans on a first date often creates pressure and discomfort. <br><br>
+
+											<strong>Fix:</strong><br>
+
+											- Let things flow naturally. Chemistry either builds or it doesn’t — and both outcomes are normal.
+										</P>
+										<br>
+
+										<P><strong>Final Thought</strong> <br>
+
+											A great first date isn’t about perfection.
+											It’s about presence, respect, and genuine connection.
+
+											Avoid these mistakes, stay authentic, and remember:
+											the goal isn’t to impress — it’s to connect.
+										</P>
+
+										<!-- <div class="tags-area">
+											<ul class="tags lab-ul justify-content-center">
+												<li>
+													<a href="#">Charity</a>
+												</li>
+												<li>
+													<a href="#" class="active">NoneProfit</a>
+												</li>
+												<li>
+													<a href="#">Admission</a>
+												</li>
+												<li>
+													<a href="#">Exams</a>
+												</li>
+											</ul>
+											<ul class="share lab-ul justify-content-center">
+												<li>
+													<a href="#" class="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+												</li>
+												<li>
+													<a href="#" class="dribble"><i class="fa-brands fa-dribbble"></i></a>
+												</li>
+												<li>
+													<a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+												</li>
+												<li>
+													<a href="#" class="google"><i class="fa-brands fa-google"></i></a>
+												</li>
+											</ul>
+										</div> -->
+									</div>
+								</div>
+							</div>
+
+							<!-- <div class="article-pagination">
+								<div class="prev-article">
+									<a href="#"><i class="icofont-rounded-double-left"></i>Previous Article</a>
+									<p>Evisculate Parallel Processes via Technica Sound Models Authoritative</p>
+								</div>
+								<div class="next-article">
+									<a href="#">Next Article <i class="icofont-rounded-double-right"></i></a>
+									<p>Qvisculate Parallel Processes via Technica Sound Models Authoritative</p>
+								</div>
+							</div> -->
+
+							<!-- <div class="author">
+								<div class="author__thumb">
+									<img src="../../static/assets/images/blog/author/01.jpg" alt="author">
+								</div>
+								<div class="author__content">
+									<h6 class="mb-2">Rajib Ahmed</h6>
+									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, ipsa autem reprehenderit dolorem necessitatibus numquam illo in commodi cum. Quidem odit neque laudantium sequi exercitationem quas aspernatur, dolores vero earum.</p>
+									<div class="social-media">
+										<a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+										<a href="#" class="behance"><i class="fa-brands fa-behance"></i></a>
+										<a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
+										<a href="#" class="vimeo"><i class="fa-brands fa-vimeo-v"></i></a>
+										<a href="#" class="linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+									</div>
+								</div>
+							</div> -->
+
+							<!-- <div class="comments">
+								<h4 class="comment-title">02 Comment</h4>
+								<ul class="lab-ul comment-list">
+									<li class="comment">
+										<div class="com-item">
+											<div class="com-thumb">
+												<img alt="" src="assets/images/blog/author/02.jpg" srcset="assets/images/blog/author/02.jpg">
+											</div>
+											<div class="com-content">
+												<div class="com-title">
+													<div class="com-title-meta">
+														<a href="member-single.html">Linsa Faith</a>
+														<span> January 5, 2022 at 12:41 pm </span>
+													</div>
+													<span class="reply">
+														<a class="comment-reply-link" href="#"><i class="icofont-reply-all"></i>Reply</a>
+													</span>
+												</div>
+												<p>The inner sanctuary, I throw myself down among the tall grass bye the trckli stream and, as I lie close to the earth</p>
+											</div>
+										</div>
+										<ul class="lab-ul comment-list">
+											<li class="comment">
+												<div class="com-thumb">
+													<img alt="" src="assets/images/blog/author/03.jpg" srcset="assets/images/blog/author/03.jpg">
+												</div>
+												<div class="com-content">
+													<div class="com-title">
+														<div class="com-title-meta">
+															<a href="member-single.html">James Jusse</a>
+															<span> January 5, 2022 at 12:41 pm </span>
+														</div>
+														<span class="reply">
+															<a class="comment-reply-link" href="#"><i class="icofont-reply-all"></i>Reply</a>
+														</span>
+													</div>
+													<p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings spring which I enjoy with my whole heart </p>
+												</div>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div> -->
+
+							<!-- <div class="comment-respond">
+								<h4>Leave a Comment</h4>
+								<div class="add-comment">
+									<form action="#" class="comment-form">
+										<input name="name" type="text" placeholder="Name*">
+										<input name="email" type="text" placeholder="Email*">
+										<input name="url" type="text" placeholder="Website*" class="w-100">
+										<textarea name="comment" rows="7" placeholder="Type Here Your Comment*"></textarea>
+										<button type="submit" class="default-btn reverse"><span>Send Comment</span></button>
+									</form>
+								</div>
+							</div> -->
+						</article>
+					</div>
+					<!-- <div class="col-lg-3 col-md-7 col-12">
+						<aside>
+							<div class="widget widget-search">
+								<div class="widget-header">
+									<h5>Search keywords</h5>
+								</div>
+								<form action="https://demos.codexcoder.com/" class="search-wrapper">
+									<input type="text" placeholder="Search Here...">
+									<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+								</form>
+							</div>
+
+							<div class="widget widget-category">
+								<div class="widget-header">
+									<h5>Post Categories</h5>
+								</div>
+								<ul class="lab-ul widget-wrapper list-bg-none">
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Show all</span><span>18</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Business</span><span>20</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Creative</span><span>25</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Inspiation</span><span>30</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>News</span><span>28</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Photography</span><span>20</span></a>
+									</li>
+									<li>
+										<a href="#" class="d-flex flex-wrap justify-content-between"><span><i class="fa-solid fa-angles-right"></i>Smart</span><span>26</span></a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="widget widget-post">
+								<div class="widget-header">
+									<h5>Recent Post</h5>
+								</div>
+								<ul class="lab-ul widget-wrapper">
+									<li class="d-flex flex-wrap justify-content-between">
+										<div class="post-thumb">
+											<a href="blog-single.html"><img src="assets/images/blog/p-post/01.jpg" alt="product"></a>
+										</div>
+										<div class="post-content ps-4">
+											<a href="blog-single.html">
+												<h6>Poor People’s Campaign Our Resources</h6>
+											</a>
+											<p>01 January 2022</p>
+										</div>
+									</li>
+									<li class="d-flex flex-wrap justify-content-between">
+										<div class="post-thumb">
+											<a href="blog-single.html"><img src="assets/images/blog/p-post/02.jpg" alt="product"></a>
+										</div>
+										<div class="post-content ps-4">
+											<a href="blog-single.html">
+												<h6>Boosting Social For NGO And Charities </h6>
+											</a>
+											<p>01 January 2022</p>
+										</div>
+									</li>
+									<li class="d-flex flex-wrap justify-content-between">
+										<div class="post-thumb">
+											<a href="blog-single.html"><img src="assets/images/blog/p-post/03.jpg" alt="product"></a>
+										</div>
+										<div class="post-content ps-4">
+											<a href="blog-single.html">
+												<h6>Poor People’s Campaign Our Resources</h6>
+											</a>
+											<p>01 January 2022</p>
+										</div>
+									</li>
+									<li class="d-flex flex-wrap justify-content-between">
+										<div class="post-thumb">
+											<a href="blog-single.html"><img src="assets/images/blog/p-post/04.jpg" alt="product"></a>
+										</div>
+										<div class="post-content ps-4">
+											<a href="blog-single.html">
+												<h6>Boosting Social For NGO And Charities</h6>
+											</a>
+											<p>01 January 2022</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+
+						</aside>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- ================> Blog section end here <================== -->
+
+
+
+		<!-- ================> Footer section start here <================== -->
+	<footer class="footer footer--style2">
+		<div class="footer__top bg_img" style="background-image: url(./static/assets/images/footer/bg.jpg)">
+			<div class="footer__newsletter wow fadeInUp" data-wow-duration="1.5s">
+				<div class="container">
+					<div class="row g-4 justify-content-center">
+						<div class="col-lg-6 col-12">
+							<div class="footer__newsletter--area">
+								<div class="footer__newsletter--title">
+									<h4>Newsletter Sign up</h4>
+								</div>
+								<div class="footer__newsletter--form">
+									<form action="#">
+										<input type="email" placeholder="Your email address">
+										<button type="submit" class="default-btn"><span>Subscribe</span></button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-12">
+							<div class="footer__newsletter--area justify-content-xxl-end">
+								<div class="footer__newsletter--title me-xl-4">
+									<h4>Join Community</h4>
+								</div>
+								<div class="footer__newsletter--social">
+									<ul>
+										<li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-twitch"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-dribbble"></i></a></li>
+										<li><a href="#"><i class="fa-brands fa-facebook-messenger"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+			<div class="footer__toparea padding-top padding-bottom wow fadeInUp" data-wow-duration="1.5s">
+				<div class="container">
+					<div class="row g-4">
+						<div class="col-lg-3 col-sm-6 col-12">
+							<div class="footer__item footer--about">
+								<div class="footer__inner">
+									<div class="footer__content">
+										<div class="footer__content--title">
+											<h4>About Link Lovers</h4>
+										</div>
+										<div class="footer__content--desc">
+											<!-- <p>Link Lovers is a friendly dating theme based on HTML template for the community functionality</p> -->
+										</div>
+										<div class="footer__content--info">
+											<!-- <p><b>Address :</b> 1234 lorem street</p> -->
+											<p><b>Contact :</b> +234 810 952 2982</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-6 col-12">
+							<div class="footer__item footer--feature">
+								<div class="footer__inner">
+									<div class="footer__content">
+										<!-- <div class="footer__content--title">
+											<h4>Featured Members</h4>
+										</div>
+										<div class="footer__content--desc">
+											<ul>
+												<li>
+													<div class="thumb position-relative">
+														<img src="./static/assets/images/footer/feature/01.jpg" alt="member-img">
+														<span class="feature__activity"></span>
+													</div>
+													<div class="content">
+														<a href="member-single.html"><h6>Samantha Lee</h6></a>
+														<p>Active</p>
+													</div>
+												</li>
+												<li>
+													<div class="thumb position-relative">
+														<img src="./static/assets/images/footer/feature/02.jpg" alt="member-img">
+														<span class="feature__activity feature__activity--ofline"></span>
+													</div>
+													<div class="content">
+														<a href="member-single.html"><h6>Peter McMillan</h6></a>
+														<p>2 Hours Ago</p>
+													</div>
+												</li>
+												<li>
+													<div class="thumb position-relative">
+														<img src="./static/assets/images/footer/feature/03.jpg" alt="member-img">
+														<span class="feature__activity"></span>
+													</div>
+													<div class="content">
+														<a href="member-single.html"><h6>Tluagtea Tualzik</h6></a>
+														<p>Active</p>
+													</div>
+												</li>
+											</ul>
+										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-6 col-12">
+							<div class="footer__item footer--support">
+								<div class="footer__inner">
+									<div class="footer__content">
+										<div class="footer__content--title">
+											<h4>Contacts & Support</h4>
+										</div>
+										<div class="footer__content--desc">
+											<ul>
+												<li><a href="#"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
+												{% if user.is_authenticated %}
+												<li><a href="{% url 'accounts:edit_profile' %}"><i class="fa-solid fa-angle-right"></i> Edit Profile</a></li>
+												<li><a href="{% url 'accounts:password_reset' %}"><i class="fa-solid fa-angle-right"></i> Reset Password</a></li>
+												{% endif %}
+												<!-- <li><a href="#"><i class="fa-solid fa-angle-right"></i> Testimonials</a></li> -->
+												<li><a href="{% url 'accounts:contact' %}"><i class="fa-solid fa-angle-right"></i> Get in Touch</a></li>
+												<li><a href="#"><i class="fa-solid fa-angle-right"></i> FAQ</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-lg-3 col-sm-6 col-12">
+							<div class="footer__item footer--activity">
+								<div class="footer__inner">
+									<div class="footer__content">
+										<div class="footer__content--title">
+											<h4>Recent Activity</h4>
+										</div>
+										<div class="footer__content--desc">
+											<ul>
+												<li>
+													<div class="thumb">
+														<a href="group-single.html"><img src="./static/assets/images/footer/activity/01.jpg" alt="dating thumb"></a>
+													</div>
+													<div class="content">
+														<a href="group-single.html"><h6>Where to find a good...</h6></a>
+														<p>August 13, 2022</p>
+													</div>
+												</li>
+												<li>
+													<div class="thumb">
+														<a href="group-single.html"><img src="./static/assets/images/footer/activity/02.jpg" alt="dating thumb"></a>
+													</div>
+													<div class="content">
+														<a href="group-single.html"><h6>Where to find a good...</h6></a>
+														<p>August 13, 2022</p>
+													</div>
+												</li>
+												<li>
+													<div class="thumb">
+														<a href="group-single.html"><img src="./static/assets/images/footer/activity/03.jpg" alt="dating thumb"></a>
+													</div>
+													<div class="content">
+														<a href="group-single.html"><h6>Where to find a good...</h6></a>
+														<p>August 13, 2022</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer__bottom wow fadeInUp" data-wow-duration="1.5s">
+			<div class="container">
+				<div class="footer__content text-center">
+					<p class="mb-0">All Rights Reserved &copy; <a href="#">Link Lovers</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+    <!-- ================> Footer section end here <================== -->
+
+
+
+	<!-- All Needed JS -->
+	<script src="../../static/assets/js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="../../static/assets/js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="../../static/assets/js/isotope.pkgd.min.js"></script>
+	<script src="../../static/assets/js/swiper.min.js"></script>
+	<!-- <script src="../../static/assets/js/all.min.js"></script> -->
+	<script src="../../static/assets/js/wow.js"></script>
+	<script src="../../static/assets/js/counterup.js"></script>
+	<script src="../../static/assets/js/jquery.countdown.min.js"></script>
+	<script src="../../static/assets/js/lightcase.js"></script>
+	<script src="../../static/assets/js/waypoints.min.js"></script>
+	<script src="../../static/assets/js/vendor/bootstrap.bundle.min.js"></script>
+	<script src="../../static/assets/js/plugins.js"></script>
+	<script src="../../static/assets/js/main.js"></script>
+
+
+
+
+</body>
+
+<!--blog-single.html :35:54 GMT -->
+</html>

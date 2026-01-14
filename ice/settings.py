@@ -119,14 +119,12 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [
-                "redis://default:SI6hDFaDQhzyixYQFfQdF5BuxxVTbvat@redis-16837.crce199.us-west-2-2.ec2.redns.redis-cloud.com:16837"
+                "redis://default:VifAxfWfTPh7jfDnsWRGHVbvDGH8T0qH@redis-18549.c1.us-west-2-2.ec2.cloud.redislabs.com:18549"
             ],
             # 'hosts': [('127.0.0.1', 6379)],  # Redis must be installed and running
         },
     },
 }
-
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -156,7 +154,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 
 # media hosting

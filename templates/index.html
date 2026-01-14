@@ -207,7 +207,7 @@
 							<div class="banner__title">
 								<h2>New Places, Unforgettable Dating.</h2>
 								<p>Join our local family today! Please call us for more info.</p>
-								<a href="/" class="default-btn style-2"><span>Get A Membership</span></a> <br><br>
+								<!-- <a href="/" class="default-btn style-2"><span>Get A Membership</span></a> <br><br> -->
 							</div>
 						</div>
 					</div>
@@ -245,7 +245,7 @@
 						<div class="about__left">
 							<div class="about__top">
 								<div class="about__content">
-									<h3>Welcome To Link Lovers</h3>
+									<h3 style="color: #FF6B6B;">Welcome To Link Lovers</h3>
 									<p>You found us, finally, and you are already in love. More than 100,000 users in Nigeria already shared the same experiences.</p>
 								</div>
 							</div>
@@ -749,11 +749,10 @@
 			</div>
 			<div class="section__wrapper">
 				<div class="row g-4 justify-content-center row-cols-lg-3 row-cols-sm-2 row-cols-1">
-					<div class="col wow fadeInUp" data-wow-duration="1.5s">
+					<!-- <div class="col wow fadeInUp" data-wow-duration="1.5s">
 						<div class="story__item">
 							<div class="story__inner">
 								<div class="story__thumb">
-									<!-- <a href="#"><img src="./static/assets/images/banner/5.jpg" alt="dating thumb"></a> -->
 									<a href="#"><img src="./static/assets/images/story/01.jpg" alt="dating thumb"></a>
 									<span class="member__activity member__activity--ofline">Entertainment</span>
 								</div>
@@ -772,7 +771,7 @@
 								<a href="{% url 'accounts:login' %}" id="read" class="default-btn style-2"><span>Read More..</span></a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- <div class="col wow fadeInUp" data-wow-duration="1.6s">
 						<div class="story__item">
 							<div class="story__inner">
@@ -794,7 +793,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col wow fadeInUp" data-wow-duration="1.7s">
 						<div class="story__item">
 							<div class="story__inner">
@@ -803,8 +802,8 @@
 									<span class="member__activity member__activity--ofline">Attraction</span>
 								</div>
 								<div class="story__content">
-									<a href="#"><h4>Love looks not with the eyes, but with the mind.</h4></a>
-									<div class="story__content--author">
+									<a href="{% url 'pages:blog-single' %}"><h4>First Date Mistakes That Instantly Kill Attraction.</h4></a>
+									<!-- <div class="story__content--author">
 										<div class="story__content--thumb">
 											<img src="./static/assets/images/story/author/03.jpg" alt="dating thumb">
 										</div>
@@ -812,11 +811,12 @@
 											<h6>William Show</h6>
 											<p>June 18, 2022</p>
 										</div>
-									</div>
+									</div> -->
 								</div>
+								<!-- <a href="{% url 'accounts:login' %}" id="read" class="default-btn style-2"><span>Read More..</span></a> -->
 							</div>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1416,7 +1416,7 @@
 								<div class="work__content">
 									<h3>Trust And Safety</h3>
 									<p>Choose from one of our membership levels and unlock features you need. </p>
-									<a href="/" class="default-btn"><span>See More Details</span></a>
+									<a href="{% url 'pages:policy' %}" class="default-btn"><span>See More Details</span></a>
 								</div>
 							</div>
 						</div>

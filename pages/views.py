@@ -9,3 +9,9 @@ def about(request):
 @login_required
 def membership(request):
     return render(request, "pages/membership.html")
+
+def blog_single(request):
+    return render(request, "pages/blog-single.html")
+
+def policy(request):
+    return render(request, "pages/policy.html")

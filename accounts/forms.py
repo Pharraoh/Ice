@@ -42,6 +42,10 @@ class SignUpForm(UserCreationForm):
         widget=forms.Select(attrs={'id': 'gradYearSelect'})
     )
 
+    agree_to_terms = forms.BooleanField(
+        required=True,
+        label="I agree to the Terms & Conditions"
+    )
 
 
     class Meta:

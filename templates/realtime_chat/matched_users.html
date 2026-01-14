@@ -168,9 +168,9 @@
                                                        font-weight: bold;
                                                    {% endif %}">
                                             {% if item.last_message_sender == request.user.username %}
-                                                {{ item.last_message|truncatechars:30 }}
+                                                {{ item.last_message|truncatechars:15 }}
                                             {% else %}
-                                                {{ item.last_message|truncatechars:30 }}
+                                                {{ item.last_message|truncatechars:15 }}
                                             {% endif %}
                                             {% if item.timestamp %}
                                                 <small style="font-size: 0.8rem; color: #999; margin-left: 10px; white-space: nowrap;">{{ item.timestamp }}</small>

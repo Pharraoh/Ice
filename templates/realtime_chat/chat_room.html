@@ -375,6 +375,10 @@
         body:not(.in-chat-view) #friends {
             display: block !important;
         }
+
+        .btn.btn-floating {
+            margin-right: 20px !important;
+        }
     }
 
     @media (min-width: 992px) {
@@ -412,6 +416,15 @@
         <!-- Chat Header -->
         <div class="chat-header">
             <div class="chat-header-user">
+                <div class="chat-header-action">
+                    <ul class="list-inline">
+                        <li class="list-inline-item d-inline d-lg-none">
+                            <a href="{% url 'realtime_chat:matched_users' %}" class="btn btn-danger btn-floating">
+                                <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <figure class="avatar avatar-state">
                     <img src="{{ other_user.profile_image.url }}" class="rounded-circle" alt="image">
                 </figure>
@@ -420,23 +433,18 @@
                     <small class="text-success">Online</small>
                 </div>
             </div>
-            <div class="chat-header-action">
-                <ul class="list-inline">
-                    <li class="list-inline-item d-inline d-lg-none">
-                        <a href="{% url 'realtime_chat:matched_users' %}" class="btn btn-danger btn-floating">
-                            <i class="fa fa-arrow-left"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
 
         <style media="screen">
             .messages {
               display: flex;
               flex-direction: column;
-              gap: 8px;
-              padding: 10px;
+              /* gap: 8px;
+              padding: 10px; */
+            }
+
+            .layout .chat .chat-body .messages .message-item {
+                margin-bottom: 1rem !important;
             }
 
             .message-item {
@@ -471,6 +479,7 @@
               text-align: right;
             }
         </style>
+
 
         <!-- Chat Body -->
         <div class="chat-body" id="chat-log" style="max-height: calc(100vh - 200px); overflow-y: auto;">

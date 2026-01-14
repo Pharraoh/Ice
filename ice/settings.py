@@ -129,31 +129,31 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# import dj_database_url
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-
-import os
-
+import dj_database_url
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.cwvhmjitoneirhkraxpa',
-        'PASSWORD': 'xK5WSHIOxlBRsioC',
-        'HOST': 'aws-0-us-west-2.pooler.supabase.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+
+
+# import os
+#
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.cwvhmjitoneirhkraxpa',
+#         'PASSWORD': 'xK5WSHIOxlBRsioC',
+#         'HOST': 'aws-0-us-west-2.pooler.supabase.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # media hosting

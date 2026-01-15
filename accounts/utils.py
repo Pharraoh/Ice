@@ -11,22 +11,56 @@ def get_online_users(minutes=5):
     return User.objects.filter(last_seen__gte=threshold)
 
 
+#smtp
+# def send_welcome_email(user):
+#     subject = "Welcome to Link Lovers!"
+#     from_email = settings.DEFAULT_FROM_EMAIL
+#     to = [user.email]
+#
+#     # Render the HTML template
+#     html_content = render_to_string('accounts/welcome-email.html', {'user': user})
+#     text_content = f"Hi {user.username},\n\nWelcome to Link Lovers. We're excited to have you on board!"  # Fallback plain text
+#
+#     msg = EmailMultiAlternatives(subject, text_content, from_email, to)
+#     msg.attach_alternative(html_content, "text/html")
+#     msg.send()
+
+
+from django.template.loader import render_to_string
+from .brevo import send_brevo_email
+
 def send_welcome_email(user):
     subject = "Welcome to Link Lovers!"
-    from_email = settings.DEFAULT_FROM_EMAIL
-    to = [user.email]
 
-    # Render the HTML template
-    html_content = render_to_string('accounts/welcome-email.html', {'user': user})
-    text_content = f"Hi {user.username},\n\nWelcome to Link Lovers. We're excited to have you on board!"  # Fallback plain text
+    html_content = render_to_string(
+        "accounts/welcome-email.html",
+        {"user": user},
+    )
 
-    msg = EmailMultiAlternatives(subject, text_content, from_email, to)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    send_brevo_email(
+        subject=subject,
+        html_content=html_content,
+        to_email=user.email,
+        to_name=user.username,
+    )
 
-# def send_welcome_email(user):
-#     subject = "Welcome to Ice Dating!"
-#     message = f"Hi {user.username},\n\nWelcome to Test Dating. We're excited to have you on board!"
-#     recipient_list = [user.email]
-#
-#     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list)
+
+
+
+def send_password_reset_email(user, reset_link):
+    subject = "Password Reset Request"
+
+    html_content = render_to_string(
+        "accounts/password_reset_email.html",
+        {
+            "user": user,
+            "reset_link": reset_link,
+        },
+    )
+
+    send_brevo_email(
+        subject=subject,
+        html_content=html_content,
+        to_email=user.email,
+        to_name=user.username,
+    )

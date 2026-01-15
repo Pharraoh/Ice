@@ -178,14 +178,8 @@ cloudinary.config(
 
 
 
-# import dj_database_url
-# from dotenv import load_dotenv
-#
-# load_dotenv()
-#
-# DATABASES = {
-#     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-# }
+EMAIL_TIMEOUT = 20
+EMAIL_USE_LOCALTIME = True
 
 
 
@@ -240,6 +234,8 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 
 # EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"

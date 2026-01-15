@@ -179,45 +179,76 @@ from django.urls import reverse
 
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from .utils import send_password_reset_email
 
 User = get_user_model()
 
 
 # ✅ Custom Password Reset View
+# def custom_password_reset(request):
+#     if request.method == "POST":
+#         form = PasswordResetForm(request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data["email"]
+#             user = User.objects.filter(email=email).first()
+#             if user:
+#                 token = default_token_generator.make_token(user)
+#                 uid = urlsafe_base64_encode(force_bytes(user.pk))
+#                 reset_link = request.build_absolute_uri(
+#                     reverse('accounts:password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+#                 )
+#
+#                 # ✅ Send Reset Email
+#
+#                 subject = "Password Reset Request"
+#                 from_email = settings.DEFAULT_FROM_EMAIL
+#                 to = [email]
+#
+#                 # Render your HTML template
+#                 html_content = render_to_string('accounts/password_reset_email.html', {'reset_link': reset_link})
+#
+#                 # Create the email message and attach HTML
+#                 email_message = EmailMultiAlternatives(subject, '', from_email, to)
+#                 email_message.attach_alternative(html_content, "text/html")
+#                 email_message.send()
+#
+#
+#             return redirect('accounts:password_reset_done')  # Redirect to success page
+#
+#     else:
+#         form = PasswordResetForm()
+#
+#     return render(request, 'accounts/password_reset.html', {'form': form})
+
 def custom_password_reset(request):
     if request.method == "POST":
         form = PasswordResetForm(request.POST)
+
         if form.is_valid():
             email = form.cleaned_data["email"]
             user = User.objects.filter(email=email).first()
+
             if user:
                 token = default_token_generator.make_token(user)
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
+
                 reset_link = request.build_absolute_uri(
-                    reverse('accounts:password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+                    reverse(
+                        "accounts:password_reset_confirm",
+                        kwargs={"uidb64": uid, "token": token},
+                    )
                 )
 
-                # ✅ Send Reset Email
+                # ✅ Send via Brevo HTTP API (NON-BLOCKING)
+                send_password_reset_email(user, reset_link)
 
-                subject = "Password Reset Request"
-                from_email = settings.DEFAULT_FROM_EMAIL
-                to = [email]
-
-                # Render your HTML template
-                html_content = render_to_string('accounts/password_reset_email.html', {'reset_link': reset_link})
-
-                # Create the email message and attach HTML
-                email_message = EmailMultiAlternatives(subject, '', from_email, to)
-                email_message.attach_alternative(html_content, "text/html")
-                email_message.send()
-
-
-            return redirect('accounts:password_reset_done')  # Redirect to success page
+            # Always redirect (prevents email enumeration)
+            return redirect("accounts:password_reset_done")
 
     else:
         form = PasswordResetForm()
 
-    return render(request, 'accounts/password_reset.html', {'form': form})
+    return render(request, "accounts/password_reset.html", {"form": form})
 
 
 # ✅ Password Reset Done View

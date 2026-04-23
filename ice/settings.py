@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#t$vg2*4ui77g^m!=noz06auz3vuix!-blqdb^-zczqu7nx0g6'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -118,62 +118,53 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [
-                "redis://default:VifAxfWfTPh7jfDnsWRGHVbvDGH8T0qH@redis-18549.c1.us-west-2-2.ec2.cloud.redislabs.com:18549"
-            ],
-            # 'hosts': [('127.0.0.1', 6379)],  # Redis must be installed and running
+            # 'hosts': [os.getenv('REDIS_URL')]
+            'hosts': [('127.0.0.1', 6379)],  # Redis must be installed and running
         },
     },
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 #
 # import dj_database_url
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-
-import os
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.cwvhmjitoneirhkraxpa',
-        'PASSWORD': 'xK5WSHIOxlBRsioC',
-        'HOST': 'aws-0-us-west-2.pooler.supabase.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 
+
+
+# import os
+#
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+
+
 # media hosting
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dstefwn3l',
-    'API_KEY': '235168181554165',
-    'API_SECRET': 'g1eSXg-ryFRKKBkWRPB7gF4Kd1I',
-    'RESOURCE_TYPE': 'auto'
-}
-
 import cloudinary
 
-cloudinary.config(
-    cloud_name = "dstefwn3l",
-    api_key = "235168181554165",
-    api_secret = "g1eSXg-ryFRKKBkWRPB7gF4Kd1I",
-    resource_type = "auto"
-)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'RESOURCE_TYPE': 'auto'
+}
 
 
 
@@ -203,26 +194,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Email Configuration (Use an SMTP server)
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = 'smtp-relay.brevo.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = '92c9d0001@smtp-brevo.com'
-# EMAIL_HOST_PASSWORD = 'xsmtpsib-ab7b5dd16565e4ffeb8e6c25a04853394cc7fb701698f4b13e2a6bdd79171da8-rA4zsv12K8mfV3Qh'
-# DEFAULT_FROM_EMAIL = 'Link Lovers<linkloversng@gmail.com>'
-
-
 import os
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -237,14 +208,6 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
-
-# EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
-#
-# ANYMAIL = {
-#      "SENDINBLUE_API_KEY": "xsmtpsib-ab7b5dd16565e4ffeb8e6c25a04853394cc7fb701698f4b13e2a6bdd79171da8-rA4zsv12K8mfV3Qh"
-# }
-#
-# DEFAULT_FROM_EMAIL = "Link Lovers <no-reply@yourdomain.com>"
 
 
 
